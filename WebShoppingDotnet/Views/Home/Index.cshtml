@@ -1,0 +1,39 @@
+﻿@model List<WebShoppingDotnet.Models.Quangcao>;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+<section id="banner">
+    <div id="main-slideshow">
+        <div class="slideshow-content" id="ml-slide">
+             <div class="mySlides">
+                <img src="..\img\quangcao\slider1.jpg" alt="">
+
+            </div>
+            @foreach (var item in Model)
+            {
+               <div class="mySlides">
+                <img src="..@item.UrlImg" alt="">
+               </div>  
+            }
+            <!-- slide1 -->
+           
+        </div>
+        <div class="slick">
+            <div onclick="plusDivs(-1)">
+                <i class="fa-solid fa-chevron-left"></i>
+            </div>
+            <div onclick="plusDivs(1)">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+        </div>
+        <div class="dots">
+            <span class="dot demo" onclick="currentDiv(1)"></span>
+            <span class="dot demo" onclick="currentDiv(2)"></span>
+            <span class="dot demo" onclick="currentDiv(3)"></span>
+            <span class="dot demo" onclick="currentDiv(4)"></span>
+            <span class="dot demo" onclick="currentDiv(5)"></span>
+        </div>
+    </div>
+</section>

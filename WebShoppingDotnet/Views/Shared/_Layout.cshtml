@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebShoppingDotnet</title>
+     <link rel="stylesheet" href="~/css/header.css">
+    <link rel="stylesheet" href="~/css/home.css">
+    <link rel="stylesheet" href="~/css/footer.css"></head>
+     <link href="~/assets/fontawesome-free-6.0.0-beta3-web/css/all.css" rel="stylesheet" />
+     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<body>
+    @Html.Partial("~/Views/Shared/_Header.cshtml")
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+       @Html.Partial("~/Views/Shared/_Footer.cshtml")
+
+   @* <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>*@
+    <script src="~/script/home.js"></script>
+<script src="~/script/header.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
