@@ -8,41 +8,41 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WebShoppingDotnet
 build_property.RootNamespace = WebShoppingDotnet
-build_property.ProjectDir = F:\workspaceCSharp\PROBJECT_DOTNET\WebShoppingDotnet\WebShoppingDotnet\
+build_property.ProjectDir = C:\MyWorkplace\workspaceCSharp\seminar\WebShoppingDotnet\WebShoppingDotnet\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = F:\workspaceCSharp\PROBJECT_DOTNET\WebShoppingDotnet\WebShoppingDotnet
+build_property.MSBuildProjectDirectory = C:\MyWorkplace\workspaceCSharp\seminar\WebShoppingDotnet\WebShoppingDotnet
 build_property._RazorSourceGeneratorDebug = 
 
-[F:/workspaceCSharp/PROBJECT_DOTNET/WebShoppingDotnet/WebShoppingDotnet/Views/Home/Index.cshtml]
+[C:/MyWorkplace/workspaceCSharp/seminar/WebShoppingDotnet/WebShoppingDotnet/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/workspaceCSharp/PROBJECT_DOTNET/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/Error.cshtml]
+[C:/MyWorkplace/workspaceCSharp/seminar/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/workspaceCSharp/PROBJECT_DOTNET/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_Footer.cshtml]
+[C:/MyWorkplace/workspaceCSharp/seminar/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_Footer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/workspaceCSharp/PROBJECT_DOTNET/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_Header.cshtml]
+[C:/MyWorkplace/workspaceCSharp/seminar/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_Header.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9IZWFkZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/workspaceCSharp/PROBJECT_DOTNET/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/MyWorkplace/workspaceCSharp/seminar/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/workspaceCSharp/PROBJECT_DOTNET/WebShoppingDotnet/WebShoppingDotnet/Views/_ViewImports.cshtml]
+[C:/MyWorkplace/workspaceCSharp/seminar/WebShoppingDotnet/WebShoppingDotnet/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/workspaceCSharp/PROBJECT_DOTNET/WebShoppingDotnet/WebShoppingDotnet/Views/_ViewStart.cshtml]
+[C:/MyWorkplace/workspaceCSharp/seminar/WebShoppingDotnet/WebShoppingDotnet/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[F:/workspaceCSharp/PROBJECT_DOTNET/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_Layout.cshtml]
+[C:/MyWorkplace/workspaceCSharp/seminar/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-s07fzstihz
