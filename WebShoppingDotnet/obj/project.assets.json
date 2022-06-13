@@ -9105,19 +9105,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Trong\\.nuget\\packages\\": {}
+    "C:\\Users\\QuangLinh\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\workspaceCSharp\\PROBJECT_DOTNET\\WebShoppingDotnet\\WebShoppingDotnet\\WebShoppingDotnet.csproj",
+      "projectUniqueName": "D:\\.NET\\WebShoppingDotnet\\WebShoppingDotnet\\WebShoppingDotnet.csproj",
       "projectName": "WebShoppingDotnet",
-      "projectPath": "F:\\workspaceCSharp\\PROBJECT_DOTNET\\WebShoppingDotnet\\WebShoppingDotnet\\WebShoppingDotnet.csproj",
-      "packagesPath": "C:\\Users\\Trong\\.nuget\\packages\\",
-      "outputPath": "F:\\workspaceCSharp\\PROBJECT_DOTNET\\WebShoppingDotnet\\WebShoppingDotnet\\obj\\",
+      "projectPath": "D:\\.NET\\WebShoppingDotnet\\WebShoppingDotnet\\WebShoppingDotnet.csproj",
+      "packagesPath": "C:\\Users\\QuangLinh\\.nuget\\packages\\",
+      "outputPath": "D:\\.NET\\WebShoppingDotnet\\WebShoppingDotnet\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Trong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\QuangLinh\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9176,7 +9176,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }
