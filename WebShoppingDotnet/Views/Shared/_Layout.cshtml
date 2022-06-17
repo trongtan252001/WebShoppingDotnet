@@ -13,22 +13,13 @@
     <link rel="stylesheet" href="~/css/footer.css">
     <link rel="stylesheet" href="~/assets/loader.css">
     <script src="~/script/jquery-3.5.0.min.js"></script>
+    @RenderSection("Styles", false)
     </head>
 
-
-   
-     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 <body>
     @Html.Partial("~/Views/Shared/_Header.cshtml")
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-       @Html.Partial("~/Views/Shared/_Footer.cshtml")
+    @RenderBody()
+@Html.Partial("~/Views/Shared/_Footer.cshtml")
 
    @* <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
