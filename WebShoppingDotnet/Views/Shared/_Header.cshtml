@@ -49,7 +49,7 @@
         </div>
         <div class="header-top-wrap-logo">
           <h1>
-            <a href="/Shopping/home"
+            <a asp-controller="Home"
               ><img
                 src="./img/logo.png"
                 alt="Thời trang công sở Seven.AM: Váy đầm, quần áo, vest nữ"
@@ -60,7 +60,7 @@
         <div class="header-top-list">
           <!--Icon chuông-->
           <div>
-            <a href="/cart">
+            <a >
               <i class="fa-solid fa-cart-shopping icon-header"></i>
               Giỏ hàng(<span class="cart-count color-red">0</span>)
             </a>
@@ -80,113 +80,10 @@
         </div>
       </div>
       <nav class="nav-bar">
-        <ul class="nav-list">
-          <li class="nav-item">
-            <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">
-              <span>sp12</span>
-              <i class="fa-solid fa-angle-down"></i>
-            </a>
-            <div class="sub-nav">
-              <ul class="list-sub">
-                <li class="item-sub-nav" stt="0">
-                  <a href="/Shopping/" class="text-hover text-hover-underline-goes-right active">Sản phẩm nổi bật</a>
-                </li>
-                <li class="item-sub-nav" stt="1">
-                  <a href="/Shopping/>" class="text-hover text-hover-underline-goes-right">Sản phẩm mới</a>
-                </li>
-                <li class="item-sub-nav" stt="2">
-                  <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">Best seller</a>
-                </li>
-                <li class="item-sub-nav" stt="3">
-                  <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">Khuyến mãi</a>
-                </li>
-              </ul>
-              <div class="sub-nav-left">
-                <div class="sub-nav-img item<%=j%> active">
-                  <a href="/Shopping/">
-                    <img src="" alt="" />
-                  </a>
-                </div>
+          <ul class="nav-list">
 
-                <div class="sub-nav-img item<%=j%>">
-                  <a href="/Shopping/">
-                    <img src="" alt="" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </li>
-            <li class="nav-item">
-            <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">
-              <span>sp12</span>
-              <i class="fa-solid fa-angle-down"></i>
-            </a>
-            <div class="sub-nav">
-              <ul class="list-sub">
-                <li class="item-sub-nav" stt="0">
-                  <a href="/Shopping/" class="text-hover text-hover-underline-goes-right active">Sản phẩm nổi bật</a>
-                </li>
-                <li class="item-sub-nav" stt="1">
-                  <a href="/Shopping/>" class="text-hover text-hover-underline-goes-right">Sản phẩm mới</a>
-                </li>
-                <li class="item-sub-nav" stt="2">
-                  <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">Best seller</a>
-                </li>
-                <li class="item-sub-nav" stt="3">
-                  <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">Khuyến mãi</a>
-                </li>
-              </ul>
-              <div class="sub-nav-left">
-                <div class="sub-nav-img item<%=j%> active">
-                  <a href="/Shopping/">
-                    <img src="" alt="" />
-                  </a>
-                </div>
-
-                <div class="sub-nav-img item<%=j%>">
-                  <a href="/Shopping/">
-                    <img src="" alt="" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </li>
-            <li class="nav-item">
-            <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">
-              <span>sp12</span>
-              <i class="fa-solid fa-angle-down"></i>
-            </a>
-            <div class="sub-nav">
-              <ul class="list-sub">
-                <li class="item-sub-nav" stt="0">
-                  <a href="/Shopping/" class="text-hover text-hover-underline-goes-right active">Sản phẩm nổi bật</a>
-                </li>
-                <li class="item-sub-nav" stt="1">
-                  <a href="/Shopping/>" class="text-hover text-hover-underline-goes-right">Sản phẩm mới</a>
-                </li>
-                <li class="item-sub-nav" stt="2">
-                  <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">Best seller</a>
-                </li>
-                <li class="item-sub-nav" stt="3">
-                  <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">Khuyến mãi</a>
-                </li>
-              </ul>
-              <div class="sub-nav-left">
-                <div class="sub-nav-img item<%=j%> active">
-                  <a href="/Shopping/">
-                    <img src="" alt="" />
-                  </a>
-                </div>
-
-                <div class="sub-nav-img item<%=j%>">
-                  <a href="/Shopping/">
-                    <img src="" alt="" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
+              @await Component.InvokeAsync("ViewMenu")
+          </ul>
       </nav>
     </div>
   </div>
@@ -196,51 +93,16 @@
       <div class="header-top">
         <div class="header-top-wrap-logo">
           <h1>
-            <a href="/Shopping/home"
+            <a asp-controller="Home"
               ><img src="./img/logo.png" alt="Thời trang công sở Seven.AM: Váy đầm, quần áo, vest nữ"
             /></a>
           </h1>
         </div>
         <nav class="nav-bar">
-          <ul class="nav-list">
-            <li class="nav-item">
-              <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">
-                <span>sp2</span>
+            <ul class="nav-list">
 
-                <i class="fa-solid fa-angle-down"></i>
-              </a>
-              <div class="sub-nav">
-                <ul class="list-sub">
-                  <li class="item-sub-nav" stt="0">
-                    <a href="/Shopping/" class="text-hover text-hover-underline-goes-right active">Sản phẩm nổi bật</a>
-                  </li>
-                  <li class="item-sub-nav" stt="1">
-                    <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">Sản phẩm mới</a>
-                  </li>
-                  <li class="item-sub-nav" stt="2">
-                    <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">Best seller</a>
-                  </li>
-                  <li class="item-sub-nav" stt="3">
-                    <a href="/Shopping/" class="text-hover text-hover-underline-goes-right">Khuyến mãi</a>
-                  </li>
-                </ul>
-                <div class="sub-nav-left">
-                  <div class="sub-nav-img item<%=j%> active">
-                    <a href="/Shopping/detail?id=<%=product.get(k).getMaSP()%>">
-                      <img src="" alt="" />
-                    </a>
-                  </div>
-
-                  <div class="sub-nav-img item<%=j%>">
-                    <a href="/Shopping/detail?id=<%=product.get(k).getMaSP()%>">
-                      <img src="" alt="" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </li>
-
-          </ul>
+                @await Component.InvokeAsync("ViewMenu")
+            </ul>
         </nav>
         <div class="header-top-list nav-notify">
           <div id="search-scroll">
@@ -279,7 +141,7 @@
         </div>
         <div class="header-top-wrap-logo">
           <h1>
-            <a href="/Shopping/home"
+            <a asp-controller="Home" 
               ><img
                 src="./img/logo.png"
                 alt="Thời trang công sở Seven.AM: Váy đầm, quần áo, vest nữ"
@@ -298,20 +160,8 @@
                 </a>
               </div>
             </li>
-            <c:forEach var="p" items="${listLoaiSP}">
+              @await Component.InvokeAsync("ViewMenu")
               <li class="nav-item">
-                <div class="nav-item-warper">
-                  <a
-                    href="/Shopping/search?id=${p.getMaLoai()}&slt=4&name=${p.getTenLoai()}"
-                    class="text-hover text-hover-underline-goes-right"
-                  >
-                    <span>${p.tenLoai}</span>
-                  </a>
-                </div>
-              </li>
-            </c:forEach>
-
-            <li class="nav-item">
               <div class="nav-item-warper">
                 <a href="./account" class="text-hover text-hover-underline-goes-right">
                   <span>Tài khoản</span>
