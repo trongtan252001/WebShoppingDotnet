@@ -156,7 +156,8 @@ namespace WebShoppingDotnet.Models
 
             modelBuilder.Entity<Hinhanh>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Idhinhanh)
+                    .HasName("PRIMARY");
 
                 entity.ToTable("hinhanh");
 
@@ -164,6 +165,8 @@ namespace WebShoppingDotnet.Models
                     .UseCollation("utf8_general_ci");
 
                 entity.HasIndex(e => e.Idsp, "IDSP");
+                entity.Property(e => e.Idhinhanh).HasColumnName("IDHINHANH");
+
 
                 entity.Property(e => e.Idsp).HasColumnName("IDSP");
 
@@ -172,7 +175,7 @@ namespace WebShoppingDotnet.Models
                     .HasColumnName("URL");
 
                 entity.HasOne(d => d.IdspNavigation)
-                    .WithMany()
+                    .WithMany(p=>p.Hinhanhs)
                     .HasForeignKey(d => d.Idsp)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("hinhanh_ibfk_1");
