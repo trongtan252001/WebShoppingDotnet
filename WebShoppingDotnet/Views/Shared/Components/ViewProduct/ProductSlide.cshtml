@@ -1,0 +1,74 @@
+﻿@using System.Globalization
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Product p = Model;
+    ICollection<Hinhanh> listImage = p.Hinhanhs;
+    float saleToday = p.GetSaleToday();
+
+}
+<div class="slides-item">
+    <div class="slide-collection">
+        <div class="collection-slide-div">
+            <a href="/Shopping/detail?id=<%=p.getMaSP()%>">
+                <img class="collection-slide-image" src="@listImage.First().Url" alt="">
+            </a>
+            <div class="btn-img padding-btn-slider">
+                <div class="btn-img-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <div class="btn-img-buy">
+                    <a href="/Shopping/detail?id=<%=p.getMaSP()%>">mua ngay</a>
+                </div>
+                <div class="btn-img-cart" 
+                     idSP="@p.Masp"
+                     onclick="openModal(this)"
+                     data-product-id="@p.Masp"
+                     data-product-name="@p.Tensp"
+                     data-product-price="@p.Dongia"
+                     data-product-img="@listImage.First().Url"
+                     data-product-sell="@saleToday"
+                     data-product-size-s="@p.S"
+                     data-product-size-l="@p.L"
+                     data-product-size-m="@p.M"
+                     data-product-size-xl="@p.Xl"
+                     data-product-color="@p.Mau">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+            </div>
+            @{
+                if (saleToday > 0)
+                {
+                    String giaGiam = Math.Round(saleToday * 100) + "%";
+                    <div class="colection-tag">
+                        <div class="tag-saleoff">
+                            <span>
+                                @giaGiam
+                            </span>
+                        </div>
+                        <img src="~/img/img-sale.png" alt="" class="img-sale">
+                    </div>
+                }
+            }
+        </div>
+        <div class="text-content-collection">
+            <h3 class="slide-collection-title">
+                @p.Tensp
+            </h3>
+            <span class="slide-collection-price">
+                @p.ParseCurrencyVND(p.Dongia- saleToday*p.Dongia)
+            </span>
+            @{
+                if (saleToday > 0)
+                {
+                    <span class="current-price">
+                        @p.ParseCurrencyVND(p.Dongia)
+                    </span>
+                }
+
+                    
+            }
+        </div>
+    </div>
+</div>

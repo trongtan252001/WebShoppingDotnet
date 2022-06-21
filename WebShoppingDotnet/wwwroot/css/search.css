@@ -324,9 +324,9 @@ label {
         grid-template-columns: repeat(1, 1fr);
     }
 }
-.slide-collection{
-    display: none;
-}
+/* .slide-collection{ */
+/*     display: none; */
+/* } */
 .slide-collection.active{
   display: block;
 }
