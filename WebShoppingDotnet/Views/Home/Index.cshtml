@@ -1,6 +1,6 @@
 ﻿@model List<Quangcao>;
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Trang chu";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,12 +13,16 @@
 
 <section id="banner">
     <div id="main-slideshow">
+
         <div class="slideshow-content" id="ml-slide">
 
             @foreach (var item in Model)
             {
                 <div class="mySlides">
-                    <img src="@item.UrlImg">
+                    <a href="~/@item.Url">
+                        <img src="@item.UrlImg">
+
+                    </a>
                 </div>
             }
             <!-- slide1 -->
@@ -161,6 +165,49 @@
     <class class="fixed-bg">
         <a href="#" class="btn-more-white1">Xem địa chỉ hệ thống cửa hàng</a>
     </class>
+</section>
+<section id="tab-home">
+    <div class="container">
+        <div class="tab">
+            <h2 class="tablinks active">Sản phẩm mới</h2>
+            <h2 class="tablinks">BEST SELLER</h2>
+            <h2 class="tablinks"> KHUYẾN MÃI</h2>
+        </div>
+        <div id="list-tab1">
+            <div class="list-tab-content list-tab-content1">
+
+                
+
+            </div>
+            <div class="div-btn-tab">
+                <a class="btn btn-tab" so="1" size ="<%=productList4.size()%>">xem thêm</a>
+            </div>
+
+        </div>
+
+        <div id="list-tab2">
+            <div class="list-tab-content list-tab-content3">
+
+                
+
+            </div>
+            <div class="div-btn-tab">
+                <a class="btn btn-tab" so="3" size ="<%=productList7.size()%>">xem thêm</a>
+            </div>
+
+        </div>
+        <div id="list-tab3">
+            <div class="list-tab-content list-tab-content2">
+
+
+            </div>
+            <div class="div-btn-tab">
+                <a class="btn btn-tab" so="2" size ="<%=productList6.size()%>">xem thêm</a>
+            </div>
+
+        </div>
+
+    </div>
 </section>
 <div class="modal-custom" id="modal-cart">
     <div class="modal-dialog-custom">

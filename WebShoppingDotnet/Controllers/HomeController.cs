@@ -7,9 +7,14 @@ namespace WebShoppingDotnet.Controllers
 {
     public class HomeController : Controller
     {
-        ShopthoitrangContext _shopthoitrang = new ShopthoitrangContext();
+        private ShopthoitrangContext _shopthoitrang;
 
-        public IActionResult Index()
+        public HomeController()
+        {
+            _shopthoitrang = new ShopthoitrangContext();
+        }
+
+        public async Task<IActionResult> Index()
         {
             IHomeService homeService = new HomeServices();
             Bosutap _bst1 = _shopthoitrang.Bosutaps.First();
@@ -17,18 +22,18 @@ namespace WebShoppingDotnet.Controllers
 
             ViewBag.BoSuuTap1 = _bst1;
             ViewBag.BoSuuTap2 = _bst2;
-            ViewBag.ListBST1 = _shopthoitrang.Products
+            ViewBag.ListBST1 = await _shopthoitrang.Products
                 .Where(s=>s.Trangthai==1&& s.IdboSuuTap==_bst1.IdBst)
                 .OrderByDescending(x => x.Ngaynhap)
                 .Include(x => x.Hinhanhs)
-                .Take(10).ToList();
-            ViewBag.ListBST2 = _shopthoitrang.Products
+                .Take(10).ToListAsync();
+            ViewBag.ListBST2 = await _shopthoitrang.Products
                 .Where(s => s.Trangthai == 1 && s.IdboSuuTap == _bst2.IdBst)
                 .Include(x=>x.Hinhanhs)
                 .OrderByDescending(x => x.Ngaynhap)
-                .Take(10).ToList();
+                .Take(10).ToListAsync();
             ViewBag.FeaturedProducts = homeService.GetFeaturedProducts(8);
-            return View(_shopthoitrang.Quangcaos.ToList());
+            return View(await _shopthoitrang.Quangcaos.ToListAsync());
         }
     }
 }

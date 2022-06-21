@@ -1,9 +1,15 @@
-﻿
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = ViewBag.title;
+
+}
 <link rel="stylesheet" href="~/css/search.css">
 
 <section id="main-search" class="margin-top-mobile">
      <div class="container">
-         <<div class="contain">
+         <div class="contain">
               <div class="left-contain">
                 <div class="left-contain-price-range">
                     <p class="left-contain-item-title">Khoảng Giá</p>
@@ -61,139 +67,33 @@
              <div class="right-contain">
                  <div class="top-search-title">
                     <div class="wrapper-search-left">
-                        <h2 class="text-search">AO
+                        <h2 class="text-search">
+                            @ViewBag.title
                         </h2>
                         <span class="title-sum-product">120 sản phẩm</span>
+                        
                     </div>
 
                     <div class="right-contain-sort">
                         <label for="cars">Sắp Xếp</label>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" >Last Name</a>
+
                         <select name="cars" id="cars">
                             <option value="0">Tùy chọn</option>
-                            <option value="1">Sắp xếp từ A-Z</option>
-                            <option value="2">Sắp xếp từ Z-A</option>
-                            <option value="3">Sắp xếp theo giá tăng dần</option>
-                            <option value="4">Sắp xếp theo giá giảm dần</option>
+                            <option value="">
+                                Sắp xếp từ A-Z
+                            </option>
+                            <option value="name_desc">Sắp xếp từ Z-A</option>
+                            <option value="Price">Sắp xếp theo giá tăng dần</option>
+                            <option value="price_desc">Sắp xếp theo giá giảm dần</option>
                         </select>
                     </div>
                 </div>
                  <div class="list-tab-content">
-                     @*// ---------------------------------*@
-                     <div class="slide-collection  active">
-                        <div class="collection-slide-div">
-                            <a href="/">
-                                <img class="collection-slide-image"
-                                     src="./img/product/100_1.jpg" alt="">
-                            </a>
-                            <div class="btn-img">
-                                <div class="btn-img-search" >
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </div>
-                                <div class="btn-img-buy">
-                                    <a href="/">mua ngay</a>
-                                </div>
-                                <div class="btn-img-cart" >
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </div>
-                            </div>
-                          
-                            <div class="colection-tag">
-                                <div class="tag-saleoff">
-                                    <span>10</span>
-                                </div>
-                                <img src="./img/img-sale.png" alt="" class="img-sale">
-                            </div>
-                           
-
-                        </div>
-                        <div class="list-image-hover">
-
-                         
-                            <img class="img-item-hov" src="./img/product/100_2.jpg" alt="">
-                             <img class="img-item-hov" src="./img/product/100_3.jpg" alt="">
-                              <img class="img-item-hov" src="./img/product/100_1.jpg" alt="">
-                            
-                        </div>
-                        <div class="text-content-collection">
-                            <h3 class="slide-collection-title">
-                                SP1
-                            </h3>
-                            <div>
-                                    <span class="slide-collection-price">
-
-                                         300,000đ
-
-                                    </span>
-                               
-                                <span class="current-price">
-                                       400,000đ
-
-
-
-                                    </span>
-                               
-
-                            </div>
-                        </div>
-                    </div>
-                     @*//------------------------------------------------------*@
-                      <div class="slide-collection active">
-                        <div class="collection-slide-div">
-                            <a href="/">
-                                <img class="collection-slide-image"
-                                     src="./img/product/101_3.jpg" alt="">
-                            </a>
-                            <div class="btn-img">
-                                <div class="btn-img-search">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
-                                </div>
-                                <div class="btn-img-buy">
-                                    <a href="/">mua ngay</a>
-                                </div>
-                                <div class="btn-img-cart" >
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="colection-tag">
-                                <div class="tag-saleoff">
-                                    <span>30%</span>
-                                </div>
-                                <img src="./img/img-sale.png" alt="" class="img-sale">
-                            </div>
-                           
-
-                        </div>
-                        <div class="list-image-hover">
-
-                           
-                            <img class="img-item-hov" src="./img/product/101_3.jpg" alt="">
-                            <img class="img-item-hov" src="./img/product/101_1.jpg" alt="">
-                            <img class="img-item-hov" src="./img/product/101_2.jpg" alt="">
-                           
-                        </div>
-                        <div class="text-content-collection">
-                            <h3 class="slide-collection-title">
-                                Avatart quan 
-                            </h3>
-                            <div>
-                                     <span class="slide-collection-price">
-
-                                         3000.000đ
-
-                                    </span>
-                              
-                                <span class="current-price">
-                                      4.56332đ
-
-
-                                    </span>
-                               
-
-                            </div>
-                        </div>
-                    </div>
-                      @*//------------------------------------------------------*@
+                     @foreach (Product product in Model)
+                     {                    
+                         @await Html.PartialAsync("Components/ViewProduct/Index", product)
+                     }
 
                  </div>
                   <div class="pagination">
@@ -215,5 +115,14 @@
          </div>
      </div>
 </section>
+@section Scripts
+{
+    <script>
+        var sortSelect = document.getElementById("cars");
+        sortSelect.addEventListener("change",e => {
 
-<script src="~/script/search.js"></script>
+            window.location.replace(/+"?sortOrder="+sortSelect.value);
+
+        });
+    </script>
+}
