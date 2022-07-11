@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace WebShoppingDotnet.Models
 {
@@ -8,6 +9,7 @@ namespace WebShoppingDotnet.Models
         public Product()
         {
             Giohangs = new HashSet<Giohang>();
+            Hinhanhs = new List<Hinhanh>();
         }
 
         public string Masp { get; set; } = null!;
@@ -27,8 +29,28 @@ namespace WebShoppingDotnet.Models
         public int M { get; set; }
         public int Xl { get; set; }
 
+        public float GetSaleToday()
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+            if (today >= Ngaybatdausale && today <= Ngayketthucsale)
+            {
+                return Sale;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public string ParseCurrencyVND(float input)
+        {
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+            return double.Parse(input+"").ToString("#,###", cul.NumberFormat)+" đ";
+        }
         public virtual Bosutap IdboSuuTapNavigation { get; set; } = null!;
         public virtual Loaisp LoaispNavigation { get; set; } = null!;
         public virtual ICollection<Giohang> Giohangs { get; set; }
+        public virtual ICollection<Hinhanh> Hinhanhs { get; set; }
+
     }
 }

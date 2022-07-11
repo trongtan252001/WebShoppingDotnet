@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebShoppingDotnet.Controllers
+namespace WebShoppingDotnet.Views
 {
-    public class ProductsController : Controller
+    public class CartController : Controller
     {
         public IActionResult Index()
         {

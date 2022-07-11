@@ -5,6 +5,7 @@ namespace WebShoppingDotnet.Models
 {
     public partial class Hinhanh
     {
+        public  string Idhinhanh { get; set; } = null!;
         public string Idsp { get; set; } = null!;
         public string Url { get; set; } = null!;
 
