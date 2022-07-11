@@ -33,7 +33,7 @@ namespace WebShoppingDotnet.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySql("server=localhost;user=root;port=3306;database=shopnet", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.24-mariadb"));
+                optionsBuilder.UseMySql("server=localhost;user=root;port=3306;database=shopthoitrang", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.24-mariadb"));
             }
         }
 
