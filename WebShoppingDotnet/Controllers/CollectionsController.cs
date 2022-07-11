@@ -88,7 +88,6 @@ namespace WebShoppingDotnet.Controllers
                     products = products.Where(p => p.Xl > 0);
                     break;
                 default:
-                    sortOrder = "all";
                     break;
             }
             ViewData["size"] = size;
@@ -122,7 +121,7 @@ namespace WebShoppingDotnet.Controllers
             products = products.Include(p => p.Hinhanhs);
             var totalItems = await products.CountAsync();
             ViewData["TotalItems"] = totalItems;
-            int pageSize = 12;
+            int pageSize = 16;
             ViewData["pageNumber"] = pageNumber??1;
 
             return View(await PaginatedList<Product>.CreateAsync(products.AsNoTracking(), pageNumber ?? 1, pageSize));
