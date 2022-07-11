@@ -12,7 +12,7 @@
 
 <div class="slide-collection">
     <div class="collection-slide-div">
-        <a href="/Shopping/detail?id=<%=p.getMaSP()%>">
+        <a asp-controller="Detail" asp-action="Index" asp-route-idProduct="@p.Masp">
             <img class="collection-slide-image" src="@listImage.First().Url" alt="">
         </a>
         <div class="btn-img">

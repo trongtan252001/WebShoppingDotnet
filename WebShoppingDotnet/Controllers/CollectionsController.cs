@@ -118,11 +118,6 @@ namespace WebShoppingDotnet.Controllers
                     break;
             }
 
-            if (sortOrder==null)
-            {
-                ViewData["CurrentSort"] = "all";
-            }
-            
             ViewData["CurrentSort"] = sortOrder;
             products = products.Include(p => p.Hinhanhs);
             var totalItems = await products.CountAsync();
