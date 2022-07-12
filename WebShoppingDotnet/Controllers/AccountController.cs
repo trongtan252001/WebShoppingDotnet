@@ -16,9 +16,10 @@ namespace WebShoppingDotnet.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Update(InfoUser infoUser)
+        public void Update(InfoUser infoUser)
         {
-
+            IUserService.updateInfo(infoUser);
+            
         }
     }
 }

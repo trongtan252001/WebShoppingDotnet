@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using WebShoppingDotnet.common;
 using WebShoppingDotnet.Models;
 
 namespace WebShoppingDotnet.Service
@@ -30,6 +31,12 @@ namespace WebShoppingDotnet.Service
         public static int getCountNotify(string idUser)
         {
             return 1;
+        }
+        public static bool updateInfo(InfoUser infoUser)
+        {
+            User user= _shopthoitrang.Giohangs.Count(c => c.Iduser.Equals(infoUser.));
+            Khachhang khachHang = getKhachHang(user.Id);
+            return true;
         }
         public static string ComputeSha512Hash(string rawData)
         {
