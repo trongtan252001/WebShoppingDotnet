@@ -331,6 +331,8 @@
             num =parseInt(num);
             return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
         }
+        
+
         //modal close dom
         const modalCart = document.getElementById('modal-cart');
         function closeModal() {
@@ -358,6 +360,53 @@
                     element.classList.toggle('active');
                 });
             });
+        }
+        
+        $('.btn-modal').click(function () {
+            var sizes = document.getElementsByClassName('product-list-size');
+            //get class active
+            var arrSize = [];
+            for (var i = 0; i < sizes.length; i++) {
+                if (sizes[i].classList.contains('active') && sizes[i].classList.contains('crossed') == false) {
+                    var size = sizes[i].innerText;
+                    arrSize.push(size);
+                }
+            }
+            if(arrSize.length == 0){
+                pushNotify('warning','Vui lòng chọn size','chọn size');
+                return;
+            }
+            addCart( arrSize);
+
+        });
+        function addCart(arrSize) {
+            var id = $('.modal-id').text();
+            closeModal();
+            //convert array to json
+            var size = JSON.stringify(arrSize);
+            //ajax
+            $.ajax({
+                url: '@Url.Action("AddCart","Cart")',
+                type: 'POST',
+                data: {
+                    id: id,
+                    size: size
+                },
+                success: function (data) {
+                    //get json
+                    var json = JSON.parse(data);
+                    console.log(data);
+                    if (json.success === 'true') {
+                        $('.cart-count.color-red').text(json.quantity);
+                        pushNotify('success','thêm vào giỏi hàng thành công','Thêm Sản phẩm');
+
+                    } else {
+                        pushNotify('error','thêm vào giỏi hàng thất bại','Thêm Sản phẩm');
+
+                    }
+                }
+            });
+
         }
     </script>
 }

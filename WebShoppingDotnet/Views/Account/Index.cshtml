@@ -5,7 +5,7 @@
 @{
      Layout = "~/Views/Shared/_Layout.cshtml";
      User user=(User) ViewBag.user;
-    Khachhang khachhang=(Khachhang) ViewBag.khachHang;
+     Khachhang khachhang=(Khachhang) ViewBag.khachHang;
 }
 
     <link href="~/css/bootstrapf9e3.css?v=1.1" rel="stylesheet" type="text/css" />
@@ -221,9 +221,7 @@
 
     function clickCapNhat() {
         var check = true;
-        <%if(khachHang==null){%>
-        check = false;
-        <%}%>
+        if(@khachhang==null) check=false;
         var name = $("#name-customer").val();
         var phone = $("#phone-customer").val();
         var email = $("#email-customer").val();
@@ -241,7 +239,7 @@
 
             //ajax
             $.ajax({
-                url: "<%=request.getContextPath()%>/account",
+                url: "~/account",
                 type: "POST",
                 data: {
                     name: name,

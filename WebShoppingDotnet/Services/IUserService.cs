@@ -4,7 +4,7 @@ using WebShoppingDotnet.Models;
 
 namespace WebShoppingDotnet.Service
 {
-    public static class UserService
+    public static class IUserService
     {
         static ShopthoitrangContext _shopthoitrang = new ShopthoitrangContext();
         public static User checkLogin(string username, string pass)
@@ -13,6 +13,10 @@ namespace WebShoppingDotnet.Service
             pass = ComputeSha512Hash(pass);
             User user = _shopthoitrang.Users.FirstOrDefault(u=>u.Username.Equals(username) && u.Userpassword.Equals(pass));
             return user;
+        }
+        public static User getUser(string idUser)
+        {
+            return _shopthoitrang.Users.FirstOrDefault(u=>u.Id.Equals(idUser));
         }
         public static Khachhang getKhachHang(string idUser)
         {

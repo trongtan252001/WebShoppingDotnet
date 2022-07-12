@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using WebShoppingDotnet.Models;
 using WebShoppingDotnet.Services;
 
@@ -16,10 +17,15 @@ namespace WebShoppingDotnet.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IHomeService homeService = new HomeServices();
+            IHomeService homeService = new HomeService();
             Bosutap _bst1 = _shopthoitrang.Bosutaps.First();
             Bosutap _bst2 = _shopthoitrang.Bosutaps.Skip(1).First();
-
+            string userString = HttpContext.Session.GetString("user");
+            if(userString != null)
+            {
+                User user = JsonConvert.DeserializeObject<User>(userString);
+                ViewBag.User = user;
+            }
             ViewBag.BoSuuTap1 = _bst1;
             ViewBag.BoSuuTap2 = _bst2;
             ViewBag.ListBST1 = await _shopthoitrang.Products

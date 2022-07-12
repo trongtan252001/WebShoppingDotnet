@@ -7,7 +7,7 @@ namespace WebShoppingDotnet.Services
     {
         ICollection<Product> GetFeaturedProducts(int limit);
     }
-    public class HomeServices:IHomeService{
+    public class HomeService:IHomeService{
         public ICollection<Product> GetFeaturedProducts(int limit)
         {
             ShopthoitrangContext context = new ShopthoitrangContext();
