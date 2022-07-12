@@ -1,14 +1,12 @@
 ﻿@using WebShoppingDotnet.Service
 @{
-    User user=HttpContext.Session.GetString("user");
-    Khachhang khachhang=(Khachhang) TempData["customer"];
+    User user=ViewBag.user;
     int quantity=0;
     int countNotify=0;
     if (user != null)
     {
-        quantity = UserService.getCountCart(user.Id);
-
-        countNotify = UserService.getCountNotify(user.Id);
+        quantity = IUserService.getCountCart(user.Id);
+        countNotify = IUserService.getCountNotify(user.Id);
     }
 }
 <div class="comment">
@@ -115,7 +113,7 @@
                             <i class="fa-solid fa-caret-down "></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" id="drop-top">
-                            <a class="dropdown-item" href="~/account">Tài khoản</a>
+                            <a class="dropdown-item" href="~/account?idUser=@user.Id">Tài khoản</a>
                             <a class="dropdown-item" href="~/cart">Giỏ hàng</a>
                             <a class="dropdown-item text-danger" href="#">Đăng xuất</a>
                         </div>
