@@ -1,4 +1,17 @@
-﻿<div class="comment">
+﻿@using WebShoppingDotnet.Service
+@{
+    User user=HttpContext.Session.GetString("user");
+    Khachhang khachhang=(Khachhang) TempData["customer"];
+    int quantity=0;
+    int countNotify=0;
+    if (user != null)
+    {
+        quantity = UserService.getCountCart(user.Id);
+
+        countNotify = UserService.getCountNotify(user.Id);
+    }
+}
+<div class="comment">
     <form action="" id="comment-dialog" method="post" enctype="multipart/form-data">
         <div class="comment-header">
             <h3 class="comment-header-title">Hộp Thoại Góp Ý</h3>
@@ -59,24 +72,57 @@
 
         <div class="header-top-list">
           <!--Icon chuông-->
-          <div>
-            <a >
-              <i class="fa-solid fa-cart-shopping icon-header"></i>
-              Giỏ hàng(<span class="cart-count color-red">0</span>)
-            </a>
-          </div>
+          @if(user != null){
+                        <div class="nav-item nav-notify">
+                                    @if (countNotify > 0)
+                                    {
+                                         <span>@countNotify</span>
+                                    }
+                                    <i class="fa-regular fa-bell icon-header"></i>
+                        <div class="nofification" id="nofification-1">
+                            <div class="notify-header">
+                                <div class="notify-title">
+                                    <h4>Thông Báo</h4>
+                                </div>
 
-          <div class="dropdown nav-item">
-            <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
-              <img class="img-xs rounded-circle" src="~/img/avatar.png" alt="User" />
-              <i class="fa-solid fa-caret-down"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-end" id="drop-top">
-              <a class="dropdown-item" href="./account">Tài khoản</a>
-              <a class="dropdown-item" href="./cart">Giỏ hàng</a>
-              <a class="dropdown-item text-danger" href="#">Đăng xuất</a>
-            </div>
-          </div>
+                            </div>
+                            <div class="notifys">
+                                <!--Thông báo 1-->
+
+                            </div>
+                            <a href="" class="link_all_noti">Xem tất cả</a>
+                        </div>
+                    </div>
+                    }
+                    <div>
+                        <a href="~/cart">
+                            <i class="fa-solid fa-cart-shopping icon-header"></i>
+                            Giỏ hàng(<span class="cart-count color-red">0</span>)
+                        </a>
+                    </div>
+                    
+                       @if(user == null) {
+                   
+                    <div class="btn-signup">
+                        <a href="~/login" id="login-a" class="color-red">Đăng nhập </a>
+                        <a href="~/signup">/ Đăng ký</a>
+                    </div>
+                       } else {
+                    <div class="dropdown nav-item">
+                        <a class="dropdown-toggle" data-bs-toggle="dropdown" href="#">
+                            <img class="img-xs rounded-circle"
+                                 src="../img/avatar.png" alt="User">
+                            <i class="fa-solid fa-caret-down "></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" id="drop-top">
+                            <a class="dropdown-item" href="~/account">Tài khoản</a>
+                            <a class="dropdown-item" href="~/cart">Giỏ hàng</a>
+                            <a class="dropdown-item text-danger" href="#">Đăng xuất</a>
+                        </div>
+                    </div>
+                   }
+
+          
         </div>
       </div>
       <nav class="nav-bar">
@@ -105,6 +151,26 @@
             </ul>
         </nav>
         <div class="header-top-list nav-notify">
+             <%if(user != null){%>
+                    <div class="nav-item nav-notify">
+                        <%if(countNotify > 0){%>
+                        <span><%=countNotify%></span>
+                        <%}%>
+                        <i class="fa-regular fa-bell icon-header"></i>
+                        <div class="nofification" id="nofification-2">
+                            <div class="notify-header">
+                                <div class="notify-title">
+                                    <h4>Thông Báo</h4>
+                                </div>
+
+                            </div>
+                            <div class="notifys">
+
+                            </div>
+                            <a href="" class="link_all_noti">Xem tất cả</a>
+                        </div>
+                    </div>
+                    }
           <div id="search-scroll">
             <i class="fa-solid fa-magnifying-glass search-icon" id="toogle-search"></i>
             <div class="header-search" id="input-group-scroll">
@@ -199,4 +265,223 @@
 <a href="#" class="scrollup show-scroll" id="scroll-up">
     <i class="fa-solid fa-arrow-up"></i>
 </a>
+<script>
+    $(".item-sub-nav").hover(function () {
+        $(this).closest(".nav-item").find(".sub-nav-img").removeClass("active");
+        $(this).closest(".nav-item").find(".text-hover").removeClass("active");
+        //get attr
+        var attr = $(this).attr("stt");
+        //add class active
+        $(this).closest(".nav-item").find(".item" + attr).addClass("active");
+    }, function () {
+        $(this).find(".text-hover").addClass("active");
+
+    });
+    $('.cart-count.color-red').text(<%=quantity%>);
+
+    //click dropdown-item text-danger
+    $(".dropdown-item.text-danger").click(function () {
+        //set attr
+        //ajax sign out
+        $.ajax({
+            url: "<%=request.getContextPath()%>/signout",
+            type: "POST",
+            data: {
+                "signout": "signout"
+            },
+            success: function (data) {
+                //set attr
+                $(".dropdown-item.text-danger").attr("href", "<%=request.getContextPath()%>/signin");
+                //set text
+
+            }
+        });
+    });
+// bật tắt thông báo
+    let notifycations=$('.nofification');
+    let notifyButton=$('.fa-regular.fa-bell');
+    $('#header-first .fa-regular.fa-bell').click(function (){
+        sendAjaxnotify(-1);
+        $('#nofification-1').toggleClass('flex');
+    });
+    $('#header-scroll .fa-regular.fa-bell').click(function (){
+        sendAjaxnotify(-1);
+        $('#nofification-2').toggleClass('flex');
+    });
+    $(document).click(function(e){
+        if(!notifyButton.is(e.target)&&notifycations.has(e.target).length===0&& !notifycations.is(e.target)){
+            notifycations.removeClass('flex')
+        }
+    })
+
+    function sendAjaxnotify(type) {
+        $('.notifys').html('');
+        $.ajax({
+            url: "<%=request.getContextPath()%>/header-user",
+            type: "POST",
+            data: {
+                type: type
+            },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    $('.notifys').append(
+                        '<a href="<%=request.getContextPath()%>'+item.link+'">' +
+                        ' <div class="notify"> '+
+                        ' <img src="<%=request.getContextPath()%>/img/discount.png" alt="" class="notify-icon"> '+
+                        ' <div class="notify-contents"> '+
+                        ' <p class="notify-subject">'+item.title+'</p> '+
+                        ' <p class="notify-content">'+item.mota+'</p> '+
+                        ' <p class="notify-time">'+item.ngayCapNhat+'</p> '+
+                        ' </div> '+
+                        ' </div> '+
+                        ' </a>'
+
+                    );
+                }
+            }
+        });
+    }
+
+    // search
+    const search1 = document.getElementById('searchtext');
+    const wrapperSearch1 = document.getElementById('wrapper-search1');
+    search1.addEventListener('keyup', function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            redirectSearch(this);
+        }
+        if(search1.value.length === 0){
+            wrapperSearch1.classList.remove('show');
+        }else{
+            wrapperSearch2.classList.remove('show');
+            wrapperSearch1.classList.add('show');
+            searchAjax(search1.value,wrapperSearch1);
+
+        }
+        event.preventDefault();
+
+    });
+
+    const search2 = document.getElementById('searchtext2');
+    const wrapperSearch2 = document.getElementById('wrapper-search2');
+    search2.addEventListener('keyup', function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            redirectSearch(this);
+        }
+        if (search2.value.length === 0) {
+            wrapperSearch2.classList.remove('show');
+        } else {
+            wrapperSearch1.classList.remove('show');
+            wrapperSearch2.classList.add('show');
+            searchAjax(search2.value,wrapperSearch2);
+        }
+    })
+
+    function pushNotify(status, message, title) {
+        new Notify({
+            status: status,
+            title: title,
+            text: message,
+            effect: 'fade',
+            speed: 300,
+            customClass: '',
+            customIcon: '',
+            showIcon: true,
+            showCloseButton: true,
+            autoclose: true,
+            autotimeout: 2000,
+            gap: 20,
+            distance: 20,
+            type: 1,
+            position: 'right top',
+            customWrapper: '',
+        })
+    }
+
+
+    document.getElementById('toogle-search').addEventListener('click', function (event) {
+        document.getElementById('input-group-scroll').classList.toggle('show');
+    });
+    // outclick div inputGroupHeader
+    document.addEventListener('click', function (event) {
+        if (event.target.closest('#input-group-header') === null) {
+            wrapperSearch1.classList.remove('show');
+        }
+        if (event.target.closest('#input-group-scroll') === null) {
+            wrapperSearch2.classList.remove('show');
+        }
+    });
+
+
+    var req = null;
+
+    function searchAjax(value,element) {
+        if (req != null) req.abort();
+        req = $.ajax({
+            type: "POST",
+            url: "<%=request.getContextPath()%>/searchAjax",
+            data: {'txtSearch' : value, 'type' : 'SEARCHICON'},
+            dataType: "text",
+            success: function(msg){
+                let data = JSON.parse(msg);
+                let countSearch = data.count;
+                let html = '';
+                if (countSearch>0){
+                    html += '<div class="search_prod_title">';
+                    html += '<span class="left">Sản phẩm</span>';
+                    html += '<a id="view_article" href="#" class="left">Xem thêm('+countSearch+')</a>';
+                    html += '</div>';
+                    html += '<ul class="list-search">';
+                    let list =data.data;
+                    for (let i = 0; i < list.length; i++) {
+                        let gia = parseInt(list[i].gia);
+                        let sale = parseFloat(list[i].sell);
+                        html += '<li class="search-items">' +
+
+                            '<div class="search-items-left">' +
+                            '<a href="<%=request.getContextPath()%>/detail?id='+list[i].maSP+'" class="item-search-img">' +
+                            '<img src="<%=request.getContextPath()%>/' + list[i].listUrlImg[0] + '" alt="">' +
+                            '</a>' +
+                            '</div>' +
+
+                            '<div class="search-item-right">' +
+                            '<a href="<%=request.getContextPath()%>/detail?id='+list[i].maSP+'">' +
+                            '<h3 class="item-search-title text-one-line">' + list[i].tenSP + '</h3>' +
+
+                            '<div class="search-item-wrap-price">';
+                        sale = Math.ceil(gia*(1-sale));
+                        html +='<span class="sale-price">' + formatPriceHome(sale) + 'đ</span>' ;
+                        html += '</div>' +
+                            '</a>'+
+                            '</div>' +
+                            '</li>';
+                    }
+                    html += '</ul>';
+                }else {
+                    html= "<h4 style='text-align: center;'>Không có sản phẩm phù hợp"+value+"</h4>";
+                }
+                element.innerHTML =html;
+            }
+        });
+    }
+    //function format price vietnamese
+    function formatPriceHome(price){
+        let priceFormat = price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+        return priceFormat;
+    }
+    function redirectSearch(ele){
+        let par = ele.closest('.header-search');
+        // select input type text
+        let input = par.querySelector('input[type="text"]');
+        let keyword = input.value;
+        if(keyword.length == 0){
+            pushNotify('warning','Vui lòng nhập từ khóa','Tìm kiếm');
+        }else {
+            window.location.href = '<%=request.getContextPath()%>/searchAjax?txt='+keyword;
+        }
+
+    };
+</script>
 @*---*@

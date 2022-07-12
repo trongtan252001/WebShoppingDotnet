@@ -17,10 +17,13 @@ namespace WebShoppingDotnet.Controllers
             
             if (user != null)
             {
-               ViewBag.user = user;
-               return RedirectToAction("Index", "Home");
+                Khachhang khachhang=UserService.getKhachHang(user.Id);
+                HttpContext.Session.SetString("user", user.Id);
+                HttpContext.Current
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.userName = userName;
+            
             return View("Index");
         }
     }

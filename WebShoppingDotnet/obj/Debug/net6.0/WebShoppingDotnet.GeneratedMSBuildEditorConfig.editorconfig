@@ -1,0 +1,80 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = WebShoppingDotnet
+build_property.RootNamespace = WebShoppingDotnet
+build_property.ProjectDir = C:\Users\NGUYEN VAN HAU\source\repos\WebShopping\WebShoppingDotnet\WebShoppingDotnet\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\NGUYEN VAN HAU\source\repos\WebShopping\WebShoppingDotnet\WebShoppingDotnet
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Account/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Cart/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Collections/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29sbGVjdGlvbnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Detail/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV0YWlsXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/Components/ViewMenu/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcVmlld01lbnVcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/Components/ViewProduct/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcVmlld1Byb2R1Y3RcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/Components/ViewProduct/ProductSlide.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcVmlld1Byb2R1Y3RcUHJvZHVjdFNsaWRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_Footer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_Header.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9IZWFkZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/NGUYEN VAN HAU/source/repos/WebShopping/WebShoppingDotnet/WebShoppingDotnet/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-s07fzstihz
