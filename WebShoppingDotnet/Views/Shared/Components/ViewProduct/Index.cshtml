@@ -1,14 +1,19 @@
-﻿@*
+﻿@using System.Globalization
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
 @{
     Product p = Model;
+    ICollection<Hinhanh> listImage = p.Hinhanhs;
+    float saleToday = p.GetSaleToday();
 }
+
+
 <div class="slide-collection">
     <div class="collection-slide-div">
-        <a href="/Shopping/detail?id=<%=p.getMaSP()%>">
-
-            <img class="collection-slide-image" src="" alt="">
+        <a asp-controller="Detail" asp-action="Index" asp-route-idProduct="@p.Masp">
+            <img class="collection-slide-image" src="@listImage.First().Url" alt="">
         </a>
         <div class="btn-img">
             <div class="btn-img-search">
@@ -17,25 +22,26 @@
             <div class="btn-img-buy">
                 <a href="/Shopping/detail?id=<%=p.getMaSP()%>">mua ngay</a>
             </div>
-            <div class="btn-img-cart" idSP="@p.Masp">
-                onclick="openModal(this)"
-                data-product-id="@p.Masp"
-                data-product-name="@p.Tensp"
-                data-product-price="@p.Dongia"
-                data-product-img="<%=p.getListUrlImg().get(0)%>"
-                data-product-sell="@p.Sale"
-                data-product-size-s="@p.S"
-                data-product-size-l="@p.L"
-                data-product-size-m="@p.M"
-                data-product-size-xl="@p.Xl"
-                data-product-color="@p.Mau">
+            <div class="btn-img-cart" idSP="@p.Masp"
+                 onclick="openModal(this)"
+                 data-product-id="@p.Masp"
+                 data-product-name="@p.Tensp"
+                 data-product-price="@p.Dongia"
+                 data-product-img="@listImage.First().Url"
+                 data-product-sell="@saleToday"
+                 data-product-size-s="@p.S"
+                 data-product-size-l="@p.L"
+                 data-product-size-m="@p.M"
+                 data-product-size-xl="@p.Xl"
+                 data-product-color="@p.Mau">
                 <i class="fa-solid fa-cart-shopping"></i>
+
             </div>
         </div>
         @{
-            if (p.Sale>0)
+            if (saleToday > 0)
             {
-                String giaGiam = Math.Round(p.Sale * 100) + "%";
+                String giaGiam = Math.Round(saleToday * 100) + "%";
                 <div class="colection-tag">
                     <div class="tag-saleoff">
                         <span>
@@ -48,6 +54,31 @@
         }
     </div>
     <div class="list-image-hover">
-        
+        @{
+            foreach (Hinhanh img in listImage)
+            {
+                <img class="img-item-hov" src="@img.Url" alt="">
+
+            }
+
+        }
+    </div>
+    <div class="text-content-collection">
+        <h3 class="slide-collection-title">
+            @p.Tensp
+        </h3>
+        <span class="slide-collection-price">
+           @p.ParseCurrencyVND(p.Dongia- saleToday*p.Dongia)
+        </span>
+        @{
+            if (saleToday > 0)
+            {
+                <span class="current-price">
+                    @p.ParseCurrencyVND(p.Dongia)
+                </span>
+            }
+
+                    
+        }
     </div>
 </div>

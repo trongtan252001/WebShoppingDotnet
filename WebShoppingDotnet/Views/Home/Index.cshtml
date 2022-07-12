@@ -1,6 +1,6 @@
 ﻿@model List<Quangcao>;
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Trang chu";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,20 +10,19 @@
     <link rel="stylesheet" href="~/assets/modal/modal.css">
 }
 
-@section Scripts
-{
-    <script src="~/script/home.js"></script>
-
-}
 
 <section id="banner">
     <div id="main-slideshow">
+
         <div class="slideshow-content" id="ml-slide">
 
             @foreach (var item in Model)
             {
                 <div class="mySlides">
-                    <img src="@item.UrlImg">
+                    <a href="~/@item.Url">
+                        <img src="@item.UrlImg">
+
+                    </a>
                 </div>
             }
             <!-- slide1 -->
@@ -69,7 +68,10 @@
 
 
                         <div class="slideshow-collection">
-
+                            @foreach (Product product in ViewBag.ListBST1)
+                            {                    
+                                @await Html.PartialAsync("Components/ViewProduct/Index", product)
+                            }
                         </div>
 
                     </div>
@@ -95,44 +97,267 @@
 
             <div class="collection-main">
                 <h2 class="section-title margin-right-5">
-                    @boSuaTap2.Name
+                    @boSuaTap2.Name>
                 </h2>
                 <p class="subtile-section">
-                    @boSuaTap2.Tieude
+                    @boSuaTap2.Tieude>
                 </p>
 
                 <div class="collection-slide">
                     <div class="collection-content">
-                        @foreach (Product product in ViewBag.ListBST1)
-                        {                    
-                            <partial name="Components/ViewProduct/Index" model="product"/>
-                        }
-                    </div>
 
+                        <div class="slideshow-collection">
+                            @foreach (Product product in ViewBag.ListBST2)
+                            {
+                                @await Html.PartialAsync("Components/ViewProduct/Index", product)
+                            }
+                        </div>
+
+                    </div>
+                    <div class="slick-collection">
+                        <div class="prev-btn slick-style-prev">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </div>
+                        <div class="next-btn slick-style-next">
+                            <i class="fa-solid fa-chevron-right" ></i>
+                        </div>
+                    </div>
                 </div>
-                <div class="slick-collection">
-                    <div class="prev-btn slick-style-prev">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </div>
-                    <div class="next-btn slick-style-next">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </div>
+
+                <!-- btn -->
+                <div>
+                    <a href="/Shopping/search?id=<%=boSuaTap2.getId()%>&res=bst&name=<%=boSuaTap2.getName()%>" class="btn">
+                        xem thêm
+                    </a>
                 </div>
             </div>
+            <div class="collection-banner" style="background-image: url(@boSuaTap2.Img)">
+                <a href=""></a>
+            </div>
 
-            <!-- btn -->
-            <div>
-                <a href="" class="btn">
-                    xem thêm
-                </a>
+        </div>
+    </div>
+</section>
+<section id="section-slider">
+    <div class="container">
+        <h2 class="section-title section-title-big">
+            SẢN PHẨM NỔI BẬT
+        </h2>
+        <div class="section-content">
+            <div class="section-slideshow" id="section-slideshow">
+                @foreach (Product product in ViewBag.FeaturedProducts)
+                {
+                    @await Html.PartialAsync("Components/ViewProduct/ProductSlide", product)
+                }
+            </div>
+            <div class="slick-section">
+                <div class="slick-style-prev" id="slick-prev">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </div>
+                <div class="slick-style-next" id="slick-next">
+                    <i class="fa-solid fa-chevron-right" ></i>
+                </div>
             </div>
         </div>
-        <div class="collection-banner" style="background-image: url(@boSuaTap2.Img)">
-            <a href=""></a>
+    </div>
+</section>
+<section id="home-shop-map">
+    <class class="fixed-bg">
+        <a href="#" class="btn-more-white1">Xem địa chỉ hệ thống cửa hàng</a>
+    </class>
+</section>
+<section id="tab-home">
+    <div class="container">
+        <div class="tab">
+            <h2 class="tablinks active">Sản phẩm mới</h2>
+            <h2 class="tablinks">BEST SELLER</h2>
+            <h2 class="tablinks"> KHUYẾN MÃI</h2>
+        </div>
+        <div id="list-tab1">
+            <div class="list-tab-content list-tab-content1">
+
+                
+
+            </div>
+            <div class="div-btn-tab">
+                <a class="btn btn-tab" so="1" size ="<%=productList4.size()%>">xem thêm</a>
+            </div>
+
         </div>
 
+        <div id="list-tab2">
+            <div class="list-tab-content list-tab-content3">
+
+                
+
+            </div>
+            <div class="div-btn-tab">
+                <a class="btn btn-tab" so="3" size ="<%=productList7.size()%>">xem thêm</a>
+            </div>
+
+        </div>
+        <div id="list-tab3">
+            <div class="list-tab-content list-tab-content2">
 
 
+            </div>
+            <div class="div-btn-tab">
+                <a class="btn btn-tab" so="2" size ="<%=productList6.size()%>">xem thêm</a>
+            </div>
+
+        </div>
 
     </div>
 </section>
+<div class="modal-custom" id="modal-cart">
+    <div class="modal-dialog-custom">
+        <div class="modal-content-custom">
+            <div class="modal-slide">
+                <img class="modal-img" src="" alt="">
+
+            </div>
+            <div class="modal-body-custom">
+                <h4 class="modal-title">
+                   
+                </h4>
+                <h4 class="modal-id">
+                    
+                </h4>
+                <div class="modal-price">
+                    <span class="slide-collection-price">
+                        
+                    </span>
+                    <span class="current-price">
+                        
+                    </span>
+                </div>
+                <p class="color-product modal-text"><span class="modal-text-bold">Màu sắc:</span><span class="product-color">trắng</span></p>
+                <div class="product-size modal-text">
+                    <p class="modal-text-bold">Kích cỡ:</p>
+                    <ul class="product-list-sizes">
+                        <li class="product-list-size">S</li>
+                        <li class="product-list-size">M</li>
+                        <li class="product-list-size">L</li>
+                        <li class="product-list-size">XL</li>
+                    </ul>
+                </div>
+                <a class="btn-modal">THÊM VÀO GIỎ HÀNG</a>
+                <a href="#" class="link-continue">Xem chi tiết đầy đủ</a>
+            </div>
+            <div class="icon-close-modal" onclick="closeModal()">
+                <i class="fa-solid fa-xmark icon-modal"></i>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/script/home.js"></script>
+    <script>
+        function pushNotify(status, message, title) {
+            new Notify({
+                status: status,
+                title: title,
+                text: message,
+                effect: 'fade',
+                speed: 300,
+                customClass: '',
+                customIcon: '',
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 2000,
+                gap: 20,
+                distance: 20,
+                type: 1,
+                position: 'right top',
+                customWrapper: '',
+            })
+        }
+        function openModal(element) {
+
+            $('.product-list-sizes .product-list-size').removeClass('crossed');
+            $('.product-list-sizes .product-list-size').removeClass('active');
+
+
+            var id =element.getAttribute('data-product-id');
+            var name =element.getAttribute('data-product-name');
+            var price =element.getAttribute('data-product-price');
+            var img =element.getAttribute('data-product-img');
+            var sell =element.getAttribute('data-product-sell');
+            var sizeS =element.getAttribute('data-product-size-s');
+            var sizeL =element.getAttribute('data-product-size-l');
+            var sizeM =element.getAttribute('data-product-size-m');
+            var sizeXL =element.getAttribute('data-product-size-xl');
+            var color =element.getAttribute('data-product-color');
+            // alert(sizeS+" "+sizeM+" "+sizeL+" "+sizeXL);
+
+            var listbtnSize = document.getElementsByClassName('product-list-size');
+            if(parseInt(sizeS) <= 0) {
+                listbtnSize[0].classList.add('crossed');
+
+
+            }
+            if(parseInt(sizeM) <= 0) {
+                listbtnSize[1].classList.add('crossed');
+            }
+            if(parseInt(sizeL) <= 0) {
+                listbtnSize[2].classList.add('crossed');
+            }
+            if(parseInt(sizeXL) <= 0) {
+                listbtnSize[3].classList.add('crossed');
+            }
+
+
+
+
+            $('.modal-img').attr('src',img);
+            $('.modal-title').text(name);
+            $('.modal-id').text(id);
+            if(sell > 0){
+                $('.modal-custom .slide-collection-price').text(formatNumber(price-sell*price)+'đ');
+                $('.modal-custom .current-price').text(formatNumber(price)+'đ');
+            }else{
+                $('.modal-custom .slide-collection-price').text(formatNumber(price)+'đ');
+                $('.modal-custom .current-price').text('');
+            }
+            $('.product-color').text(color);
+            modalCart.style.display = "flex";
+        }
+        function formatNumber(num) {
+            //convert double to int
+            num =parseInt(num);
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+        }
+        //modal close dom
+        const modalCart = document.getElementById('modal-cart');
+        function closeModal() {
+            modalCart.style.display = "none";
+        }
+        window.onload = function () {
+            const modalCart = document.getElementById('modal-cart');
+            function closeModal() {
+                modalCart.style.display = "none";
+            }
+            function openModal(position) {
+                modalCart.style.display = "flex";
+
+            }
+            //modal close over modal
+            //modal close on click outside
+            modalCart.addEventListener('click', function (event) {
+                if (event.target === modalCart) {
+                    modalCart.style.display = "none";
+                }
+            });
+            //windowns load dom
+            document.querySelectorAll('.product-list-size').forEach(element => {
+                element.addEventListener('click', function () {
+                    element.classList.toggle('active');
+                });
+            });
+        }
+    </script>
+}

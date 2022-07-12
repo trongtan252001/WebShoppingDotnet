@@ -4,7 +4,7 @@
 @foreach (var item in Model)
 {
     <li class="nav-item">
-        <a class="text-hover text-hover-underline-goes-right">
+        <a class="text-hover text-hover-underline-goes-right" asp-controller="Collections" asp-action=""  asp-route-id="@item.Idloai">
            @item.NameLoai
         </a>
     </li>
