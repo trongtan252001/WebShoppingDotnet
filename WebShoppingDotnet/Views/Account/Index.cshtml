@@ -1,20 +1,20 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
 @{
+     Layout = "~/Views/Shared/_Layout.cshtml";
+     User user=(User) ViewBag.user;
+    Khachhang khachhang=(Khachhang) ViewBag.khachHang;
 }
 
-    <link href="<%=request.getContextPath()%>/css/bootstrapf9e3.css?v=1.1" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/fonts/material-icon/css/round.css" />
+    <link href="~/css/bootstrapf9e3.css?v=1.1" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/fonts/material-icon/css/round.css" />
     <!-- custom style -->
-    <link href="<%=request.getContextPath()%>/css/uif9e3.css?v=1.1" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/acount.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/notify/simple-notify.min.css">
+    <link href="~/css/uif9e3.css?v=1.1" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/acount.css">
+<link rel="stylesheet" href="~/assets/notify/simple-notify.min.css">
 
- <%
-     KhachHang khachHang = (KhachHang) request.getAttribute("khachHang");
-     User user = (User) request.getAttribute("user");
- %>
 
     <b class="screen-overlay"></b>
     <main class="main-wrap container">
@@ -37,15 +37,15 @@
                                             <div class="row gx-3">
                                                 <div class="col-lg-12  mb-3">
                                                     <label class="form-label">Tên đăng nhập</label>
-                                                    <input class="form-control" type="text" placeholder="Nhập tại đây" value="<%=user.getUsername()%>" readonly>
+                                                    <input class="form-control" type="text" placeholder="Nhập tại đây" value="@user.Username" readonly>
                                                 </div> <!-- col .// -->
                                                 <div class="col-lg-12  mb-3">
                                                     <label class="form-label">Họ và tên</label>
-                                                    <input id="name-customer" class="form-control" type="text" placeholder="Nhập tại đây">
+                                                    <input id="name-customer" class="form-control" type="text" placeholder="Nhập tại đây"> 
                                                 </div> <!-- col .// -->
                                                 <div class="col-lg-6  mb-3">
                                                     <label class="form-label">Email</label>
-                                                    <input id="email-customer" class="form-control" type="email" placeholder="example@mail.com" value="<%=user.getEmail()%>" readonly>
+                                                    <input id="email-customer" class="form-control" type="email" placeholder="example@mail.com" value="@user.Usermail" readonly>
                                                 </div> <!-- col .// -->
                                                 <div class="col-lg-6  mb-3">
                                                     <label class="form-label">Điện thoại</label>
@@ -77,24 +77,11 @@
 
                                                 </div>
 
-
-<%--                                                <div class="col-lg-6  mb-3">--%>
-<%--                                                    <label class="form-label">Ngày sinh</label>--%>
-<%--                                                    <input id="birthday-customer"  class="form-control" type="date">--%>
-<%--                                                </div> <!-- col .// -->--%>
-<%--                                                <div class="col-lg-6 mb-3">--%>
-<%--                                                    <label class="form-label">Giới tính</label>--%>
-<%--                                                    <select id="sex-customer" class="form-select mb-3 form-control">--%>
-<%--                                                        <option value="1">Nam</option>--%>
-<%--                                                        <option value="2">Nữ</option>--%>
-<%--                                                        <option value="3">Khác</option>--%>
-<%--                                                    </select>--%>
-<%--                                                </div>--%>
                                             </div> <!-- row.// -->
                                         </div> <!-- col.// -->
                                         <aside class="col-lg-4">
                                             <figure class="text-lg-center d-flex flex-column align-items-center justify-content-center">
-                                                <img class="img-lg mb-3 img-avatar" src="<%=request.getContextPath()%>/img/avatar.png"
+                                                <img class="img-lg mb-3 img-avatar" src="../img/avatar.png"
                                                     alt="User Photo">
                                                 <figcaption>
                                                     <a class="btn btn-outline-primary" href="#">
@@ -154,11 +141,11 @@
             body_el.className += 'dark';
         }
     </script>
-<script src="<%=request.getContextPath()%>/script/jquery-3.5.0.min.js"></script>
-<script src="<%=request.getContextPath()%>/script/bootstrap.bundle.min.js"></script>
+<script src="~/script/jquery-3.5.0.min.js"></script>
+<script src="~/script/bootstrap.bundle.min.js"></script>
 
 <!-- Custom JS -->
-<script src="<%=request.getContextPath()%>/script/scriptc619.js?v=1.0"></script>
+<script src="~/script/scriptc619.js?v=1.0"></script>
    <script>
     if (localStorage.getItem("darkmode")) {
         var body_el = document.body;
@@ -172,7 +159,7 @@
     var arrayQuanHuyen;
     var valueQuanHUyen = "Quận / Huyện";
     var arrayPhuongXa;
-    $.getJSON("<%=request.getContextPath()%>/data/local.json", function (json) {
+    $.getJSON("~/data/local.json", function (json) {
         // console.log(json); // this will show the info it in firebug console
         array = json;
         // console.log(array[0]);
@@ -182,12 +169,12 @@
                 '<option value="' + element.name + '">' + element.name + "</option>"
             );
         });
-        <%if(khachHang!=null){%>
-        $("#tinh-thanh-pho").val("<%=khachHang.getTinhTP()%>").change();
+        if(@khachhang!=null){
+        $("#tinh-thanh-pho").val("@khachhang.TinhTp").change();
         clickTinhThanhPho(document.getElementById("tinh-thanh-pho"));
-        $("#quan-huyen").val("<%=khachHang.getQuanHuyen()%>").change();
-        $("#phuong-xa").val("<%=khachHang.getPhuongXa()%>").change();
-        <%}%>
+        $("#quan-huyen").val("@khachhang.QuanHuyen").change();
+        $("#phuong-xa").val("@khachhang.PhuongXa").change();
+        }
     });
     function clickTinhThanhPho(sel) {
         valueTinhThanhPho = sel.options[sel.selectedIndex].text;
@@ -225,12 +212,12 @@
     }
     //get element class name billing_address_2 envent click
 
-    <%if(khachHang!=null){%>
-    $("#name-customer").val("<%=khachHang.getTenKH()%>");
-    $("#phone-customer").val("<%=khachHang.getSdt()%>");
-    $("#email-customer").val("<%=khachHang.getEmail()%>");
-    $("#address-customer").val("<%=khachHang.getDiaChi()%>");
-    <%}%>
+    if(khachHang!=null){
+    $("#name-customer").val("@khachhang.HoTen");
+    $("#phone-customer").val("@khachhang.DienThoai");
+    $("#email-customer").val("@user.Usermail");
+    $("#address-customer").val("@khachhang.DiaChi");
+    }
 
     function clickCapNhat() {
         var check = true;
@@ -280,7 +267,7 @@
 
     }
     function checkEmailp(email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     }
     //check format phone
