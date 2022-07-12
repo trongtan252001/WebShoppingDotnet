@@ -16,7 +16,7 @@ namespace WebShoppingDotnet.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IHomeService homeService = new HomeServices();
+            IHomeService homeService = new HomeService();
             Bosutap _bst1 = _shopthoitrang.Bosutaps.First();
             Bosutap _bst2 = _shopthoitrang.Bosutaps.Skip(1).First();
 
