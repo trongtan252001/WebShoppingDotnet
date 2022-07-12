@@ -10,7 +10,10 @@ namespace WebShoppingDotnet.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            ShopthoitrangContext _shopthoitrang = new ShopthoitrangContext();
+            List <Giohang> _giohangList = new List<Giohang>();
+            Product p = new Giohang().IdspNavigation;
+            return View(p);
         }
         [HttpPost]
         public JsonResult AddCart(String? id,String? size)
