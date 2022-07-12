@@ -34,8 +34,9 @@ namespace WebShoppingDotnet.Service
         }
         public static bool updateInfo(InfoUser infoUser)
         {
-            User user= _shopthoitrang.Giohangs.Count(c => c.Iduser.Equals(infoUser.));
+            User user= _shopthoitrang.Users.FirstOrDefault(u=>u.Id.Equals(infoUser.id));
             Khachhang khachHang = getKhachHang(user.Id);
+            
             return true;
         }
         public static string ComputeSha512Hash(string rawData)
