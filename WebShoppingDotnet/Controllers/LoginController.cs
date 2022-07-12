@@ -19,7 +19,7 @@ namespace WebShoppingDotnet.Controllers
             {
                 Khachhang khachhang=UserService.getKhachHang(user.Id);
                 HttpContext.Session.SetString("user", user.Id);
-                HttpContext.Current
+               
                 return RedirectToAction("Index", "Home");
             }
             ViewBag.userName = userName;
