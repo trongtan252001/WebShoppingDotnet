@@ -1,6 +1,10 @@
-﻿@using WebShoppingDotnet.Service
+﻿@using Newtonsoft.Json
+@using WebShoppingDotnet.Service
 @{
-    User user=ViewBag.user;
+    User user=null;
+    string jsonUser=ViewBag.user;
+    if(jsonUser!=null)
+    user = JsonConvert.DeserializeObject<User>(jsonUser);
     int quantity=0;
     int countNotify=0;
     if (user != null)
@@ -29,7 +33,7 @@
         </div>
         <div class="comment-footer">
             <h6 class="comment-footer-title">
-                Nếu bạn có ý tưởng để cải thiện sản phẩm thì hãy cho chúng tôi biết nhé. Còn nếu cần trợ giúp để khắc phục vấn đề cụ thể, hãy truy cập <a href="<%=request.getContextPath()%>/term?index=1" style="color: rgb(0, 68, 255);">Trung tâm trợ giúp</a>.
+                Nếu bạn có ý tưởng để cải thiện sản phẩm thì hãy cho chúng tôi biết nhé. Còn nếu cần trợ giúp để khắc phục vấn đề cụ thể, hãy truy cập <a href="~/term?index=1" style="color: rgb(0, 68, 255);">Trung tâm trợ giúp</a>.
             </h6>
             <div class="comment-footer-button">
                 <div class="btn btn-light btn-cancel" style="margin-right: 10px;">Hủy</div>
@@ -149,11 +153,11 @@
             </ul>
         </nav>
         <div class="header-top-list nav-notify">
-             <%if(user != null){%>
+             @if(user != null){
                     <div class="nav-item nav-notify">
-                        <%if(countNotify > 0){%>
-                        <span><%=countNotify%></span>
-                        <%}%>
+                        @if(countNotify > 0){
+                        <span>@countNotify</span>
+                        }
                         <i class="fa-regular fa-bell icon-header"></i>
                         <div class="nofification" id="nofification-2">
                             <div class="notify-header">
@@ -275,21 +279,21 @@
         $(this).find(".text-hover").addClass("active");
 
     });
-    $('.cart-count.color-red').text(<%=quantity%>);
+    $('.cart-count.color-red').text(@quantity);
 
     //click dropdown-item text-danger
     $(".dropdown-item.text-danger").click(function () {
         //set attr
         //ajax sign out
         $.ajax({
-            url: "<%=request.getContextPath()%>/signout",
+            url: "~/signout",
             type: "POST",
             data: {
                 "signout": "signout"
             },
             success: function (data) {
                 //set attr
-                $(".dropdown-item.text-danger").attr("href", "<%=request.getContextPath()%>/signin");
+                $(".dropdown-item.text-danger").attr("href", "~/login");
                 //set text
 
             }
@@ -315,7 +319,7 @@
     function sendAjaxnotify(type) {
         $('.notifys').html('');
         $.ajax({
-            url: "<%=request.getContextPath()%>/header-user",
+            url: "~/header-user",
             type: "POST",
             data: {
                 type: type
@@ -324,9 +328,9 @@
                 for (var i = 0; i < data.length; i++) {
                     var item = data[i];
                     $('.notifys').append(
-                        '<a href="<%=request.getContextPath()%>'+item.link+'">' +
+                        '<a href="~'+item.link+'">' +
                         ' <div class="notify"> '+
-                        ' <img src="<%=request.getContextPath()%>/img/discount.png" alt="" class="notify-icon"> '+
+                        ' <img src="~/img/discount.png" alt="" class="notify-icon"> '+
                         ' <div class="notify-contents"> '+
                         ' <p class="notify-subject">'+item.title+'</p> '+
                         ' <p class="notify-content">'+item.mota+'</p> '+
@@ -419,7 +423,7 @@
         if (req != null) req.abort();
         req = $.ajax({
             type: "POST",
-            url: "<%=request.getContextPath()%>/searchAjax",
+            url: "~/searchAjax",
             data: {'txtSearch' : value, 'type' : 'SEARCHICON'},
             dataType: "text",
             success: function(msg){
@@ -439,13 +443,13 @@
                         html += '<li class="search-items">' +
 
                             '<div class="search-items-left">' +
-                            '<a href="<%=request.getContextPath()%>/detail?id='+list[i].maSP+'" class="item-search-img">' +
-                            '<img src="<%=request.getContextPath()%>/' + list[i].listUrlImg[0] + '" alt="">' +
+                            '<a href="~/detail?id='+list[i].maSP+'" class="item-search-img">' +
+                            '<img src="~/' + list[i].listUrlImg[0] + '" alt="">' +
                             '</a>' +
                             '</div>' +
 
                             '<div class="search-item-right">' +
-                            '<a href="<%=request.getContextPath()%>/detail?id='+list[i].maSP+'">' +
+                            '<a href="~/detail?idProduct='+list[i].maSP+'">' +
                             '<h3 class="item-search-title text-one-line">' + list[i].tenSP + '</h3>' +
 
                             '<div class="search-item-wrap-price">';
@@ -477,7 +481,7 @@
         if(keyword.length == 0){
             pushNotify('warning','Vui lòng nhập từ khóa','Tìm kiếm');
         }else {
-            window.location.href = '<%=request.getContextPath()%>/searchAjax?txt='+keyword;
+            window.location.href = '~/searchAjax?txt='+keyword;
         }
 
     };

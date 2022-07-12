@@ -1,11 +1,24 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Newtonsoft.Json
+@using WebShoppingDotnet.Service
 
 @{
-     Layout = "~/Views/Shared/_Layout.cshtml";
-     User user=(User) ViewBag.user;
-     Khachhang khachhang=(Khachhang) ViewBag.khachHang;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    User user=null;
+    Khachhang khachhang=null;
+    string jsonUser=ViewBag.user;
+    if (jsonUser != null)
+    {
+        user = JsonConvert.DeserializeObject<User>(jsonUser);
+
+
+    }
+    if (user != null)
+    {
+        khachhang = IUserService.getKhachHang(user.Id);
+    }
 }
 
     <link href="~/css/bootstrapf9e3.css?v=1.1" rel="stylesheet" type="text/css" />
@@ -14,7 +27,6 @@
     <link href="~/css/uif9e3.css?v=1.1" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="~/css/acount.css">
 <link rel="stylesheet" href="~/assets/notify/simple-notify.min.css">
-
 
     <b class="screen-overlay"></b>
     <main class="main-wrap container">
@@ -27,7 +39,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row gx-5">
-                        <jsp:include page="lefmenuaccount.jsp"></jsp:include>
+                        <partial name="../Shared/lefmenuaccount.cshtml" />
                         <div class="col-lg-9">
 
                             <section class="content-body p-xl-4">
@@ -151,9 +163,6 @@
         var body_el = document.body;
         body_el.className += 'dark';
     }
-
-
-
     var array;
     var valueTinhThanhPho = "Tỉnh/Thành Phố";
     var arrayQuanHuyen;
@@ -169,6 +178,15 @@
                 '<option value="' + element.name + '">' + element.name + "</option>"
             );
         });
+            //get element class name billing_address_2 envent click
+    console.log("khach hang" + @khachhang)
+    if(@khachhang==null){
+         console.log("khach han1g" + @khachhang)
+    $("#name-customer").val("@khachhang.HoTen");
+    $("#phone-customer").val("@khachhang.DienThoai");
+    $("#email-customer").val("@user.Usermail");
+    $("#address-customer").val("@khachhang.DiaChi");
+    }
         if(@khachhang!=null){
         $("#tinh-thanh-pho").val("@khachhang.TinhTp").change();
         clickTinhThanhPho(document.getElementById("tinh-thanh-pho"));
@@ -210,14 +228,7 @@
             $("#phuong-xa").append('<option value="' + element.name + '">' + element.name + "</option>");
         });
     }
-    //get element class name billing_address_2 envent click
 
-    if(khachHang!=null){
-    $("#name-customer").val("@khachhang.HoTen");
-    $("#phone-customer").val("@khachhang.DienThoai");
-    $("#email-customer").val("@user.Usermail");
-    $("#address-customer").val("@khachhang.DiaChi");
-    }
 
     function clickCapNhat() {
         var check = true;
@@ -229,6 +240,7 @@
         var tinhTP = $("#tinh-thanh-pho").val();
         var quanHuyen = $("#quan-huyen").val();
         var phuongXa = $("#phuong-xa").val();
+        var id='@user.Id';
         console.log(name + " " + phone + " " + email + " " + address + " " + tinhTP + " " + quanHuyen + " " + phuongXa);
         if(name.trim().length > 0 && phone.trim().length > 0
             && checkEmailp(email)
@@ -242,7 +254,7 @@
                 url: "~/account",
                 type: "POST",
                 data: {
-                    id:@user.Id,
+                    id:id,
                     name: name,
                     phone: phone,
                     email: email,
@@ -297,5 +309,3 @@
     }
 
    </script>
-
-

@@ -20,7 +20,7 @@ namespace WebShoppingDotnet.Controllers
             {
                 Khachhang khachhang=IUserService.getKhachHang(user.Id);
                 string jsonUser = JsonConvert.SerializeObject(user);
-
+                /*System.Diagnostics.Debug.WriteLine(jsonUser);*/
                 HttpContext.Session.SetString("user", jsonUser);
                 
                 return RedirectToAction("Index", "Home");

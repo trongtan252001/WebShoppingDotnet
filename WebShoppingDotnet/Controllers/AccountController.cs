@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WebShoppingDotnet.common;
 using WebShoppingDotnet.Models;
 using WebShoppingDotnet.Service;
@@ -7,19 +8,21 @@ namespace WebShoppingDotnet.Controllers
 {
     public class AccountController : Controller
     {
-        public IActionResult Index(string idUser)
+        public IActionResult Index()
         {
-            User user = IUserService.getUser(idUser);
-            ViewBag.user=user;
-            Khachhang khachHang=IUserService.getKhachHang(idUser);
-            ViewBag.khachHang=khachHang;
+            string jsonUser = HttpContext.Session.GetString("user");
+            if (jsonUser != null)
+            {
+                ViewBag.User = jsonUser;
+            }
             return View();
         }
         [HttpPost]
-        public void Update(InfoUser infoUser)
+        public ActionResult Update(InfoUser infoUser)
         {
-            IUserService.updateInfo(infoUser);
-            
+            if(IUserService.updateInfo(infoUser))
+               return Content("success");
+            else return Content("fail");
         }
     }
 }
