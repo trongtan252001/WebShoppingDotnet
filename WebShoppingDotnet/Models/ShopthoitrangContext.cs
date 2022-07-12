@@ -33,8 +33,7 @@ namespace WebShoppingDotnet.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;user=root;port=3306;database=shopthoitrang", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.24-mariadb"));
+                optionsBuilder.UseMySql("server=localhost;user=root;port=3306;database=shopnet", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.24-mariadb"));
             }
         }
 
@@ -157,7 +156,8 @@ namespace WebShoppingDotnet.Models
 
             modelBuilder.Entity<Hinhanh>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.Idhinhanh)
+                    .HasName("PRIMARY");
 
                 entity.ToTable("hinhanh");
 
@@ -165,6 +165,8 @@ namespace WebShoppingDotnet.Models
                     .UseCollation("utf8_general_ci");
 
                 entity.HasIndex(e => e.Idsp, "IDSP");
+                entity.Property(e => e.Idhinhanh).HasColumnName("IDHINHANH");
+
 
                 entity.Property(e => e.Idsp).HasColumnName("IDSP");
 
@@ -173,7 +175,7 @@ namespace WebShoppingDotnet.Models
                     .HasColumnName("URL");
 
                 entity.HasOne(d => d.IdspNavigation)
-                    .WithMany()
+                    .WithMany(p=>p.Hinhanhs)
                     .HasForeignKey(d => d.Idsp)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("hinhanh_ibfk_1");

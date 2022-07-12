@@ -1,0 +1,218 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = ViewBag.title;
+
+}
+<link rel="stylesheet" href="~/css/search.css">
+
+<section id="main-search" class="margin-top-mobile">
+    <div class="container">
+        <div class="contain">
+            <div class="left-contain">
+                <div class="left-contain-price-range">
+                    <p class="left-contain-item-title">Khoảng Giá</p>
+                    <form name="myForm" class="left-contain-item-box-content">
+                        
+                        <label><input type="radio" name="all" value="0"> Tất Cả</label><br>
+                        <label><input type="radio" name="all" value="0-300000"> Nhỏ hơn 300,000₫</label><br>
+                        <label><input type="radio" name="all" value="300000-500000">Từ 300,000₫ - 500,000₫</label><br>
+                        <label><input type="radio" name="all" value="500000-700000"> Từ 500,000₫ - 700,000₫</label><br>
+                        <label><input type="radio" name="all" value="700000-1000000"> Từ 700,000₫ - 1,000,000₫</label><br>
+                        <label><input type="radio" name="all" value="1000000-1500000"> Từ 1,000,000₫ - 1,500,000₫</label><br>
+                        <label><input type="radio" name="all" value="1500000"> Lớn hơn 1,500,000₫</label><br>
+                    </form>
+                </div>
+                <div class="left-contain-size">
+                    <p class="left-contain-item-title">Kích Thước</p>
+                    <div class="left-contain-item-box-content-size">
+                        <div class="left-contain-item-box-content-size-item">
+                            <input class="size-product" type="radio" name="size" value="S">
+                            <label>S</label><br>
+                        </div>
+                        <div class="left-contain-item-box-content-size-item">
+                            <input class="size-product" type="radio" name="size" value="M">
+                            <label>M</label><br>
+                        </div>
+                        <div class="left-contain-item-box-content-size-item">
+                            <input class="size-product" type="radio" name="size" value="L">
+                            <label>L</label><br>
+                        </div>
+                        <div class="left-contain-item-box-content-size-item">
+                            <input class="size-product" type="radio" name="size" value="XL">
+                            <label>XL</label><br>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="right-contain">
+                <div class="top-search-title">
+                    <div class="wrapper-search-left">
+                        <h2 class="text-search">
+                            @ViewBag.title
+                        </h2>
+                        <span class="title-sum-product">@ViewData["TotalItems"] sản phẩm</span>
+
+                    </div>
+
+                   
+                    <div class="right-contain-sort">
+                        <label for="cars">Sắp Xếp</label>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">Last Name</a>
+                        <select name="cars" id="cars">
+                            <option value="all">Tùy chọn</option>
+                            <option value="name">
+                                Sắp xếp từ A-Z
+                            </option>
+                            <option value="name_desc">Sắp xếp từ Z-A</option>
+                            <option value="price">Sắp xếp theo giá tăng dần</option>
+                            <option value="price_desc">Sắp xếp theo giá giảm dần</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="list-tab-content">
+                    @foreach (Product product in Model)
+                    {
+                        @await Html.PartialAsync("Components/ViewProduct/Index", product)
+                    }
+
+                </div>
+
+                @{
+                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+                    var left = (Model.PageIndex - 3) >= 1 ? Model.PageIndex - 3 : 1;
+                    var right = (Model.PageIndex + 3) <= Model.TotalPages ? Model.PageIndex + 3 : Model.TotalPages;
+
+                }
+
+                <div class="pagination">
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-size="@ViewData["size"]"
+                       asp-route-rangePrice="@ViewData["rangePrice"]"
+                       class="@prevDisabled"
+                       id="per-page">
+                        &laquo;
+                    </a>
+                    <div class="page-parrent">
+
+
+                        @for (var i = left; i <= right; i++)
+                        {
+                            if (i == Model.PageIndex)
+                            {
+                                <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-size="@ViewData["size"]"
+                           asp-route-rangePrice="@ViewData["rangePrice"]"
+                           asp-route-pageNumber="@i"
+
+                           id="per-page" class="page active">
+                                    @i
+                                </a>
+
+
+                            }
+                            else
+                            {
+                                <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-size="@ViewData["size"]"
+                           asp-route-rangePrice="@ViewData["rangePrice"]"
+                           asp-route-pageNumber="@i"
+
+                           id="per-page" class="page">
+                                    @i
+                                </a>
+                            }
+
+                        }
+                    </div>
+
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-size="@ViewData["size"]"
+                       asp-route-rangePrice="@ViewData["rangePrice"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+
+                       class="@nextDisabled" id="next-page">&raquo;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        var pageNumber =@ViewData["pageNumber"];
+        var demo1 = false;
+        var sortSelect = document.getElementById("cars");
+        var sortName = "@ViewData["CurrentSort"]";
+        var size = "@ViewData["size"]";
+
+        sortSelect.value = sortName;
+        var rangePrice = "@ViewData["rangePrice"]";
+        if (rangePrice) {
+            document.querySelector(`input[value="${rangePrice}"]`).checked = true;
+        }
+        sortSelect.addEventListener("change",
+            e => {
+                window.location.replace("?sortOrder=" + sortSelect.value
+                    +"&rangePrice="+rangePrice
+                    +"&size="+size
+                +"&pageNumber="+1
+                );
+            });
+        var rad = document.myForm.all;
+        var prev = null;
+        for (var i = 0; i < rad.length; i++) {
+            rad[i].addEventListener('change',
+                function() {
+                    if (this !== prev) {
+                        prev = this;
+                    }
+                    if (!demo1) {
+                        window.location.replace("?sortOrder=" + sortName
+                            +"&rangePrice="+ this.value
+                            +"&size="+size
+                            +"&pageNumber="+1
+                        );
+                    } else {
+                        demo1 = true;
+                    }
+
+                });
+        }
+        var rad2 = document.querySelectorAll("input[name=size]");
+        var prev2 = null;
+        var demo2 = false;
+        if (size) {
+            document.querySelector(`input[value="${size}"]`).checked = true;
+        }
+        for (var i = 0; i < rad2.length; i++) {
+            rad2[i].addEventListener('change',
+                function() {
+                    if (this !== prev2) {
+                        prev2 = this;
+                    }
+                    if (!demo1) {
+                        window.location.replace("?sortOrder=" + sortName
+                            +"&rangePrice="+ rangePrice
+                            +"&size="+this.value
+                            +"&pageNumber="+1
+                        );
+                    } else {
+                        demo2 = true;
+                    }
+
+                });
+        }
+
+    </script>
+    <script src="~/script/search.js"></script>
+}

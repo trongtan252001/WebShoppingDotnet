@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace WebShoppingDotnet.Models
 {
@@ -12,7 +14,8 @@ namespace WebShoppingDotnet.Models
         public string TinhTp { get; set; } = null!;
         public string QuanHuyen { get; set; } = null!;
         public string PhuongXa { get; set; } = null!;
-
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual User IduserNavigation { get; set; } = null!;
     }
 }
