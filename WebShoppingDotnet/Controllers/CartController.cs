@@ -111,7 +111,7 @@ namespace WebShoppingDotnet.Controllers
                 else
                 {
 
-                    cartitem.Soluong = quantity;
+                    cartitem.Soluong = (int)quantity;
                     _shopthoitrang.SaveChanges();
                     return Json(new
                     {

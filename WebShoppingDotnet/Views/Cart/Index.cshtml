@@ -458,26 +458,22 @@
       });
       return listData;
     }
+
     document.querySelector('.btn-total-checkout').addEventListener('click',function () {
       let data = getDataCheckbox();
       if (data.length>0){
 
         // ajax transform data to json
         let dataJson = JSON.stringify(data);
-        $.ajax({
-          url: "<%=request.getContextPath()%>/DoCheckout",
-          type: "POST",
-          data: {
-            data: dataJson
-          },
-          success: function (data) {
-            if (data!=null&&data==="success"){
-              location.href = "<%=request.getContextPath()%>/check-outs";
-            }else {
-              pushNotify('error', 'Có lỗi xảy ra, vui lòng thử lại sau','Lỗi');
-            }
-          }
-        });
+        dataJson= dataJson.replace(/"/g, "'");
+
+        // ajax transform data to json
+        var url = '/checkout' ;
+        var form = $('<form action="' + url + '" method="post">' +
+            '<input type="text" name="data" value="' +dataJson + '" />' +
+            '</form>');
+        $('body').append(form);
+        form.submit();
       }else {
         pushNotify('error', 'Bạn chưa chọn sản phẩm nào','Lỗi');
       }

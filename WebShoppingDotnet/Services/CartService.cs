@@ -1,4 +1,5 @@
-﻿using WebShoppingDotnet.Models;
+﻿using System.Globalization;
+using WebShoppingDotnet.Models;
 
 namespace WebShoppingDotnet.Services
 {
@@ -26,9 +27,9 @@ namespace WebShoppingDotnet.Services
         public Giohang giohang { get; set; }
         public Product product { get; set; }
         public String urlImage { get; set; }
-        
 
-        public CartDto(Giohang giohang, Product product,String urlImage)
+
+        public CartDto(Giohang giohang, Product product, String urlImage)
         {
             this.giohang = giohang;
             this.product = product;
@@ -47,5 +48,23 @@ namespace WebShoppingDotnet.Services
         }
 
     }
+
+    public class CheckoutDTo
+    {
+    public String id { get; set; }
+    public String size { get; set; }
+    public int quantity { get; set; }
+    public String name { get; set; }
+    public String img { get; set; }
+    public float price { get; set; }
+    public string ParseCurrencyVND(string input)
+    {
+        CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
+        return double.Parse(input).ToString("#,###", cul.NumberFormat) + " đ";
+    }
+
+
+    }
+
 
 }
