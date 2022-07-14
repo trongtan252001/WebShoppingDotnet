@@ -1,4 +1,43 @@
-﻿<footer>
+﻿@using Newtonsoft.Json
+@{
+    User user=null;
+    string jsonUser=ViewBag.user;
+     if(jsonUser!=null)
+    user = JsonConvert.DeserializeObject<User>(jsonUser);
+}
+<div id="comment">
+    <form action="" id="comment-dialog" method="post" enctype="multipart/form-data">
+        <div class="comment-header">
+            <h3 class="comment-header-title">Hộp Thoại Góp Ý</h3>
+            <div class="comment-close"></div>
+        </div>
+        <div class="comment-body">
+            <label for="comment-content">Vui lòng điền nhận xét của bạn :</label>
+            <textarea name="comment-content" id="comment-content" cols="40" rows="6" ></textarea>
+            <label for="comment-job">Công Việc :</label>
+            <input type="text" name="comment-job" id="comment-job">
+            <div class="comment-image">
+                <label for="comment-image-input" class="comment-button" id="label-comment-image">
+                    <i class="material-icons fas fa-plus"></i>
+                </label>
+                <span class="comment-image-size">Click để thêm ảnh (600x900)</span>
+                <input  name="comment-image-input" class="d-none" id="comment-image-input" type="file" required accept="image/*" >
+                <div id="comment-image-col" class="">
+                </div>
+            </div>
+        </div>
+        <div class="comment-footer">
+            <h6 class="comment-footer-title">
+                Nếu bạn có ý tưởng để cải thiện sản phẩm thì hãy cho chúng tôi biết nhé. Còn nếu cần trợ giúp để khắc phục vấn đề cụ thể, hãy truy cập <a href="<%=request.getContextPath()%>/term?index=1" style="color: rgb(0, 68, 255);">Trung tâm trợ giúp</a>.
+            </h6>
+            <div class="comment-footer-button">
+                <div class="comment-button btn-cancel" style="margin-right: 10px;">Hủy</div>
+                <div class="comment-button btn-primary btn-submit">GỬI</div>
+            </div>
+        </div>
+    </form>
+</div>
+<footer>
     <div id="home-about">
         <div class="inner">
             <div class="home-about-content">
@@ -45,18 +84,18 @@
 
     </div>
     <div class="footer-top">
-        <img src="~/img/icon/ft-logo.png">
+        <img src="../img/icon/ft-logo.png" >
     </div>
     <div class="footer-content">
         <div class="footer-content-item footer-content-item-contact">
             <p class="footer-content-item-title">CÔNG TY CỔ PHẦN HBD</p>
             <div class="footer-content-item-contact-item">
                 <i class="fas fa-home"></i>
-                <p> 47 Đường Đinh Điền, Phường Lam Sơn, Thành phố Hưng Yên, Tỉnh Hưng Yên</p>
+                <p > 47 Đường Đinh Điền, Phường Lam Sơn, Thành phố Hưng Yên, Tỉnh Hưng Yên</p>
             </div>
             <div class="footer-content-item-contact-item">
                 <i class="fas fa-phone"></i>
-                <p class="footer-content-item-focuse">1900 633 694</p><br>
+                <p class="footer-content-item-focuse" >1900 633 694</p><br>
             </div>
             <div class="footer-content-item-contact-item">
                 <i class="fas fa-envelope"></i>
@@ -73,16 +112,15 @@
 
         </div>
         <div class="footer-content-item">
-            <a href="../html/term.html" class="footer-content-item-title">CHÍNH SÁCH</a>
-            <a href="../html/term1.html" class="footer-content-item-focuse">Điều khoản sử dụng</a><br>
-            <a href="../html/term2.html" class="footer-content-item-focuse">Hướng dẫn thanh toán</a><br>
-            <a href="../html/term3.html" class="footer-content-item-focuse">Hướng dẫn mua hàng</a><br>
-            <a href="../html/term4.html" class="footer-content-item-focuse">Chính sách vận chuyển</a><br>
-            <a href="../html/term5.html" class="footer-content-item-focuse">Chính sách đổi trả</a><br>
-            <a href="../html/term6.html" class="footer-content-item-focuse">Chính sách bán hàng và bảo hành</a><br>
-            <a href="../html/term7.html" class="footer-content-item-focuse">Chính sách bảo vệ thông tin khách
-                hàng</a><br>
-            <a href="../html/term8.html" class="footer-content-item-focuse">Quyền lợi sinh nhật của khách hàng</a>
+            <p class="footer-content-item-title">CHÍNH SÁCH</p>
+            <a href="~/term?index=1"><p class="footer-content-item-focuse">Điều khoản sử dụng</p><br></a>
+            <a href="~/term?index=2"><p class="footer-content-item-focuse">Hướng dẫn thanh toán</p><br></a>
+            <a href="~/term?index=3"><p class="footer-content-item-focuse">Hướng dẫn mua hàng</p><br></a>
+            <a href="~/term?index=4"><p class="footer-content-item-focuse">Chính sách vận chuyển</p><br></a>
+            <a href="~/term?index=5"><p class="footer-content-item-focuse">Chính sách đổi trả</p><br></a>
+            <a href="~/term?index=6"><p class="footer-content-item-focuse">Chính sách bán hàng và bảo hành</p><br></a>
+            <a href="~/term?index=7"><p class="footer-content-item-focuse">Chính sách bảo vệ thông tin khách hàng</p><br></a>
+            <a href="~/term?index=8"><p class="footer-content-item-focuse">Quyền lợi sinh nhật của khách hàng</p></a>
         </div>
         <div class="footer-content-item">
             <p class="footer-content-item-title">VỀ SEVEN.AM</p>
@@ -91,18 +129,17 @@
             <p class="footer-content-item-focuse">Tuyển dụng</p><br>
             <p class="footer-content-item-focuse">Liên hệ</p><br>
             <p class="footer-content-item-focuse">Hợp tác kinh doanh</p><br>
+            <p class="footer-content-item-focuse" id="comment-label">Góp ý cho chúng tôi</p><br>
         </div>
         <div class="footer-content-item footer-content-item-rigeter">
             <p class="footer-content-item-title">ĐĂNG KÝ NHẬN TIN</p>
-            <p>Hãy đăng ký nhận tin để nhận được những thông tin hữu ích và những chương trình khuyến mãi hấp dẫn của
-                Seven.AM!</p>
+            <p>Hãy đăng ký nhận tin để nhận được những thông tin hữu ích và những chương trình khuyến mãi hấp dẫn của Seven.AM!</p>
             <div class="footer-content-item-input">
-                <input id="footer-content-item-input-email" style="border: none;" type="text"
-                       placeholder="Email quý khách">
+                <input id="footer-content-item-input-email" style="border: none;" type="text" placeholder="Email quý khách">
                 <i class="far fa-paper-plane"></i>
             </div>
             <div class="footer-content-item-image">
-                <img src="../img/footer/imge-footer.jpg">
+                <img src="../img/footer/imge-footer.jpg" >
             </div>
         </div>
     </div>
@@ -111,3 +148,123 @@
         </p>
     </div>
 </footer>
+<script>
+    var userJsonJS="@jsonUser"
+    var userJS;
+    if( userJsonJS!=""){
+    userJS=@Html.Raw(jsonUser)
+    }
+    $(".btn-cancel").click(function(){
+        $("#comment").removeClass('flex')
+    })
+    $(".btn-submit").click(function(){
+        $("#comment").removeClass('flex')
+    })
+    $("#comment-label").click(function (){
+        if( userJS==null){
+            pushNotify("error","Opps ! Vui lòng đăng nhập để tiếp tục.","Góp Ý́")
+        }
+        else {
+            $("#comment").addClass("flex")
+        }
+    })
+    if( userJS!=null){
+        //show comment image
+        document.querySelector("#comment-image-input").addEventListener("change", function() {
+            var files = this.files;
+            var filesArr = Array.prototype.slice.call(files);
+            var heigh=0;
+            filesArr.forEach(function(f) {
+                if (!f.type.match("image.*")) {
+                    alert("Không phải file ảnh");
+                    document.getElementById("comment-image-input").value = ""
+                    return;
+                }
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    //Initiate the JavaScript Image object.
+                    var image = new Image();
+
+                    //Set the Base64 string return from FileReader as source.
+                    image.src = e.target.result;
+
+                    //Validate the File Height and Width.
+                    image.onload = function () {
+                       height = this.height;
+                        var width = this.width;
+                        if (height ==900 && width==600) {
+                            var html = "<div class=''>" +
+                                "<div class='comment-card'>" +
+                                "<img src='" + e.target.result + "' class='comment-card-img comment-img-thumbnail' alt='...'>" +
+                                "<input class='d-none' id='file-image-" + files.length + "' type='file' accept='image/*' />" +
+                                "<div class='comment-info-wrap'>" +
+                                "<a href='#' class=''>" + f.name + "</a>" +
+                                "<div id='delete-comment-image' class='comment-button'>" +
+                                "Xóa" +
+                                "</div>" +
+                                "</div>" +
+                                "</div>" +
+                                "</div>";
+                            $('#comment-image-col').html(html);
+                            $("#label-comment-image").addClass("d-none")
+                            $(".comment-image-size").addClass("d-none")
+                            //click button "Xoa" in comment form to delete image anh show plus icon
+                            $("#delete-comment-image").click(function (){
+                                document.getElementById("comment-image-input").value=""
+                                $(".comment-image-size").removeClass("d-none")
+                                $('#comment-image-col').html("");
+                                $("#label-comment-image").removeClass("d-none")
+                            });
+                        }
+                        else {
+                              alert("Vui lòng chọn ảnh đúng kích thước.");
+                            console.log("file trc "+document.getElementById("comment-image-input").value)
+                            document.getElementById("comment-image-input").value = ""
+                            console.log("file sau "+document.getElementById("comment-image-input").value)
+                        }
+                    };
+
+                    }
+                reader.readAsDataURL(f);
+
+            });
+        });
+
+        //send comment
+        //click when push button "Gui"
+        $("#comment-dialog").submit(function (e){
+            e.stopPropagation()
+        })
+        $(".btn-submit").click(function (){
+            var commentForm= new FormData(document.getElementById("comment-dialog"));
+            var userID=''
+            var job=$("#comment-job").val()
+            commentForm.append("idUser",userID)
+            commentForm.append("comment-content",$("#comment-content").val())
+            commentForm.append("job",job)
+            $.ajax({
+                url: "~/review",
+                type: "POST",
+                data: commentForm,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    //set attr
+                    if(data=="success") {
+                        pushNotify('success', 'Góp ý thành công. THANKS !', 'Nhận Xét');
+                    }else if(data="lack"){
+                        pushNotify('error', 'Vui lòng cung cấp đủ lời nhận xét, công việc và hình ảnh.', 'Nhận Xét');
+                    }
+                    else{
+                        pushNotify('error', 'Góp ý thất bại.', 'Nhận Xét');
+                    }
+                },
+                error: function(){
+                    pushNotify('error', 'Góp ý thất bại.', 'Nhận Xét');
+                }
+            });
+        });
+    }
+
+</script>
+
