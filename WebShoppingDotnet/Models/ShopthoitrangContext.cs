@@ -77,7 +77,12 @@ namespace WebShoppingDotnet.Models
 
             modelBuilder.Entity<Cthoadon>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => new
+                {
+                    e.MaHd,
+                    e.Size,e.MaSp
+                }).HasName("PRIMARY");
+
 
                 entity.ToTable("cthoadon");
 

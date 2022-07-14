@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="input-item-content-box" >
-                    <input id="email-customer" value="@user.Usermail>" onkeyup="checkEmail(this)" class="input-item" placeholder="Email" type="email" pattern="^(\w+@@gmail.com)$">
+                    <input id="email-customer" value="@user.Usermail" onkeyup="checkEmail(this)" class="input-item" placeholder="Email" type="email" pattern="^(\w+@@gmail.com)$">
                     <div class="error-box">
                         <p class="error-text">Email không được để trống</p>
                     </div>
@@ -180,6 +180,8 @@
     var arrayQuanHuyen;
     var valueQuanHUyen = "Quận / Huyện";
     var arrayPhuongXa;
+    var dataJS ="@Html.Raw(ViewBag.data)";
+
     $.getJSON("../data/local.json", function (json) {
         // console.log(json); // this will show the info it in firebug console
         array = json;
@@ -250,7 +252,6 @@
     });
     document.getElementsByClassName('billing_address_2')[0].addEventListener('click', function () {
         clickDatHang();
-
         document.querySelectorAll('.input-item-content-box .input-item').forEach(function (item) {
             let err = item.closest('.input-item-content-box').querySelector('.error-box')
             if(err) {
@@ -302,17 +303,17 @@
         var tinhTP = $("#tinh-thanh-pho").val();
         var quanHuyen = $("#quan-huyen").val();
         var phuongXa = $("#phuong-xa").val();
+
         if(name.trim().length > 0 && phone.trim().length > 0
             && checkEmailp(email)
             &&checkPhonep(phone)
             && address.trim().length > 0
             && tinhTP.trim().length > 0
             && quanHuyen.trim().length > 0 && phuongXa.trim().length > 0) {
-
             //ajax
             $.ajax({
                 url: "@Url.Action("CheckOut","Checkout")",
-                type: "POST",
+                type: "GET",
                 data: {
                     name: name,
                     phone: phone,
@@ -321,7 +322,7 @@
                     tinhTP: tinhTP,
                     quanHuyen: quanHuyen,
                     phuongXa: phuongXa,
-                    data:@Html.Raw(ViewBag.data),
+                    listDTo:dataJS,
                     check: check
                 },
                 success: function (data) {
