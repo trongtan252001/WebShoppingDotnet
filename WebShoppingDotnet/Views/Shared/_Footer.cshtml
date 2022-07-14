@@ -149,11 +149,11 @@
     </div>
 </footer>
 <script>
-    var userJsonJS=@jsonUser
-    console.log(userJsonJS)
-    console.log("ook")
-    var userJS=JSON.parse(userJsonJS.text())
-    console.log("ok"+userJS)
+    var userJsonJS="@jsonUser"
+    var userJS;
+    if( userJsonJS!=""){
+    userJS=@Html.Raw(jsonUser)
+    }
     $(".btn-cancel").click(function(){
         $("#comment").removeClass('flex')
     })
@@ -161,14 +161,14 @@
         $("#comment").removeClass('flex')
     })
     $("#comment-label").click(function (){
-        if(user==null){
+        if( userJS==null){
             pushNotify("error","Opps ! Vui lòng đăng nhập để tiếp tục.","Góp Ý́")
         }
         else {
             $("#comment").addClass("flex")
         }
     })
-    if(user!=null){
+    if( userJS!=null){
         //show comment image
         document.querySelector("#comment-image-input").addEventListener("change", function() {
             var files = this.files;
