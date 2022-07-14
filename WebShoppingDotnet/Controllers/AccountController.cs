@@ -11,7 +11,7 @@ namespace WebShoppingDotnet.Controllers
         public IActionResult Index()
         {
             string jsonUser = HttpContext.Session.GetString("user");
-            System.Diagnostics.Debug.WriteLine(jsonUser);
+            
             if (jsonUser != null)
             {
                 ViewBag.User = jsonUser;

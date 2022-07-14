@@ -20,10 +20,6 @@ namespace WebShoppingDotnet.Controllers
             IHomeService homeService = new HomeService();
             Bosutap _bst1 = _shopthoitrang.Bosutaps.First();
             Bosutap _bst2 = _shopthoitrang.Bosutaps.Skip(1).First();
-            string userString = HttpContext.Session.GetString("user");
-            if(userString != null)
-                ViewBag.User =userString;
-            
             ViewBag.BoSuuTap1 = _bst1;
             ViewBag.BoSuuTap2 = _bst2;
             ViewBag.ListBST1 = await _shopthoitrang.Products

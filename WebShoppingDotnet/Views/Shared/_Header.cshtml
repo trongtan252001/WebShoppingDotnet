@@ -1,8 +1,11 @@
 ﻿@using Newtonsoft.Json
 @using WebShoppingDotnet.Service
+@using Microsoft.AspNetCore.Http
 @{
     User user=null;
-    string jsonUser=ViewBag.user;
+    
+    string jsonUser = Context.Session.GetString("user");
+    System.Diagnostics.Debug.WriteLine("JSON"+jsonUser);
     if(jsonUser!=null)
     user = JsonConvert.DeserializeObject<User>(jsonUser);
     int quantity=0;
@@ -15,19 +18,20 @@
 }
 
 <header id="header" class="header-signin-sigup">
+   
   <div id="header-first">
     <div class="container">
       <div class="header-top">
         <div class="header-search" id="input-group-header">
           <input
-            id="searchtext"
+            id="searchtexts"
             name="q"
-            value=""
+            value="or"
             maxlength="40"
             class="input-search"
             type="text"
             size="20"
-            placeholder="Tìm kiếm ...."
+            placeholder="Tìm kiếms ...."
             autocomplete="off"
           />
           <i class="fa-solid fa-magnifying-glass search-icon" onclick="redirectSearch(this)"></i>

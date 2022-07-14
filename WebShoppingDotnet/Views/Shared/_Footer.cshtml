@@ -1,7 +1,8 @@
 ﻿@using Newtonsoft.Json
+@using Microsoft.AspNetCore.Http
 @{
     User user=null;
-    string jsonUser=ViewBag.user;
+    string jsonUser=Context.Session.GetString("user");
      if(jsonUser!=null)
     user = JsonConvert.DeserializeObject<User>(jsonUser);
 }
@@ -152,7 +153,8 @@
 var jsonUserJs="@jsonUser";
 var userJs;
 if( jsonUserJs!=""){
-    userJs="@Html.Raw(jsonUser)"
+    userJs=@Html.Raw(jsonUser)
+    console.log(userJs.Username)
     }
     $(".btn-cancel").click(function(){
         $("#comment").removeClass('flex')

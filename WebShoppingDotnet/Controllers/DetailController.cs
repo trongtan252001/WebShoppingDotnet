@@ -20,7 +20,6 @@ namespace WebShoppingDotnet.Controllers
                 map.Add(p.Masp, urlsOfProduct);
             }
             System.Diagnostics.Debug.WriteLine(products.Count);
-
             ViewBag.Product = product;
             ViewBag.Collection = collection;
             ViewBag.Products = products;
