@@ -18,8 +18,7 @@ namespace WebShoppingDotnet.Controllers
         [Route("[controller]/{id?}")]
         [Route("[controller]/[action]/{id?}")]
         public async Task<IActionResult> Index(String? id, string sortOrder, int? pageNumber,String? rangePrice,String ?size)
-        {
-
+        { 
             var products = _shopthoitrang.Products
                             .Where(p => p.Trangthai == 1);
             var modelSort = new SortHelper();
@@ -123,7 +122,7 @@ namespace WebShoppingDotnet.Controllers
             ViewData["TotalItems"] = totalItems;
             int pageSize = 16;
             ViewData["pageNumber"] = pageNumber??1;
-
+            
             return View(await PaginatedList<Product>.CreateAsync(products.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
     }

@@ -42,6 +42,22 @@ namespace WebShoppingDotnet.Models
             }
         }
 
+        public int GetSize(String size)
+        {
+            switch (size.ToUpper())
+            {
+                case "S":
+                    return S;
+                case "L":
+                    return L;
+                case "M":
+                    return M;
+                case "XL":
+                    return Xl;
+            }
+
+            return -1;
+        }
         public string ParseCurrencyVND(float input)
         {
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"

@@ -3,6 +3,7 @@
 
     public class InfoUser
     {
+        public string id { get; set; } = null!;
         public string name { get; set; } = null!;
         public string phone { get; set; } = null!;
         public string email { get; set; } = null!;

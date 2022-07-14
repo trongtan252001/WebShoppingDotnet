@@ -20,7 +20,7 @@
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
             <div class="btn-img-buy">
-                <a href="/Shopping/detail?id=<%=p.getMaSP()%>">mua ngay</a>
+                <a asp-controller="Detail" asp-action="Index" asp-route-idProduct="@p.Masp">mua ngay</a>
             </div>
             <div class="btn-img-cart" idSP="@p.Masp"
                  onclick="openModal(this)"
