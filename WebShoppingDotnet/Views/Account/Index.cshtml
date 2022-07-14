@@ -12,6 +12,7 @@
     if (jsonUser != null)
     {
         user = JsonConvert.DeserializeObject<User>(jsonUser);
+        System.Diagnostics.Debug.WriteLine(user);
     }
     if (user != null)
     {
@@ -166,6 +167,7 @@
     if( userJsonJS!=""){
     userJS="@Html.Raw(jsonUser)"
     }
+    console.log(userJs.PhuongXa)
     var khachHang='@khachhang'
     var array;
     var valueTinhThanhPho = "Tỉnh/Thành Phố";

@@ -149,10 +149,10 @@
     </div>
 </footer>
 <script>
-    var userJsonJS="@jsonUser"
-    var userJS;
-    if( userJsonJS!=""){
-    userJS=@Html.Raw(jsonUser)
+var jsonUserJs="@jsonUser";
+var userJs;
+if( jsonUserJs!=""){
+    userJs="@Html.Raw(jsonUser)"
     }
     $(".btn-cancel").click(function(){
         $("#comment").removeClass('flex')
@@ -161,14 +161,14 @@
         $("#comment").removeClass('flex')
     })
     $("#comment-label").click(function (){
-        if( userJS==null){
+        if(userJs==null){
             pushNotify("error","Opps ! Vui lòng đăng nhập để tiếp tục.","Góp Ý́")
         }
         else {
             $("#comment").addClass("flex")
         }
     })
-    if( userJS!=null){
+    if(userJs!=null){
         //show comment image
         document.querySelector("#comment-image-input").addEventListener("change", function() {
             var files = this.files;
@@ -237,13 +237,13 @@
         })
         $(".btn-submit").click(function (){
             var commentForm= new FormData(document.getElementById("comment-dialog"));
-            var userID=''
+            var userID="<%=userID%>"
             var job=$("#comment-job").val()
             commentForm.append("idUser",userID)
             commentForm.append("comment-content",$("#comment-content").val())
             commentForm.append("job",job)
             $.ajax({
-                url: "~/review",
+                url: "<%=request.getContextPath()%>/review",
                 type: "POST",
                 data: commentForm,
                 contentType: false,
