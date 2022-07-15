@@ -1,11 +1,23 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Newtonsoft.Json
+@using WebShoppingDotnet.Service
 
 @{
-     Layout = "~/Views/Shared/_Layout.cshtml";
-     User user=(User) ViewBag.user;
-     Khachhang khachhang=(Khachhang) ViewBag.khachHang;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    User user=null;
+    Khachhang khachhang=null;
+    string jsonUser=ViewBag.User;
+    if (jsonUser != null)
+    {
+        user = JsonConvert.DeserializeObject<User>(jsonUser);
+        System.Diagnostics.Debug.WriteLine(user);
+    }
+    if (user != null)
+    {
+        khachhang = IUserService.getKhachHang(user.Id);
+    }
 }
 
     <link href="~/css/bootstrapf9e3.css?v=1.1" rel="stylesheet" type="text/css" />
@@ -14,7 +26,6 @@
     <link href="~/css/uif9e3.css?v=1.1" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="~/css/acount.css">
 <link rel="stylesheet" href="~/assets/notify/simple-notify.min.css">
-
 
     <b class="screen-overlay"></b>
     <main class="main-wrap container">
@@ -27,7 +38,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row gx-5">
-                        <jsp:include page="lefmenuaccount.jsp"></jsp:include>
+                        <partial name="../Shared/lefmenuaccount.cshtml" />
                         <div class="col-lg-9">
 
                             <section class="content-body p-xl-4">
@@ -41,7 +52,7 @@
                                                 </div> <!-- col .// -->
                                                 <div class="col-lg-12  mb-3">
                                                     <label class="form-label">Họ và tên</label>
-                                                    <input id="name-customer" class="form-control" type="text" placeholder="Nhập tại đây"> 
+                                                    <input id="name-customer" class="form-control" type="text" value="" placeholder="Nhập tại đây"> 
                                                 </div> <!-- col .// -->
                                                 <div class="col-lg-6  mb-3">
                                                     <label class="form-label">Email</label>
@@ -58,13 +69,13 @@
                                                 <div class="col-lg-12 dia-diem">
                                                     <div  class="input-item-content-box col-lg-4">
                                                         <select class="diem-diem-item col-lg-12" onChange="clickTinhThanhPho(this)" id="tinh-thanh-pho" >
-                                                            <option   value="">Tỉnh/Thành Phố</option>
+                                                            <option value="">Tỉnh/Thành Phố</option>
                                                         </select>
 
                                                     </div>
                                                     <div class="input-item-content-box col-lg-4 ">
                                                         <select class="diem-diem-item col-lg-12" onchange="clickQuanHuyen(this)"   id="quan-huyen" >
-                                                            <option   value="">Quận/Huyện</option>
+                                                            <option value="">Quận/Huyện</option>
                                                         </select>
 
                                                     </div>
@@ -151,31 +162,44 @@
         var body_el = document.body;
         body_el.className += 'dark';
     }
-
-
-
+    var userJsonJS="@jsonUser"
+    var userJS;
+    if( userJsonJS!=""){
+    userJS=@Html.Raw(jsonUser)
+    }
+    var khachHang='@khachhang'
     var array;
     var valueTinhThanhPho = "Tỉnh/Thành Phố";
     var arrayQuanHuyen;
     var valueQuanHUyen = "Quận / Huyện";
     var arrayPhuongXa;
-    $.getJSON("~/data/local.json", function (json) {
+   $.getJSON("/data/local.json", function (json) {
+
         // console.log(json); // this will show the info it in firebug console
         array = json;
-        // console.log(array[0]);
+        console.log(array[0]);
         $("#tinh-thanh-pho").html('<option value="">Tỉnh/Thành Phố</option>');
         array.forEach((element) => {
             $("#tinh-thanh-pho").append(
                 '<option value="' + element.name + '">' + element.name + "</option>"
             );
         });
-        if(@khachhang!=null){
-        $("#tinh-thanh-pho").val("@khachhang.TinhTp").change();
+            //get element class name billing_address_2 envent click
+         if(khachHang!=''){
+        $("#tinh-thanh-pho").val("@Html.Raw(khachhang.TinhTp)").change();
         clickTinhThanhPho(document.getElementById("tinh-thanh-pho"));
-        $("#quan-huyen").val("@khachhang.QuanHuyen").change();
-        $("#phuong-xa").val("@khachhang.PhuongXa").change();
+        $("#quan-huyen").val("@Html.Raw(khachhang.QuanHuyen)").change();
+        $("#phuong-xa").val("@Html.Raw(khachhang.PhuongXa)").change();
         }
+
     });
+    
+        if(khachHang!=''){
+              $("#name-customer").val("@Html.Raw(khachhang.HoTen)");
+              $("#phone-customer").val("@Html.Raw(khachhang.DienThoai)");
+              $("#email-customer").val("@Html.Raw(user.Usermail)");
+              $("#address-customer").val("@Html.Raw(khachhang.DiaChi)");
+        }
     function clickTinhThanhPho(sel) {
         valueTinhThanhPho = sel.options[sel.selectedIndex].text;
 
@@ -210,18 +234,11 @@
             $("#phuong-xa").append('<option value="' + element.name + '">' + element.name + "</option>");
         });
     }
-    //get element class name billing_address_2 envent click
-
-    if(khachHang!=null){
-    $("#name-customer").val("@khachhang.HoTen");
-    $("#phone-customer").val("@khachhang.DienThoai");
-    $("#email-customer").val("@user.Usermail");
-    $("#address-customer").val("@khachhang.DiaChi");
-    }
 
     function clickCapNhat() {
         var check = true;
-        if(@khachhang==null) check=false;
+        
+        if(khachHang=='') check=false;
         var name = $("#name-customer").val();
         var phone = $("#phone-customer").val();
         var email = $("#email-customer").val();
@@ -229,6 +246,7 @@
         var tinhTP = $("#tinh-thanh-pho").val();
         var quanHuyen = $("#quan-huyen").val();
         var phuongXa = $("#phuong-xa").val();
+        var id='@user.Id';
         console.log(name + " " + phone + " " + email + " " + address + " " + tinhTP + " " + quanHuyen + " " + phuongXa);
         if(name.trim().length > 0 && phone.trim().length > 0
             && checkEmailp(email)
@@ -239,10 +257,10 @@
 
             //ajax
             $.ajax({
-                url: "~/account",
+                url: '@Url.Action("Update", "Account")',
                 type: "POST",
                 data: {
-                    id:@user.Id,
+                    id:id,
                     name: name,
                     phone: phone,
                     email: email,
@@ -258,8 +276,13 @@
                         //refesh page
                         location.reload();
                     } else {
+                        if (data.trim() === "fail")
                         pushNotify("warning", "Cập nhật thất bại","cập nhật thông tin");
+                        else {
+                            pushNotify("warning", "Cập nhật thất bại 2","cập nhật thông tin");
+                        }
                     }
+
                 }
             });
         }
@@ -297,5 +320,3 @@
     }
 
    </script>
-
-

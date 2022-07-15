@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
+using Newtonsoft.Json;
 using WebShoppingDotnet.Helpers;
 using WebShoppingDotnet.Models;
 using WebShoppingDotnet.Views;
@@ -15,11 +16,23 @@ namespace WebShoppingDotnet.Controllers
         {
             _shopthoitrang = new ShopthoitrangContext();
         }
+        [Route("[controller]/[action]")]
+        public JsonResult SearchJsonResult(String? txt)
+        {
+
+            var matches = _shopthoitrang.Products.Where(p => p.Tensp.Contains(txt)|| p.Masp.Contains(txt));
+            var count = matches.Count();
+            List<Product> result = matches.Take(4).Include(p => p.Hinhanhs).ToList();
+            string jsonResult = JsonConvert.SerializeObject(result, Formatting.None);
+            System.Diagnostics.Debug.WriteLine("search" + jsonResult);
+
+            return Json(new{count=count,data=jsonResult});
+
+        }
         [Route("[controller]/{id?}")]
         [Route("[controller]/[action]/{id?}")]
         public async Task<IActionResult> Index(String? id, string sortOrder, int? pageNumber,String? rangePrice,String ?size)
-        {
-
+        { 
             var products = _shopthoitrang.Products
                             .Where(p => p.Trangthai == 1);
             var modelSort = new SortHelper();
@@ -123,7 +136,7 @@ namespace WebShoppingDotnet.Controllers
             ViewData["TotalItems"] = totalItems;
             int pageSize = 16;
             ViewData["pageNumber"] = pageNumber??1;
-
+            
             return View(await PaginatedList<Product>.CreateAsync(products.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
     }

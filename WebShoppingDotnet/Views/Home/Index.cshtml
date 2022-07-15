@@ -175,9 +175,6 @@
         </div>
         <div id="list-tab1">
             <div class="list-tab-content list-tab-content1">
-
-                
-
             </div>
             <div class="div-btn-tab">
                 <a class="btn btn-tab" so="1" size ="<%=productList4.size()%>">xem thêm</a>
@@ -392,16 +389,21 @@
                     id: id,
                     size: size
                 },
-                success: function (data) {
+                success: function (json) {
                     //get json
-                    var json = JSON.parse(data);
-                    console.log(data);
-                    if (json.success === 'true') {
+                    if (json.success === true) {
                         $('.cart-count.color-red').text(json.quantity);
                         pushNotify('success','thêm vào giỏi hàng thành công','Thêm Sản phẩm');
 
-                    } else {
-                        pushNotify('error','thêm vào giỏi hàng thất bại','Thêm Sản phẩm');
+                    } 
+                    else {
+                        if (json.isRedirect) {
+                            window.location.href = json.redirectUrl;
+                        } else {
+                            pushNotify('error','thêm vào giỏi hàng thất bại','Thêm Sản phẩm');
+
+                        }
+
 
                     }
                 }

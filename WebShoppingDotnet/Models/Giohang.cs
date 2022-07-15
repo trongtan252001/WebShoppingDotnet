@@ -9,7 +9,7 @@ namespace WebShoppingDotnet.Models
         public string Iduser { get; set; } = null!;
         public string Size { get; set; } = null!;
         public string Idsp { get; set; } = null!;
-        public int? Soluong { get; set; }
+        public int Soluong { get; set; }
 
         public virtual Product IdspNavigation { get; set; } = null!;
         public virtual User IduserNavigation { get; set; } = null!;

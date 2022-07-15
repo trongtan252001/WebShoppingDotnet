@@ -32,12 +32,43 @@ namespace WebShoppingDotnet.Service
         {
             return 1;
         }
+        public static bool createCustomer(Khachhang kh)
+        {
+           _shopthoitrang.Khachhangs.Add(kh);
+            if (_shopthoitrang.SaveChanges() > 0) return true;
+            else return false;
+        }
         public static bool updateInfo(InfoUser infoUser)
         {
-            User user= _shopthoitrang.Users.FirstOrDefault(u=>u.Id.Equals(infoUser.id));
+        User user= _shopthoitrang.Users.FirstOrDefault(u=>u.Id.Equals(infoUser.id));
             Khachhang khachHang = getKhachHang(user.Id);
-            
-            return true;
+            if(khachHang == null)
+            {
+                khachHang=new Khachhang();
+                khachHang.Iduser = user.Id;
+                khachHang.HoTen = infoUser.name;
+                khachHang.TinhTp = infoUser.tinhTP;
+                khachHang.QuanHuyen = infoUser.quanHuyen;
+                khachHang.PhuongXa = infoUser.phuongXa;
+                khachHang.DiaChi = infoUser.address;
+                khachHang.DienThoai = infoUser.phone;
+
+                return createCustomer(khachHang);
+            }
+            else if(user!=null && khachHang != null)
+            {
+                khachHang.HoTen = infoUser.name;
+                khachHang.TinhTp = infoUser.tinhTP;
+                khachHang.QuanHuyen=infoUser.quanHuyen;
+                khachHang.PhuongXa=infoUser.phuongXa;
+                khachHang.DiaChi = infoUser.address;
+                user.Usermail = infoUser.email;
+                khachHang.DienThoai = infoUser.phone;
+                
+            }
+            int affect = _shopthoitrang.SaveChanges();
+            if(affect > 0) return true;
+            return false;
         }
         public static string ComputeSha512Hash(string rawData)
         {

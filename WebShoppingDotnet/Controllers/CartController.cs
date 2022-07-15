@@ -1,72 +1,152 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
 using WebShoppingDotnet.Models;
+using WebShoppingDotnet.Services;
 
 namespace WebShoppingDotnet.Controllers
 {
     public class CartController : Controller
     {
         public const string CARTKEY = "cart";
-
+        CartService cartService = new CartService();
         public IActionResult Index()
         {
-            return View();
+            String jsonUser = HttpContext.Session.GetString("user");
+            List<CartDto> _cartDtoList = new List<CartDto>();
+
+            if (jsonUser == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                User user = JsonConvert.DeserializeObject<User>(jsonUser);
+                ShopthoitrangContext _shopthoitrang = new ShopthoitrangContext();
+                _cartDtoList = cartService.getListCart(user.Id);
+            }
+           
+            return View(_cartDtoList);
         }
         [HttpPost]
         public JsonResult AddCart(String? id,String? size)
         {
+            String jsonUser = HttpContext.Session.GetString("user");
+            int quantity = 0;
 
-            String[] sizeStrings = JsonConvert.DeserializeObject<String[]>(size);
-            int? quantity = 0;
-
-            var userText = HttpContext.Session.GetString("User");
-             // Xử lý đưa vào Cart ...
-             var cart = GetCartItems();
-             for (int i = 0; i < sizeStrings.Length; i++)
-             {
-                var cartitem = cart.Find(p => p.Idsp==id&&p.Size== sizeStrings[i]);
-                if (cartitem != null)
-                {
-                    // Đã tồn tại, tăng thêm 1
-                    cartitem.Soluong++;
-                }
-                else
-                {
-                    //  Thêm mới
-                    cart.Add(new Giohang() {Idsp = id,Soluong = 1,Size = sizeStrings[i]});
-                }
-            }
-             quantity = cart.Sum(item=>item.Soluong);
-             // Lưu cart vào Session
-            SaveCartSession(cart);
-
-            return Json("{\"quantity\":\""+ quantity + "\",\"success\":\"true\"}");
-        }
-        void ClearCart()
-        {
-            var session = HttpContext.Session;
-            session.Remove(CARTKEY);
-        }
-        void SaveCartSession(List<Giohang> ls)
-        {
-            var session = HttpContext.Session;
-            string jsoncart = JsonConvert.SerializeObject(ls);
-            session.SetString(CARTKEY, jsoncart);
-        }
-        List<Giohang> GetCartItems()
-        {
-
-            var session = HttpContext.Session;
-            string jsoncart = session.GetString(CARTKEY);
-            if (jsoncart != null)
+            if (jsonUser == null)
             {
-                return JsonConvert.DeserializeObject<List<Giohang>>(jsoncart);
+                
+                 return Json(new
+                 {
+                     success=false,
+                     redirectUrl = Url.Action("Index", "Login"),
+                     isRedirect = true
+                 });
             }
             else
             {
-                return new List<Giohang>();
+                ShopthoitrangContext _shopthoitrang = new ShopthoitrangContext();
+                User user = JsonConvert.DeserializeObject<User>(jsonUser);
+                String[] sizeStrings = JsonConvert.DeserializeObject<String[]>(size);
+
+                for (int i = 0; i < sizeStrings.Length; i++)
+                {
+                    var cartitem = _shopthoitrang.Giohangs.FirstOrDefault(item => item.Iduser==user.Id && item.Idsp==id&& item.Size==sizeStrings[i]);
+                    if (cartitem != null)
+                    {
+                        cartitem.Soluong = cartitem.Soluong + 1;
+                        _shopthoitrang.SaveChanges();
+                    }
+                    else
+                    {
+                        //  Thêm mới
+                        String idCart = id + sizeStrings[i];
+                        Giohang cart = new Giohang(){ Idsp = id,Iduser = user.Id, Soluong = 1, Size = sizeStrings[i] };
+                        _shopthoitrang.Giohangs.Add(cart);
+                        _shopthoitrang.SaveChanges();
+                    }
+                }
+                quantity = (int)_shopthoitrang.Giohangs.Where(item => item.Iduser == user.Id).Sum(i => i.Soluong);
             }
+
+            return Json(new {
+                success = true,
+                quantity = quantity
+            });
         }
-        
+        [HttpPost]
+        public JsonResult UpdateCart(String? id, String? size,int? quantity)
+        {
+            String jsonUser = HttpContext.Session.GetString("user");
+
+            if (jsonUser == null||size == null || id == null || quantity == null)
+            {
+                //send error ajax json
+                return Json(new
+                {
+                    status = "error",
+                    quantity = 0,
+                });
+            }
+            // Cập nhật Cart thay đổi số lượng quantity ...
+            ShopthoitrangContext _shopthoitrang = new ShopthoitrangContext();
+            User user = JsonConvert.DeserializeObject<User>(jsonUser);
+            var cartitem = _shopthoitrang.Giohangs.FirstOrDefault(item => item.Iduser == user.Id && item.Idsp== id && item.Size==size);
+
+            if (cartitem != null)
+            {
+                Product p = _shopthoitrang.Products.First(p => p.Masp == cartitem.Idsp);
+                if (cartitem.Soluong+ quantity> p.GetSize(size))
+                {
+                    cartitem.Soluong = p.GetSize(size);
+                    _shopthoitrang.SaveChanges();
+                    return Json(new
+                    {
+                        status = "outsize",
+                        quantity = cartitem.Soluong,
+                    });
+                }
+                else
+                {
+
+                    cartitem.Soluong = (int)quantity;
+                    _shopthoitrang.SaveChanges();
+                    return Json(new
+                    {
+                        status = "success",
+                        quantity = quantity,
+                    });
+                }
+            }
+
+            return Json(new
+            {
+                status = "error",
+                quantity = 0,
+            });
+        }
+        [HttpPost]
+        public String remoteCart(String? id,String? size)
+        {
+            String jsonUser = HttpContext.Session.GetString("user");
+
+            if (jsonUser == null|| id == null)
+            {
+                //send error ajax json
+                return "error";
+            }
+            // Cập nhật Cart thay đổi số lượng quantity ...
+            ShopthoitrangContext _shopthoitrang = new ShopthoitrangContext();
+            User user = JsonConvert.DeserializeObject<User>(jsonUser);
+            var cartitem = _shopthoitrang.Giohangs.FirstOrDefault(item => item.Iduser == user.Id && item.Idsp == id && item.Size == size);
+            var gioHang = _shopthoitrang.Giohangs.FirstOrDefault(item =>
+                item.Iduser == user.Id && item.Idsp == id && item.Size == size);
+            _shopthoitrang.Giohangs.Remove(gioHang);
+            _shopthoitrang.SaveChanges();
+            return "success";
+        }
+
     }
 }

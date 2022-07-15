@@ -6,6 +6,7 @@
 
 }
 <link rel="stylesheet" href="~/css/search.css">
+<link rel="stylesheet" href="~/assets/modal/modal.css">
 
 <section id="main-search" class="margin-top-mobile">
     <div class="container">
@@ -107,12 +108,12 @@
                             if (i == Model.PageIndex)
                             {
                                 <a asp-action="Index"
-                           asp-route-sortOrder="@ViewData["CurrentSort"]"
-                           asp-route-size="@ViewData["size"]"
-                           asp-route-rangePrice="@ViewData["rangePrice"]"
-                           asp-route-pageNumber="@i"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-size="@ViewData["size"]"
+                                   asp-route-rangePrice="@ViewData["rangePrice"]"
+                                   asp-route-pageNumber="@i"
 
-                           id="per-page" class="page active">
+                                   id="per-page" class="page active">
                                     @i
                                 </a>
 
@@ -121,12 +122,12 @@
                             else
                             {
                                 <a asp-action="Index"
-                           asp-route-sortOrder="@ViewData["CurrentSort"]"
-                           asp-route-size="@ViewData["size"]"
-                           asp-route-rangePrice="@ViewData["rangePrice"]"
-                           asp-route-pageNumber="@i"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-size="@ViewData["size"]"
+                                   asp-route-rangePrice="@ViewData["rangePrice"]"
+                                   asp-route-pageNumber="@i"
 
-                           id="per-page" class="page">
+                                   id="per-page" class="page">
                                     @i
                                 </a>
                             }
@@ -146,6 +147,48 @@
         </div>
     </div>
 </section>
+<div class="modal-custom" id="modal-cart">
+    <div class="modal-dialog-custom">
+        <div class="modal-content-custom">
+            <div class="modal-slide">
+                <img class="modal-img" src="" alt="">
+
+            </div>
+            <div class="modal-body-custom">
+                <h4 class="modal-title">
+                   
+                </h4>
+                <h4 class="modal-id">
+                    
+                </h4>
+                <div class="modal-price">
+                    <span class="slide-collection-price">
+                        
+                    </span>
+                    <span class="current-price">
+                        
+                    </span>
+                </div>
+                <p class="color-product modal-text"><span class="modal-text-bold">Màu sắc:</span><span class="product-color">trắng</span></p>
+                <div class="product-size modal-text">
+                    <p class="modal-text-bold">Kích cỡ:</p>
+                    <ul class="product-list-sizes">
+                        <li class="product-list-size">S</li>
+                        <li class="product-list-size">M</li>
+                        <li class="product-list-size">L</li>
+                        <li class="product-list-size">XL</li>
+                    </ul>
+                </div>
+                <a class="btn-modal">THÊM VÀO GIỎ HÀNG</a>
+                <a href="#" class="link-continue">Xem chi tiết đầy đủ</a>
+            </div>
+            <div class="icon-close-modal" onclick="closeModal()">
+                <i class="fa-solid fa-xmark icon-modal"></i>
+            </div>
+        </div>
+
+    </div>
+</div>
 @section Scripts
 {
     <script>
@@ -165,7 +208,7 @@
                 window.location.replace("?sortOrder=" + sortSelect.value
                     +"&rangePrice="+rangePrice
                     +"&size="+size
-                +"&pageNumber="+1
+                    +"&pageNumber="+1
                 );
             });
         var rad = document.myForm.all;
@@ -214,5 +257,165 @@
         }
 
     </script>
+
     <script src="~/script/search.js"></script>
+     <script>
+        function pushNotify(status, message, title) {
+            new Notify({
+                status: status,
+                title: title,
+                text: message,
+                effect: 'fade',
+                speed: 300,
+                customClass: '',
+                customIcon: '',
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 2000,
+                gap: 20,
+                distance: 20,
+                type: 1,
+                position: 'right top',
+                customWrapper: '',
+            })
+        }
+        function openModal(element) {
+
+            $('.product-list-sizes .product-list-size').removeClass('crossed');
+            $('.product-list-sizes .product-list-size').removeClass('active');
+
+
+            var id =element.getAttribute('data-product-id');
+            var name =element.getAttribute('data-product-name');
+            var price =element.getAttribute('data-product-price');
+            var img =element.getAttribute('data-product-img');
+            var sell =element.getAttribute('data-product-sell');
+            var sizeS =element.getAttribute('data-product-size-s');
+            var sizeL =element.getAttribute('data-product-size-l');
+            var sizeM =element.getAttribute('data-product-size-m');
+            var sizeXL =element.getAttribute('data-product-size-xl');
+            var color =element.getAttribute('data-product-color');
+            // alert(sizeS+" "+sizeM+" "+sizeL+" "+sizeXL);
+
+            var listbtnSize = document.getElementsByClassName('product-list-size');
+            if(parseInt(sizeS) <= 0) {
+                listbtnSize[0].classList.add('crossed');
+
+
+            }
+            if(parseInt(sizeM) <= 0) {
+                listbtnSize[1].classList.add('crossed');
+            }
+            if(parseInt(sizeL) <= 0) {
+                listbtnSize[2].classList.add('crossed');
+            }
+            if(parseInt(sizeXL) <= 0) {
+                listbtnSize[3].classList.add('crossed');
+            }
+
+
+
+
+            $('.modal-img').attr('src',img);
+            $('.modal-title').text(name);
+            $('.modal-id').text(id);
+            if(sell > 0){
+                $('.modal-custom .slide-collection-price').text(formatNumber(price-sell*price)+'đ');
+                $('.modal-custom .current-price').text(formatNumber(price)+'đ');
+            }else{
+                $('.modal-custom .slide-collection-price').text(formatNumber(price)+'đ');
+                $('.modal-custom .current-price').text('');
+            }
+            $('.product-color').text(color);
+            modalCart.style.display = "flex";
+        }
+        function formatNumber(num) {
+            //convert double to int
+            num =parseInt(num);
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+        }
+        
+
+        //modal close dom
+        const modalCart = document.getElementById('modal-cart');
+        function closeModal() {
+            modalCart.style.display = "none";
+        }
+        window.onload = function () {
+            const modalCart = document.getElementById('modal-cart');
+            function closeModal() {
+                modalCart.style.display = "none";
+            }
+            function openModal(position) {
+                modalCart.style.display = "flex";
+
+            }
+            //modal close over modal
+            //modal close on click outside
+            modalCart.addEventListener('click', function (event) {
+                if (event.target === modalCart) {
+                    modalCart.style.display = "none";
+                }
+            });
+            //windowns load dom
+            document.querySelectorAll('.product-list-size').forEach(element => {
+                element.addEventListener('click', function () {
+                    element.classList.toggle('active');
+                });
+            });
+        }
+        
+        $('.btn-modal').click(function () {
+            var sizes = document.getElementsByClassName('product-list-size');
+            //get class active
+            var arrSize = [];
+            for (var i = 0; i < sizes.length; i++) {
+                if (sizes[i].classList.contains('active') && sizes[i].classList.contains('crossed') == false) {
+                    var size = sizes[i].innerText;
+                    arrSize.push(size);
+                }
+            }
+            if(arrSize.length == 0){
+                pushNotify('warning','Vui lòng chọn size','chọn size');
+                return;
+            }
+            addCart( arrSize);
+
+        });
+        function addCart(arrSize) {
+            var id = $('.modal-id').text();
+            closeModal();
+            //convert array to json
+            var size = JSON.stringify(arrSize);
+            //ajax
+            $.ajax({
+                url: '@Url.Action("AddCart","Cart")',
+                type: 'POST',
+                data: {
+                    id: id,
+                    size: size
+                },
+                success: function (json) {
+                    //get json
+                    if (json.success === true) {
+                        $('.cart-count.color-red').text(json.quantity);
+                        pushNotify('success','thêm vào giỏi hàng thành công','Thêm Sản phẩm');
+
+                    } 
+                    else {
+                        if (json.isRedirect) {
+                            window.location.href = json.redirectUrl;
+                        } else {
+                            pushNotify('error','thêm vào giỏi hàng thất bại','Thêm Sản phẩm');
+
+                        }
+
+
+                    }
+                }
+            });
+
+        }
+    </script>
 }
