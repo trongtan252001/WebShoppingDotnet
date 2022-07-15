@@ -9,7 +9,7 @@
     <div class="content-header">
         <h2 class="content-title"> Bảng điều khiển </h2>
         <div>
-            <a href="#" class="btn btn-primary">Tạo báo cáo</a>
+            @*<a href="#" class="btn btn-primary">Tạo báo cáo</a>*@
         </div>
     </div>
     <div class="row">
@@ -18,7 +18,7 @@
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-primary-light"><i class="text-primary material-icons md-monetization_on"></i></span>
                     <div class="text">
-                        <h6 class="mb-1">Tổng doanh thu</h6>  <span>2,474,480đ</span>
+                        <h6 class="mb-1">Tổng doanh thu</h6>  <span>@ProductFotmat.formatPrice((double)ViewData["tdt"])đ</span>
                     </div>
                 </article>
 
@@ -29,7 +29,7 @@
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-success-light"><i class="text-success material-icons md-local_shipping"></i></span>
                     <div class="text">
-                        <h6 class="mb-1">Tổng đơn hàng</h6> <span>2</span>
+                        <h6 class="mb-1">Tổng đơn hàng</h6> <span>@ViewData["thd"]</span>
                     </div>
                 </article>
             </div> <!-- card end// -->
@@ -39,7 +39,7 @@
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-warning-light"><i class="text-warning material-icons md-shopping_basket"></i></span>
                     <div class="text">
-                        <h6 class="mb-1">Tổng sản phẩm</h6>  <span>22,315</span>
+                        <h6 class="mb-1">Tổng sản phẩm</h6>  <span>@ProductFotmat.formatPrice((int)ViewData["tsp"])</span>
 
                     </div>
                 </article>
@@ -50,7 +50,7 @@
                 <article class="icontext">
                     <span class="icon icon-sm rounded-circle bg-warning-light"><i class="text-danger material-icons md-supervised_user_circle"></i></span>
                     <div class="text">
-                        <h6 class="mb-1">Tổng khách hàng</h6>  <span>4</span>
+                        <h6 class="mb-1">Tổng khách hàng</h6>  <span>@ProductFotmat.formatPrice((int)ViewData["tkh"])</span>
                     </div>
                 </article>
             </div> <!--  end// -->
@@ -113,35 +113,27 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     @{var index = 0;}
-                 @foreach (var item1 in (List<User>) ViewData["hd"])
+                 @foreach (var item1 in (List<HoaDonS>) ViewData["hd"])
                  {
-                        foreach (var item in item1.Hoadons.ToList())
-                        {
+                       
                             index++;
-                            if(index > 10)
-                            {
-                                break;
-                            }
+                           
 
                             <tr>
                         <td>@index</td>
-                        <td><b>@item1.Username</b></td>
-                        <td>@item1.Usermail</td>
-                        <td>@ProductFotmat.formatPrice(item.TongTien) đ</td>
-                        <td><span class="badge rounded-pill @ProductFotmat.getClassTrangThai2(item.TrangThai)">@ProductFotmat.getTrangThai2(item.TrangThai)</span></td>
-                        <td>@item.NgayDatHang</td>
+                        <td><b>@item1.user.Username</b></td>
+                        <td>@item1.user.Usermail</td>
+                        <td>@ProductFotmat.formatPrice(item1.hoadon.TongTien) đ</td>
+                        <td><span class="badge rounded-pill @ProductFotmat.getClassTrangThai2(item1.hoadon.TrangThai)">@ProductFotmat.getTrangThai2(item1.hoadon.TrangThai)</span></td>
+                        <td>@item1.hoadon.NgayDatHang</td>
                         <td class="text-end">
-                            <a href="" class="btn btn-light">Chi tiết</a>
+                            <a href="~/OrderAdmin/detail?m=@item1.hoadon.Mahoadon" class="btn btn-light">Chi tiết</a>
 
                         </td>
                     </tr>
-                        }
-                        if(index > 10)
-                            {
-                                break;
-                            }
+                         
+                     }
 
-                 }
                     
 
 
