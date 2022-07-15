@@ -21,8 +21,16 @@ namespace WebShoppingDotnet.Controllers
                 string jsonUser = JsonConvert.SerializeObject(user);
                /* System.Diagnostics.Debug.WriteLine(jsonUser);*/
                 HttpContext.Session.SetString("user", jsonUser);
-                
-                return RedirectToAction("Index", "Home");
+                if (user.Role==0)
+                {
+                    return RedirectToAction("Index", "Dashboard");
+
+
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
             ViewBag.userName = userName;
             
