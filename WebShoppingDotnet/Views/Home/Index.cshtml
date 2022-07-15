@@ -87,7 +87,7 @@
 
                 <!-- btn -->
                 <div>
-                    <a class="btn">
+                    <a class="btn" asp-action="Index" asp-controller="Collections">
                         xem thêm
                     </a>
                 </div>
@@ -126,7 +126,7 @@
 
                 <!-- btn -->
                 <div>
-                    <a href="/Shopping/search?id=<%=boSuaTap2.getId()%>&res=bst&name=<%=boSuaTap2.getName()%>" class="btn">
+                    <a asp-action="Index" asp-controller="Collections" class="btn">
                         xem thêm
                     </a>
                 </div>
