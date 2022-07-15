@@ -15,7 +15,6 @@ namespace WebShoppingDotnet.Controllers
         public IActionResult Login(string userName, string pass)
         {
             User user = IUserService.checkLogin(userName, pass);
-            
             if (user != null)
             {
                 Khachhang khachhang=IUserService.getKhachHang(user.Id);

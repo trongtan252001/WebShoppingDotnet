@@ -1,4 +1,7 @@
-﻿namespace WebShoppingDotnet.common
+﻿using System.Globalization;
+using WebShoppingDotnet.Models;
+
+namespace WebShoppingDotnet.common
 {
     public class Order
     {
@@ -41,6 +44,29 @@
 
         public Order()
         {
+        }
+        public Order getOrder(Hoadon hoaDon,Khachhang khachHang,User user)
+        {
+            this.orderId = hoaDon.Mahoadon;
+            this.userId = hoaDon.Iduser;
+            this.orderDate = hoaDon.NgayDatHang;
+            this.status = hoaDon.TrangThai;
+            this.ngayNhanHang = hoaDon.NgayNhanHang;
+            this.soNgayDuKien = hoaDon.SoNgayDuKien;
+            this.totalPrice = hoaDon.TongTien;
+            this.email = user.Usermail;
+            this.name = khachHang.HoTen;
+            this.phone = khachHang.DienThoai;
+            this.address = khachHang.DiaChi;
+            this.tinhTP = khachHang.TinhTp;
+            this.quanHuyen = khachHang.QuanHuyen;
+            this.phuongXa = khachHang.PhuongXa;
+            return this ;
+        }
+        public String formatDate(DateTime? date)
+        {
+            string parsedDate=string.Format("{0:dd-MM-yyyy}", date);
+            return parsedDate;
         }
     }
 }
