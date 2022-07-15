@@ -1,4 +1,5 @@
-﻿using WebShoppingDotnet.common;
+﻿
+using WebShoppingDotnet.common;
 using WebShoppingDotnet.Models;
 
 namespace WebShoppingDotnet.Services
@@ -9,36 +10,82 @@ namespace WebShoppingDotnet.Services
         public static int getSumBillUser(String idUser, String status)
         {
             int total = 0;
-            if(status.Equals("all"))
-                _shopthoitrang.Hoadons.Count(b => b.Iduser.Equals(idUser));
-            total = _shopthoitrang.Hoadons.Count(b => b.Iduser.Equals(idUser) && b.TrangThai.Equals(status));
+            if (status.Equals("all"))
+                total = _shopthoitrang.Hoadons.Count(b => b.Iduser.Equals(idUser));
+            else total = _shopthoitrang.Hoadons.Count(b => b.Iduser.Equals(idUser) && b.TrangThai == (Int32.Parse(status)));
             return total;
         }
         public static Order getBill(String idOrder)
         {
             Order order = new Order();
-            Hoadon hoaDon=_shopthoitrang.Hoadons.FirstOrDefault(b=>b.Mahoadon.Equals(idOrder));
-            if(hoaDon != null)
+            Hoadon hoaDon = _shopthoitrang.Hoadons.FirstOrDefault(b => b.Mahoadon.Equals(idOrder));
+            if (hoaDon != null)
             {
                 User user = _shopthoitrang.Users.FirstOrDefault(u => u.Id.Equals(hoaDon.Iduser));
                 Khachhang khachHang = _shopthoitrang.Khachhangs.FirstOrDefault(c => c.Iduser.Equals(hoaDon.Iduser));
-                order = new Order(hoaDon.Mahoadon, hoaDon.Iduser, hoaDon.NgayDatHang, hoaDon.TrangThai, hoaDon.NgayNhanHang,
-                    hoaDon.SoNgayDuKien, hoaDon.TongTien, user.Usermail, khachHang.HoTen, khachHang.DienThoai, khachHang.DiaChi, khachHang.TinhTp
-                    , khachHang.QuanHuyen, khachHang.PhuongXa);
+                order.getOrder(hoaDon, khachHang, user);
             }
-            
+
             return order;
         }
         public static List<Cthoadon> getCTHoaDon(String idBill)
         {
             return new List<Cthoadon>();
         }
-        public static List<Order> getBillUser(int limit, int start, String idUser, String status)
+        public static List<Order> getBillUser(int limit, int skip, String idUser, String status)
         {
-            List<Hoadon> hoadons=_shopthoitrang.Hoadons.Where(h => h.Iduser.Equals(idUser)).ToList();
-            List<Order> orders = new List<Order>();
-            return null;
-        }
+            List<Hoadon> hoadons = new List<Hoadon>();
+            if (status.Equals("all"))
+            {
+                hoadons = _shopthoitrang.Hoadons.Where(h => h.Iduser.Equals(idUser)).OrderBy(h => h.NgayDatHang).Skip(skip).Take(limit).ToList();
 
+
+            }
+
+            else
+                hoadons = _shopthoitrang.Hoadons.Where(h => h.Iduser.Equals(idUser) && h.TrangThai == (Int32.Parse(status))).OrderBy(h => h.NgayDatHang).Skip(skip).Take(limit).ToList();
+            User user = _shopthoitrang.Users.FirstOrDefault(u => u.Id.Equals(idUser));
+            Khachhang khachHang = _shopthoitrang.Khachhangs.FirstOrDefault(c => c.Iduser.Equals(idUser));
+            List<Order> orders = new List<Order>();
+            for (int i = 0; i < hoadons.Count; i++)
+            {
+                Order order = new Order();
+                order.getOrder(hoadons.ElementAt(i), khachHang, user);
+                orders.Add(order);
+            }
+            return orders;
+        }
+        public static int cancelOrder(string orderID)
+        {
+
+            Hoadon hoadon = _shopthoitrang.Hoadons.FirstOrDefault(h => h.Mahoadon.Equals(orderID));
+
+            hoadon.TrangThai = 1;
+
+            return _shopthoitrang.SaveChanges();
+        }
+        public static List<DetailOrder> getDetail(string orderID)
+        {
+
+
+            List<Cthoadon> list = _shopthoitrang.Cthoadons.Where(d => d.MaHd.Equals(orderID)).ToList();
+            List<DetailOrder> orders = new List<DetailOrder>();
+            for (int i = 0; i < list.Count; i++)
+            {
+                Product p = _shopthoitrang.Products.FirstOrDefault(p => p.Masp.Equals(list.ElementAt(i).MaSp));
+                string hinhanh = _shopthoitrang.Hinhanhs.OrderBy(i => i.Url).FirstOrDefault(i => i.Idsp.Equals(p.Masp)).Url;
+                DetailOrder dod = new DetailOrder(list.ElementAt(i), hinhanh, p.Tensp);
+                orders.Add(dod);
+            }
+            System.Diagnostics.Debug.WriteLine(list.Count + orderID);
+            return orders;
+
+        }
+        public static int receive(string orderID)
+        {
+            Hoadon hoadon = _shopthoitrang.Hoadons.FirstOrDefault(h => h.Mahoadon.Equals(orderID));
+            hoadon.NgayNhanHang = DateTime.Now;
+            return _shopthoitrang.SaveChanges();
+        }
     }
 }

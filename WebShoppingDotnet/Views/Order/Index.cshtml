@@ -1,8 +1,20 @@
-﻿@*
+﻿@using WebShoppingDotnet.common
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Order> orders = ViewBag.orders;
+    int page = ViewBag.page;
+    string status=ViewBag.status;
 }
+@functions{
+    public string formatPrice(double price){
+        price = @Math.Round(price, 0);
+        return String.Format("{0:N1}", price);
+    }
+}
+<<<<<<< HEAD
 @* <%@ page import="java.util.List" %> *@
 @* <%@ page import="com.example.projectwebshopping.model.admin.Order" %> *@
 @* <%@ page import="com.example.projectwebshopping.model.client.Product" %> *@
@@ -13,18 +25,21 @@
 @*     int pagenumber = (int) request.getAttribute("page"); *@
 @*     String xemTrangThaiDonHang = (String) request.getAttribute("xemTrangThaiDonHang"); *@
 @* %> *@
+=======
 
-<link href="<%=request.getContextPath()%>/css/bootstrapf9e3.css?v=1.1" rel="stylesheet"/>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/admin/fonts/material-icon/css/round.css"/>
+>>>>>>> dev-hau
+
+<link href="~/css/bootstrapf9e3.css?v=1.1" rel="stylesheet"/>
+<link rel="stylesheet" href="~/admin/fonts/material-icon/css/round.css"/>
 <!-- custom style -->
-<link href="<%=request.getContextPath()%>/css/uif9e3.css?v=1.1" rel="stylesheet"/>
-<link href="<%=request.getContextPath()%>/css/responsivef9e3.css?v=1.1" rel="stylesheet"/>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/orders.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/acount.css">
+<link href="~/css/uif9e3.css?v=1.1" rel="stylesheet"/>
+<link href="~/css/responsivef9e3.css?v=1.1" rel="stylesheet"/>
+<link rel="stylesheet" href="~/css/orders.css">
+<link rel="stylesheet" href="~/css/acount.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
       crossorigin="anonymous" referrerpolicy="no-referrer"/>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/notify/simple-notify.min.css">
+<link rel="stylesheet" href="~/assets/notify/simple-notify.min.css">
 
 
 <b class="screen-overlay"></b>
@@ -38,17 +53,17 @@
         <div class="card">
             <div class="card-body">
                 <div class="row gx-5">
-                    <jsp:include page="lefmenuaccount.jsp"></jsp:include>
+                    <partial name="../Shared/lefmenuaccount.cshtml" />
                     <div class="col-lg-9">
 
                         <section class="content-body p-xl-4 ">
                             <div class="status-bar">
-                                <a href="<%=request.getContextPath()%>/order?status=all" class="status-bar-all">Tất Cả</a>
-                                <a href="<%=request.getContextPath()%>/order?status=0" class="status-bar-0">Chờ Xác Nhận</a>
-                                <a href="<%=request.getContextPath()%>/order?status=2" class="status-bar-2">Đã Xác Nhận</a>
-                                <a href="<%=request.getContextPath()%>/order?status=3" class="status-bar-3">Đang Giao</a>
-                                <a href="<%=request.getContextPath()%>/order?status=4" class="status-bar-4">Đã Nhận</a>
-                                <a href="<%=request.getContextPath()%>/order?status=1" class="status-bar-1">Đã Hủy</a>
+                                <a href="~/order?status=all" class="status-bar-all">Tất Cả</a>
+                                <a href="~/order?status=0" class="status-bar-0">Chờ Xác Nhận</a>
+                                <a href="~/order?status=2" class="status-bar-2">Đã Xác Nhận</a>
+                                <a href="~/order?status=3" class="status-bar-3">Đang Giao</a>
+                                <a href="~/order?status=4" class="status-bar-4">Đã Nhận</a>
+                                <a href="~/order?status=1" class="status-bar-1">Đã Hủy</a>
                             </div>
                             <div class="view-mode">
                                 <div class="search col-lg-12">
@@ -63,17 +78,17 @@
                                 </div>
                             </div>
                             <ul class="list-orders col-lg-12">
-                                <%
-                                    for (int i = 0; i < orders.size(); i++) {
-                                        Order order = orders.get(i);
-                                        if (order.getStatus() == 0) {
-                                %>
-                                <!--Đơn Hàng 3-->
+                                @for(int i = 0; i < orders.Count; i++)
+                                {
+                                    Order order = orders.ElementAt(i);
+                                    if (order.status == 0)
+                                    {
+                                        <!--Đơn Hàng 3-->
                                 <li class="order col-lg-12">
                                     <div class="order-status">
                                         <div class="order-status-infor">
 
-                                            <img src="<%=request.getContextPath()%>/img/package-box.png" alt=""
+                                            <img src="../img/package-box.png" alt=""
                                                  class="status-image">
                                             <p class="status__text">Đang Xử Lý</p>
                                         </div>
@@ -88,36 +103,35 @@
                                     <div class="order-summary">
                                         <div class="order-infor">
                                             <p class="order-date">Ngày Đặt
-                                                Hàng: <%=order.formatDate(order.getOrderDate())%>
+                                                Hàng: @order.formatDate(order.orderDate)
                                             </p>
                                             <p class="order-id">Mã Đơn Hàng:
-                                            <p class="order-id-item"><%=order.getOrderId()%>
-                                            </p></p>
+                                            <p class="order-id-item">@order.orderId</p></p>
 
                                         </div>
                                         <div class="order-footer">
                                             <div class="order-total-price">
                                                 Tổng
-                                                Tiền: <%=Product.formatMoney(Double.parseDouble(order.getTotalPrice() + ""))%>
+                                                Tiền: @formatPrice(order.totalPrice)
                                                 đ
                                             </div>
                                             <div class="button-group">
-                                                <a style="cursor: pointer" class="cancel-button cancel-button-xu-ly" idOrder="<%=order.getOrderId()%>">
-                                                    <img src="<%=request.getContextPath()%>/img/exclamation.png" alt="">
+                                                <a style="cursor: pointer" class="cancel-button cancel-button-xu-ly" idOrder="@order.orderId">
+                                                    <img src="../img/exclamation.png" alt="">
                                                     Hủy</a>
                                             </div>
                                         </div>
 
                                     </div>
-                                </li>
-                                <%}%>
-
-                                <%if (order.getStatus() == 1) {%>
-                                <!--Đơn Hàng 2-->
+                               </li>
+                                    }
+                                    else if(order.status == 1)
+                                    {
+                                         <!--Đơn Hàng 2-->
                                 <li class="order col-lg-12">
                                     <div class="order-status">
                                         <div class="order-status-infor">
-                                            <img src="<%=request.getContextPath()%>/img/traffic-signal.png" alt=""
+                                            <img src="../img/traffic-signal.png" alt=""
                                                  class="status-image">
                                             <p class="status__text">Đã Hủy</p>
                                         </div>
@@ -133,20 +147,20 @@
                                     <div class="order-summary">
                                         <div class="order-infor">
                                             <p class="order-date">Ngày Đặt
-                                                Hàng: <%=order.formatDate(order.getOrderDate())%>
+                                                Hàng:  @order.formatDate(order.orderDate)
                                             </p>
                                             <p class="order-receive-date">Ngày
-                                                Hủy: <%=order.formatDate(order.getNgayNhanHang())%>
+                                                Hủy:  @order.formatDate(order.ngayNhanHang)
                                             </p>
                                             <p class="order-id">Mã Đơn Hàng:
-                                            <p class="order-id-item"><%=order.getOrderId()%>
+                                            <p class="order-id-item">@order.orderId
                                             </p></p>
 
                                         </div>
                                         <div class="order-footer">
                                             <div class="order-total-price">
                                                 Tổng Tiền:
-                                                <s><%=Product.formatMoney(Double.parseDouble(order.getTotalPrice() + ""))%>
+                                                <s>@formatPrice(order.totalPrice)
                                                     đ</s>
                                             </div>
                                             <div class="button-group">
@@ -155,14 +169,14 @@
                                         </div>
 
                                     </div>
-                                </li>
-                                <%}%>
-                                <%if (order.getStatus() == 2) {%>
-                                <!--Đơn Hàng 4-->
-                                <li class="order col-lg-12">
+                                        </li>
+                                    }
+                                    else if(order.status == 2)
+                                    {
+                                        <li class="order col-lg-12">
                                     <div class="order-status">
                                         <div class="order-status-infor">
-                                            <img src="<%=request.getContextPath()%>/img/fast-delivery.png" alt=""
+                                            <img src="../img/fast-delivery.png" alt=""
                                                  class="status-image">
                                             <p class="status__text">Đã xác nhận</p>
 
@@ -177,38 +191,36 @@
                                     <div class="order-summary">
                                         <div class="order-infor">
                                             <p class="order-date">Ngày Đặt
-                                                Hàng: <%=order.formatDate(order.getOrderDate())%>
+                                                Hàng: @order.formatDate(order.orderDate)
                                             </p>
                                             <p class="order-receive-date">Ngày Nhận Hàng Dự
-                                                Kiến: <%=order.getSoNgayDuKien()%>
+                                                Kiến: @order.soNgayDuKien
                                             </p>
                                             <p class="order-id">Mã Đơn Hàng:
-                                            <p class="order-id-item"><%=order.getOrderId()%>
-                                            </p></p>
+                                            <p class="order-id-item">@order.orderId</p></p>
                                         </div>
                                         <div class="order-footer">
                                             <div class="order-total-price">
                                                 Tổng
-                                                Tiền: <%=Product.formatMoney(Double.parseDouble(order.getTotalPrice() + ""))%>
+                                                Tiền: @formatPrice(order.totalPrice)
                                                 đ
                                             </div>
                                             <div class="button-group">
-                                                <a style="cursor: pointer" class="cancel-button cancel-button-da-xac-nhan" idOrder="<%=order.getOrderId()%>">
-                                                    <img src="<%=request.getContextPath()%>/img/exclamation.png" alt="">
+                                                <a style="cursor: pointer" class="cancel-button cancel-button-da-xac-nhan" idOrder="@order.orderId">
+                                                    <img src="../img/exclamation.png" alt="">
                                                     Hủy</a>
                                             </div>
                                         </div>
 
                                     </div>
                                 </li>
-                                <%}%>
-
-                                <%if (order.getStatus() == 3) {%>
-                                <!--Đơn Hàng 4-->
-                                <li class="order col-lg-12">
+                                    }
+                                    else if(order.status == 3)
+                                    {
+                                   <li class="order col-lg-12">
                                     <div class="order-status">
                                         <div class="order-status-infor">
-                                            <img src="<%=request.getContextPath()%>/img/fast-delivery.png" alt=""
+                                            <img src="../img/fast-delivery.png" alt=""
                                                  class="status-image">
                                             <p class="status__text">Đang Vận Chuyển</p>
 
@@ -224,37 +236,35 @@
                                     <div class="order-summary">
                                         <div class="order-infor">
                                             <p class="order-date">Ngày Đặt
-                                                Hàng: <%=order.formatDate(order.getOrderDate())%>
+                                                Hàng:@order.formatDate(order.orderDate)
                                             </p>
                                             <p class="order-receive-date">Ngày Nhận Hàng Dự
-                                                Kiến: <%=order.getSoNgayDuKien()%>
+                                                Kiến: @order.soNgayDuKien
                                             </p>
                                             <p class="order-id">Mã Đơn Hàng:
-                                            <p class="order-id-item"><%=order.getOrderId()%>
-                                            </p></p>
+                                            <p class="order-id-item">@order.orderId</p></p>
                                         </div>
                                         <div class="order-footer">
                                             <div class="order-total-price">
                                                 Tổng
-                                                Tiền: <%=Product.formatMoney(Double.parseDouble(order.getTotalPrice() + ""))%>
+                                                Tiền: @formatPrice(order.totalPrice)
                                                 đ
                                             </div>
                                             <div class="button-group">
-                                                <a style="cursor: pointer" class="buy-again buy-again-nhan-hang" idOrder="<%=order.getOrderId()%>">Nhận hàng</a>
+                                                <a style="cursor: pointer" class="buy-again buy-again-nhan-hang" idOrder="@order.orderId">Nhận hàng</a>
 
                                             </div>
                                         </div>
 
                                     </div>
                                 </li>
-                                <%}%>
-
-                                <%if (order.getStatus() == 4) {%>
-                                <!--Đơn Hàng 1-->
-                                <li class="order col-lg-12">
+                                    }
+                                    else if(order.status == 4)
+                                    {
+                                  <li class="order col-lg-12">
                                     <div class="order-status">
                                         <div class="order-status-infor">
-                                            <img src="<%=request.getContextPath()%>/img/package.png" alt=""
+                                            <img src="../img/package.png" alt=""
                                                  class="status-image">
                                             <p class="status__text">Đã Nhận Được Hàng</p>
                                         </div>
@@ -269,19 +279,18 @@
                                     <div class="order-summary">
                                         <div class="order-infor">
                                             <p class="order-date">Ngày Đặt
-                                                Hàng: <%=order.formatDate(order.getOrderDate())%>
+                                                Hàng: @order.formatDate(order.orderDate)
                                             </p>
                                             <p class="order-receive-date">Ngày Nhận
-                                                Hàng: <%=order.formatDate(order.getNgayNhanHang())%>
+                                                Hàng:@order.soNgayDuKien
                                             </p>
                                             <p class="order-id">Mã Đơn Hàng:
-                                            <p class="order-id-item"><%=order.getOrderId()%>
-                                            </p></p>
+                                            <p class="order-id-item">@order.orderId</p></p>
                                         </div>
                                         <div class="order-footer">
                                             <div class="order-total-price">
                                                 Tổng
-                                                Tiền: <%=Product.formatMoney(Double.parseDouble(order.getTotalPrice() + ""))%>
+                                                Tiền:  @formatPrice(order.totalPrice)
                                                 đ
                                             </div>
                                             <div class="button-group">
@@ -289,22 +298,22 @@
                                         </div>
                                     </div>
                                 </li>
-                                <%}%>
-                                <%}%>
-
+                                    }
+                                }
 
                             </ul>
                             <div class="more-order">
                                 <div class="pagination">
                                     <a class="page-item-pe" href="#">&laquo;</a>
-                                    <%for (int i = 1; i <= pagenumber;i++){
-                                        if(i == 1){
-                                    %>
-                                    <a class="active page-item" href="#"><%=i%></a>
-                                    <%}else{%>
-                                    <a href="#" class="page-item"><%=i%></a>
-                                    <%}%>
-                                    <%}%>
+                                    @for (int i = 1; i <= page;i++){
+                                        if(i == 1)
+                                        {
+                                            @:<a class="active page-item" href="#">@i</a>
+                                        }
+                                        else {
+                                           @:<a href="#" class="page-item">@i</a>
+                                           }
+                                    }
                                     <a class="page-item-next" href="#">&raquo;</a>
                                 </div>
                             </div>
@@ -326,6 +335,8 @@
         var body_el = document.body;
         body_el.className += 'dark';
     }
+    var pagenumber = '@(page)';
+    var xemTrangThaiDonHang = '@status';
    show();
     function show(){
         let listShow = document.querySelectorAll('.order')
@@ -335,6 +346,7 @@
                 var parent = this.closest('.order').querySelector('.order-details');
                 var idHoaDon = this.closest('.order').querySelector('.order-id-item').innerHTML;
                 if (clickItemShow) {
+                    console.log("hoa don "+ idHoaDon)
                     getItemOrderDetails(parent, idHoaDon);
                 }
             })
@@ -343,30 +355,33 @@
 
     function getItemOrderDetails(parent, idHoaDon) {
         parent.innerHTML = '';
+
+        console.log("fdfs- "+idHoaDon)
         //send ajax jquery
             $.ajax({
-                url: '<%=request.getContextPath()%>/order',
+                url: '@Url.Action("Detail", "Order")',
                 type: 'POST',
                 data: {
-                    idHoaDon: idHoaDon
+                    orderID: idHoaDon
                 },
                 success: function (data) {
-                    // console.log(data);
-                    var listItem = data;
+                     console.log(data);
+                    var listItem = JSON.parse(data);
+                    console.log(listItem)
 
                     for (var i = 0; i < listItem.length; i++) {
                         var item = listItem[i];
                         var itemHtml = '<div class="order-detail">' +
                             '               <div class="product-infor">' +
-                            '                <img src="<%=request.getContextPath()%>'+item.urlImg+'" alt="" class="product-image">' +
+                            '                <img src="..'+item.urlImg+'" alt="" class="product-image">' +
                             '                <div class="product-info-general">' +
                             '                <p class="product-name">'+item.name+'</p>' +
-                            '                 <p class="product-size">Size: '+item.size+'</p>' +
-                            '                  <p class="product-quantity">Số Lượng: '+item.soLuong+'</p>' +
+                            '                 <p class="product-size">Size: '+item.ct.Size+'</p>' +
+                            '                  <p class="product-quantity">Số Lượng: '+item.ct.SoLuong+'</p>' +
                             '                  </div>' +
                             '                   </div>' +
                             '                    <div class="product-price">' +
-                            '                    <span>'+(formatPrice(item.gia))+' đ</span>' +
+                            '                    <span>'+(formatPrice(item.ct.Price))+' đ</span>' +
                             '                    </div>' +
                             '                     </div>';
                         parent.innerHTML += itemHtml;
@@ -377,7 +392,7 @@
     }
 //format price
     function formatPrice(price) {
-        return price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+        return String(price).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }
 
 
@@ -392,11 +407,11 @@
 
             if(page != pageActive.innerHTML){
                 getOrder(page);
+                
             }
         })
     }
-    var pagenumber = <%=pagenumber%>;
-    var xemTrangThaiDonHang = '<%=xemTrangThaiDonHang%>';
+    
 
     document.querySelector('.status-bar-'+xemTrangThaiDonHang).classList.add('select');
 
@@ -430,15 +445,16 @@
         listOrder.innerHTML = '';
         //send ajax jquery
         $.ajax({
-            url: '<%=request.getContextPath()%>/order',
-            type: 'POST',
+            url: '@Url.Action("Redirect", "Order")',
+            type: "POST",
             data: {
                 page: page,
-                xemTrangThaiDonHang:xemTrangThaiDonHang
+                status: xemTrangThaiDonHang
             },
             success: function (data) {
-                 // console.log(data);
-                var listItem = data;
+                
+                var listItem = JSON.parse(data);
+                console.log(listItem+"fd")
                 for (var i = 0; i < listItem.length; i++) {
                     var order = listItem[i];
                     var  status = order.status;
@@ -449,7 +465,7 @@
                         '<li class="order col-lg-12">'+
                         '<div class="order-status">'+
                         '<div class="order-status-infor">'+
-                        '<img src="<%=request.getContextPath()%>/img/package-box.png" alt=""'+
+                        '<img src="../img/package-box.png" alt=""'+
                         'class="status-image">'+
                         '<p class="status__text">Đang Xử Lý</p>'+
                         '</div>'+
@@ -461,9 +477,7 @@
                         '</div>'+
                         '<div class="order-summary">'+
                         '<div class="order-infor">'+
-                        '<p class="order-date">Ngày Đặt'+
-                        'Hàng: '+formatDate(order.orderDate)+
-                        '</p>'+
+                        '<p class="order-date">Ngày Đặt Hàng:'+ formatDate(order.orderDate) +'</p>'+
                         '<p class="order-id">Mã Đơn Hàng:'+
                         '<p class="order-id-item">'+order.orderId+
                         '</p></p>'+
@@ -476,7 +490,7 @@
                         '</div>'+
                         '<div class="button-group">'+
                         '<a style="cursor: pointer" class="cancel-button cancel-button-xu-ly" idOrder="'+order.orderId+'">'+
-                        '<img src="<%=request.getContextPath()%>/img/exclamation.png" alt="">'+
+                        '<img src="../img/exclamation.png" alt="">'+
                         'Hủy</a>'+
                         '</div>'+
                         '</div>'+
@@ -489,7 +503,7 @@
                         '<li class="order col-lg-12">'+
                         '<div class="order-status">'+
                         '<div class="order-status-infor">'+
-                        '<img src="<%=request.getContextPath()%>/img/traffic-signal.png" alt=""'+
+                        '<img src="../img/traffic-signal.png" alt=""'+
                         'class="status-image">'+
                         '<p class="status__text">Đã Hủy</p>'+
                         '</div>'+
@@ -529,7 +543,7 @@
                         '<li class="order col-lg-12">'+
                         '<div class="order-status">'+
                         '<div class="order-status-infor">'+
-                        '<img src="<%=request.getContextPath()%>/img/fast-delivery.png" alt=""'+
+                        '<img src="../img/fast-delivery.png" alt=""'+
                         'class="status-image">'+
                         '<p class="status__text">Đã xác nhận</p>'+
                         '</div>'+
@@ -559,7 +573,7 @@
                         '</div>'+
                         '<div class="button-group">'+
                             '<a style="cursor: pointer" class="cancel-button cancel-button-da-xac-nhan" idOrder="'+order.orderId+'>'+
-                            '<img src="<%=request.getContextPath()%>/img/exclamation.png" alt="">'+
+                            '<img src="../img/exclamation.png" alt="">'+
                             'Hủy</a>'+
                         '</div>'+
                         '</div>'+
@@ -571,7 +585,7 @@
                         '<li class="order col-lg-12">'+
                         '<div class="order-status">'+
                         '<div class="order-status-infor">'+
-                        '<img src="<%=request.getContextPath()%>/img/fast-delivery.png" alt=""'+
+                        '<img src="../img/fast-delivery.png" alt=""'+
                         'class="status-image">'+
                         '<p class="status__text">Đang Vận Chuyển</p>'+
                         '</div>'+
@@ -612,7 +626,7 @@
                         '<li class="order col-lg-12">'+
                         '<div class="order-status">'+
                         '<div class="order-status-infor">'+
-                        '<img src="<%=request.getContextPath()%>/img/package.png" alt=""'+
+                        '<img src="../img/package.png" alt=""'+
                         'class="status-image">'+
                         '<p class="status__text">Đã Nhận Được Hàng</p>'+
                         '</div>'+
@@ -668,7 +682,7 @@
         for(var i = 0; i < cancelOrderDangXuLy.length; i++){
             cancelOrderDangXuLy[i].addEventListener('click', function(e) {
                 var idOrder = e.target.getAttribute('idOrder');
-                sendAjaxCancelOrder(idOrder, 1)
+                sendAjaxCancelOrder(idOrder, 0)
 
             });
         }
@@ -679,7 +693,7 @@
         for(var i = 0; i < cancelOrderDaXacNhan.length; i++){
             cancelOrderDaXacNhan[i].addEventListener('click', function(e) {
                 var idOrder = e.target.getAttribute('idOrder');
-                sendAjaxCancelOrder(idOrder, 5);
+                sendAjaxCancelOrder(idOrder, 0);
 
             });
         }
@@ -690,7 +704,7 @@
         for(var i = 0; i < cancelOrderDaNhanHang.length; i++){
             cancelOrderDaNhanHang[i].addEventListener('click', function(e) {
                 var idOrder = e.target.getAttribute('idOrder');
-                sendAjaxCancelOrder(idOrder, 4)
+                sendAjaxCancelOrder(idOrder, 1)
             });
         }
 
@@ -701,31 +715,28 @@
             return;
         }
         $.ajax({
-            url: '<%=request.getContextPath()%>'+'/cancel-order',
+            url: '@Url.Action("Handle", "Order")',
             type: 'POST',
             data:{
-                idOrder: idOrder,
+                orderID: idOrder,
                 status: status
             },
             success: function(response){
-                if(response != 0){
-                    if(status == 1) {
+                    if(status==0){
+                    if(response=="success") {
                         pushNotify('success', 'Đơn Hàng Đã Được Huỷ', 'Thông Báo');
                     }
-                    if(response == 4 ){
+                    else pushNotify('error', 'Hủy đơn hàng thất bại ̉', 'Thông Báo');
+                    }
+                    else if(response=="success") {
                         pushNotify('success', 'Cập nhật đơn hàng thành công', 'Thông Báo');
-
                     }
-                    if(response == 5){
-                        pushNotify('success', 'Gửi yêu cầu thành công', 'Thông Báo');
-
-                    }
+                    else pushNotify('error', 'Cập nhật đơn hàng thất bại', 'Thông Báo');
+                    
                     setTimeout(function(){
                         window.location.reload();
                     }, 1000);
-                }else{
-                    pushNotify('error', 'Đơn Hàng Không Thể Huỷ', 'Thông Báo');
-                }
+               
             }
         });
     }

@@ -10,6 +10,10 @@
   "profiles": {
     "WebShoppingDotnet": {
       "commandName": "Project",
+<<<<<<< HEAD
+=======
+      "workingDirectory": "C:\\Users\\NGUYEN VAN HAU\\source\\repos\\WebShopping\\WebShoppingDotnet",
+>>>>>>> dev-hau
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
