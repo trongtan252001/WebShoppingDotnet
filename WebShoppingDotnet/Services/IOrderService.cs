@@ -64,17 +64,17 @@ namespace WebShoppingDotnet.Services
 
             return _shopthoitrang.SaveChanges();
         }
-        public static List<DetailOrder> getDetail(string orderID)
+        public static List<DetailOrderClient> getDetail(string orderID)
         {
 
 
             List<Cthoadon> list = _shopthoitrang.Cthoadons.Where(d => d.MaHd.Equals(orderID)).ToList();
-            List<DetailOrder> orders = new List<DetailOrder>();
+            List<DetailOrderClient> orders = new List<DetailOrderClient>();
             for (int i = 0; i < list.Count; i++)
             {
                 Product p = _shopthoitrang.Products.FirstOrDefault(p => p.Masp.Equals(list.ElementAt(i).MaSp));
                 string hinhanh = _shopthoitrang.Hinhanhs.OrderBy(i => i.Url).FirstOrDefault(i => i.Idsp.Equals(p.Masp)).Url;
-                DetailOrder dod = new DetailOrder(list.ElementAt(i), hinhanh, p.Tensp);
+                DetailOrderClient dod = new DetailOrderClient(list.ElementAt(i), hinhanh, p.Tensp);
                 orders.Add(dod);
             }
             System.Diagnostics.Debug.WriteLine(list.Count + orderID);

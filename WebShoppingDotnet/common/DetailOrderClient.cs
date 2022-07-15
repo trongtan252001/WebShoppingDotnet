@@ -2,13 +2,13 @@
 
 namespace WebShoppingDotnet.common
 {
-    public class DetailOrder
+    public class DetailOrderClient
     {
         public Cthoadon ct { get; set; } = null!;
         public string urlImg { get; set; }
         public string name { get; set; }
 
-        public DetailOrder(Cthoadon ct, string urlImg, string name)
+        public DetailOrderClient(Cthoadon ct, string urlImg, string name)
         {
             this.ct = ct;
             this.urlImg = urlImg;

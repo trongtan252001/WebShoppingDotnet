@@ -50,7 +50,7 @@ namespace WebShoppingDotnet.Controllers
         }
         public IActionResult Detail(string orderID)
         {
-            List<DetailOrder> list=IOrderService.getDetail(orderID);
+            List<DetailOrderClient> list=IOrderService.getDetail(orderID);
             string jsonList= JsonConvert.SerializeObject(list);
             return Content(jsonList);
         }
