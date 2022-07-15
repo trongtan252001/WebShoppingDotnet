@@ -403,12 +403,14 @@
                 txt: value
             },
             dataType: "text",
-            success: function(msg){
-                let data = JSON.parse(msg);
-                console.log(data);
+            success: function(data1) {
+                var data = JSON.parse(data1);
+
                 let countSearch = data.count;
+
                 let html = '';
-                if (countSearch>0){
+                if (countSearch>0) {
+                    console.log(countSearch); 
                     html += '<div class="search_prod_title">';
                     html += '<span class="left">Sản phẩm</span>';
                     html += '<a id="view_article" href="#" class="left">Xem thêm('+countSearch+')</a>';
@@ -416,23 +418,20 @@
                     html += '<ul class="list-search">';
                     let list =data.data;
                     for (let i = 0; i < list.length; i++) {
-                        let gia = parseInt(list[i].gia);
-                        let sale = parseFloat(list[i].sell);
                         html += '<li class="search-items">' +
 
                             '<div class="search-items-left">' +
-                            '<a href="~/detail?id='+list[i].maSP+'" class="item-search-img">' +
-                            '<img src="~/' + list[i].listUrlImg[0] + '" alt="">' +
+                            '<a href="Detail?idProduct='+list[i].id+'" class="item-search-img">' +
+                            '<img src="' + list[i].url + '" alt="">' +
                             '</a>' +
                             '</div>' +
 
                             '<div class="search-item-right">' +
-                            '<a href="~/detail?idProduct='+list[i].maSP+'">' +
-                            '<h3 class="item-search-title text-one-line">' + list[i].tenSP + '</h3>' +
+                            '<a href="Detail?idProduct='+list[i].id+'">' +
+                            '<h3 class="item-search-title text-one-line">' + list[i].name + '</h3>' +
 
                             '<div class="search-item-wrap-price">';
-                        sale = Math.ceil(gia*(1-sale));
-                        html +='<span class="sale-price">' + formatPriceHome(sale) + 'đ</span>' ;
+                        html +='<span class="sale-price">' + list[i].price + 'đ</span>' ;
                         html += '</div>' +
                             '</a>'+
                             '</div>' +

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
 using WebShoppingDotnet.Helpers;
 using WebShoppingDotnet.Models;
+using WebShoppingDotnet.Services;
 using WebShoppingDotnet.Views;
 
 namespace WebShoppingDotnet.Controllers
@@ -17,16 +18,22 @@ namespace WebShoppingDotnet.Controllers
             _shopthoitrang = new ShopthoitrangContext();
         }
         [Route("[controller]/[action]")]
-        public JsonResult SearchJsonResult(String? txt)
+        public string SearchJsonResult(String? txt)
         {
 
             var matches = _shopthoitrang.Products.Where(p => p.Tensp.Contains(txt)|| p.Masp.Contains(txt));
             var count = matches.Count();
-            List<Product> result = matches.Take(4).Include(p => p.Hinhanhs).ToList();
-            string jsonResult = JsonConvert.SerializeObject(result, Formatting.None);
-            System.Diagnostics.Debug.WriteLine("search" + jsonResult);
+            List<Product> products = matches.Take(4).Include(p => p.Hinhanhs).ToList();
+            List< SearchDTO> searchDTOs = new List<SearchDTO>();
+            foreach (var p in products)
+            {
+                double price = (1 - p.GetSaleToday()) * p.Dongia;
+                searchDTOs.Add(new SearchDTO()
+                    { id = p.Masp,name = p.Tensp, url = p.Hinhanhs.First().Url, price = price });
+            }
+            string jsonResult = JsonConvert.SerializeObject(searchDTOs, Formatting.None);
 
-            return Json(new{count=count,data=jsonResult});
+            return "{\"count\":\"" + count + "\",\"data\":" + jsonResult+ "}";
 
         }
         [Route("[controller]/{id?}")]
