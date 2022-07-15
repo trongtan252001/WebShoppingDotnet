@@ -7,17 +7,78 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.7" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\admin\css\bootstrapf9e3.css" />
+    <None Include="wwwroot\admin\css\responsive3556.css" />
+    <None Include="wwwroot\admin\css\responsivef9e3.css" />
+    <None Include="wwwroot\admin\css\ui3556.css" />
+    <None Include="wwwroot\admin\css\uif9e3.css" />
+    <None Include="wwwroot\admin\fonts\material-icon\css\round.css" />
+    <None Include="wwwroot\admin\fonts\material-icon\font\MaterialIcons-Round.ttf" />
+    <None Include="wwwroot\admin\fonts\material-icon\font\MaterialIcons-Round.woff" />
+    <None Include="wwwroot\admin\fonts\material-icon\font\MaterialIcons-Round.woff2" />
+    <None Include="wwwroot\admin\images\brands\1.png" />
+    <None Include="wwwroot\admin\images\brands\10.png" />
+    <None Include="wwwroot\admin\images\brands\2.png" />
+    <None Include="wwwroot\admin\images\brands\3.png" />
+    <None Include="wwwroot\admin\images\brands\4.png" />
+    <None Include="wwwroot\admin\images\brands\5.png" />
+    <None Include="wwwroot\admin\images\brands\6.png" />
+    <None Include="wwwroot\admin\images\brands\7.png" />
+    <None Include="wwwroot\admin\images\brands\8.png" />
+    <None Include="wwwroot\admin\images\brands\9.png" />
+    <None Include="wwwroot\admin\images\brands\brand.jpg" />
+    <None Include="wwwroot\admin\images\card-brands\1.png" />
+    <None Include="wwwroot\admin\images\card-brands\2.png" />
+    <None Include="wwwroot\admin\images\card-brands\3.png" />
+    <None Include="wwwroot\admin\images\card-brands\4.png" />
+    <None Include="wwwroot\admin\images\favicon.ico" />
+    <None Include="wwwroot\admin\images\icons\stars-active.svg" />
+    <None Include="wwwroot\admin\images\icons\starts-disable.svg" />
+    <None Include="wwwroot\admin\images\items\1.jpg" />
+    <None Include="wwwroot\admin\images\items\2.jpg" />
+    <None Include="wwwroot\admin\images\items\3.jpg" />
+    <None Include="wwwroot\admin\images\items\4.jpg" />
+    <None Include="wwwroot\admin\images\items\5.jpg" />
+    <None Include="wwwroot\admin\images\items\6.jpg" />
+    <None Include="wwwroot\admin\images\items\7.jpg" />
+    <None Include="wwwroot\admin\images\items\8.jpg" />
+    <None Include="wwwroot\admin\images\logo.svg" />
+    <None Include="wwwroot\admin\images\misc\map.jpg" />
+    <None Include="wwwroot\admin\images\not-found.png" />
+    <None Include="wwwroot\admin\images\people\avatar1.jpg" />
+    <None Include="wwwroot\admin\images\people\avatar2.jpg" />
+    <None Include="wwwroot\admin\images\people\avatar3.jpg" />
+    <None Include="wwwroot\admin\images\people\avatar4.jpg" />
+    <None Include="wwwroot\admin\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\admin\js\bootstrap.min.js" />
+    <None Include="wwwroot\admin\js\cam_nhan.js" />
+    <None Include="wwwroot\admin\js\chart.js" />
+    <None Include="wwwroot\admin\js\jquery-3.5.0.min.js" />
+    <None Include="wwwroot\admin\js\scriptc619.js" />
+    <None Include="wwwroot\admin\js\setting_bo_suu_tap.js" />
+    <None Include="wwwroot\admin\js\setting_footer.js" />
+    <None Include="wwwroot\admin\js\settting_product.js" />
+    <None Include="wwwroot\admin\js\upload-imga.js" />
   </ItemGroup>
 
 </Project>

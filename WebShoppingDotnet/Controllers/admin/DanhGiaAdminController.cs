@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebShoppingDotnet.Controllers
+namespace WebShoppingDotnet.Controllers.admin
 {
-    public class ProductsController : Controller
+    public class DanhGiaAdminController : Controller
     {
         public IActionResult Index()
         {

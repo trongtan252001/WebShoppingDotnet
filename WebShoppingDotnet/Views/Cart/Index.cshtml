@@ -1,0 +1,482 @@
+﻿@using WebShoppingDotnet.Services
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<link rel="stylesheet" href="~/css/cart.css">
+<section id="cart" class="margin-top-mobile">
+    <div class="container">
+        <div class="cart-holder">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="cart-name">
+                                <div class="wrapper-checkbox">
+                                    <label class="checkbox path">
+                                        <input type="checkbox" id="check-all">
+                                        <svg viewBox="0 0 21 21">
+                                            <path
+                                                d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186">
+                                            </path>
+                                        </svg>
+                                    </label>
+                                </div>
+                                <h2>Giỏ hàng</h2>
+                            </div>
+                            <ul class="cart-list">
+                                @foreach (CartDto c in Model)
+                                {
+                                    Product p = c.product;
+                                    if (c.product.Trangthai!=1)
+                                    {
+                                        continue;
+                                    }
+                                    <li class="cart-item">
+                                        <div class="cart-item-holder">
+                                          <div class="wrapper-checkbox">
+                                            <label class="checkbox path">
+                                              <input class="choose-product"  type="checkbox" >
+                                              <svg viewBox="0 0 21 21">
+                                                <path
+                                                        d="M5,10.75 L8.5,14.25 L19.4,2.3 C18.8333333,1.43333333 18.0333333,1 17,1 L4,1 C2.35,1 1,2.35 1,4 L1,17 C1,18.65 2.35,20 4,20 L17,20 C18.65,20 20,18.65 20,17 L20,7.99769186">
+                                                </path>
+                                              </svg>
+                                            </label>
+                                          </div>
+                                  <div class="cart-item-img">
+                                    <a asp-controller="Detail" asp-action="Index" asp-route-idProduct="@c.giohang.Idsp">
+                                      <img src="@c.urlImage" alt="">
+                                    </a>
+                                  </div>
+                      <div class="cart-item-content">
+                        <div class="cart-item-warper">
+                          <div class="cart-item-price-holder">
+                            <span class="cart-item-price">
+                              
+                                @p.ParseCurrencyVND(p.Dongia- p.GetSaleToday()*p.Dongia)
+                              </span>
+                          </div>
+                          <p class="cart-item-name">
+                            @p.Tensp
+                          </p>
+                          <div class="cart-item-variants">
+                            <span class="cart-item-color">@p.Mau
+                            </span>
+                              <div class="size">
+                                  <select name="size" class="size-select">
+                                      <option value="@c.giohang.Size" selected>@c.giohang.Size</option>
+                                  </select>
+                              </div>
+                              @if (c.giohang.Soluong<= p.GetSize(c.giohang.Size))
+                              {
+                              <div class="cart-item-qty-holder" data-cart-price="@( p.Dongia - p.GetSaleToday() * p.Dongia)"
+                                       data-cart-id="@p.Masp" data-cart-size="@c.giohang.Size" data-cart-img="@c.urlImage"
+                                       data-cart-name="@p.Tensp">
+                                      <div class="qty-minus btn-qty">
+                                          <i class="fa-solid fa-minus"></i>
+                                      </div>
+                                      <input type="number" class="cart-item-qty" value="@c.giohang.Soluong"
+                                             min="1">
+                                      <div class="qty-plus btn-qty">
+                                          <i class="fa-solid fa-plus"></i>
+                                      </div>
+                                  </div>
+                              }
+                              else
+                              {
+                                  <h4 class="outsize-cart">Het hang</h4>
+                                  <div class="cart-item-qty-holder" data-cart-price="@(p.Dongia- p.GetSaleToday()*p.Dongia)"
+                                       data-cart-id="@p.Masp>" data-cart-size="@c.giohang.Size" data-cart-img="@c.urlImage"
+                                       data-cart-name="@p.Tensp">
+                                  </div>
+                              }
+
+                              </div>
+                            </div>
+                            <a class="cart-item-save" asp-controller="Detail" asp-action="Index" asp-route-idProduct="@c.giohang.Idsp">
+                              <i class="fa-solid fa-link"></i>
+                              <span>Xem chi tiết</span>
+                            </a>
+                          </div>
+                          <a class="btn-remover">
+                            <i class="fa-solid fa-xmark"></i>
+                          </a>
+                        </div>
+                                <div class="wrapper-loader">
+                                  <div class="lds-ellipsis">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                  </div>
+                                </div>
+                              </li>
+                                }
+                            </ul>
+                            <div class="sub-total-1-holder">
+                                <span class="sub-total-title-1">Tổng cộng</span>
+                                <span class="cart-total-price-1">đ</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="body-left">
+                        <div class="check-cart-total">
+                            <h2 class="check-title">Tóm tắt đơn hàng</h2>
+                            <div class="sub-total">
+                                <span class="cart-total-title">Tổng cộng</span>
+                                <span class="cart-total-price">195,000đ</span>
+                            </div>
+                            <a class="btn-cart btn-total-checkout">Đặt hàng</a>
+                            <a asp-controller="Home" class="btn-cart btn-continue-shopping">Tiếp tục mua hàng</a>
+
+                        </div>
+                        <div class="bag-payment-options">
+                            <h3 class="text-accept">Chúng tôi chấp nhận:</h3>
+                            <img src="~/img/cart/list-img-pay.png" alt="">
+                            <p>Sử dụng mã giảm giá ở bước tiếp theo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        sumTotal();
+    const checkAll = document.getElementById("check-all");
+    const check = document.querySelectorAll('.cart-item input[type="checkbox"]');
+    checkAll.addEventListener("click", function () {
+      if (checkAll.checked) {
+        check.forEach(function (item) {
+          if (item.disabled){
+            item.checked = false;
+          }else {
+            item.checked = true;
+          }
+        });
+      } else {
+        check.forEach(function (item) {
+          item.checked = false;
+        });
+      }
+      sumTotal();
+    });
+    //plus minus quality
+    const listMinus = document.querySelectorAll(".qty-minus");
+    const listPlus = document.querySelectorAll(".qty-plus");
+    listMinus.forEach((element) => {
+      element.addEventListener("click", () => {
+        let quantity = element.parentElement.querySelector(".cart-item-qty");
+        openLoader(quantity);
+
+        if (quantity.value > 1) {
+          quantity.value--;
+        }
+        //get atribute parent quantity class  cart-item-qty-holder
+        let id = element.parentElement.getAttribute("data-cart-id");
+        let size = element.parentElement.getAttribute("data-cart-size");
+        //ajax jquery
+        $.ajax({
+          url: "@Url.Action("UpdateCart","Cart")",
+          type: "POST",
+          data: {
+            id: id,
+            size: size,
+            quantity: quantity.value
+          },
+          success: function (result) {
+            if (result!=null){
+              var status = result.status;
+
+              if (status == "success") {
+                var soluong = result.quantity;
+                quantity.value = soluong;
+                // turn off click element div
+
+                element.parentNode.querySelector('.qty-plus').style.pointerEvents = "auto";
+                element.parentNode.querySelector('.qty-plus').style.opacity= "1";
+
+              }
+              if (status == "outsize"){
+                var soluong = result.quantity;
+                quantity.value = soluong;
+
+              }
+              if (status == "error") {
+                quantity.value++;
+              }
+              closeLoader(quantity);
+              sumTotal();
+
+            }
+          }
+        });
+      });
+    });
+    listPlus.forEach((element) => {
+      element.addEventListener("click", () => {
+        let quantity = element.parentElement.querySelector(".cart-item-qty");
+        openLoader(quantity);
+
+        if (quantity.value ) {
+          quantity.value++;
+        }
+        let id = element.parentElement.getAttribute("data-cart-id");
+        let size = element.parentElement.getAttribute("data-cart-size");
+        //ajax jquery
+        $.ajax({
+          url: "@Url.Action("UpdateCart","Cart")",
+          type: "POST",
+          data: {
+            id: id,
+            size: size,
+            quantity: quantity.value
+          },
+          success: function (result) {
+            if (result!=null){
+              var status = result.status;
+              if (status == "success"){
+                var soluong = result.quantity;
+                quantity.value = soluong;
+                // turn off click element div
+                element.style.pointerEvents = "auto";
+                element.style.opacity= "1";
+
+              }
+              if (status == "outsize") {
+                var soluong = result.quantity;
+                quantity.value = soluong;
+                element.style.pointerEvents = "none";
+                element.style.opacity= "0.5";
+              }
+              if (status == "error") {
+                quantity.value--;
+              }
+              closeLoader(quantity);
+              sumTotal();
+            }
+          }
+        });
+      });
+    });
+
+    function pushNotify(status, message, title) {
+      new Notify({
+        status: status,
+        title: title,
+        text: message,
+        effect: 'fade',
+        speed: 300,
+        customClass: '',
+        customIcon: '',
+        showIcon: true,
+        showCloseButton: true,
+        autoclose: true,
+        autotimeout: 2000,
+        gap: 20,
+        distance: 20,
+        type: 1,
+        position: 'right bottom',
+        customWrapper: '',
+      })
+    }
+    //event jquery out focus
+    $(".cart-item-qty").focusout(function () {
+      let id = $(this).parent().attr("data-cart-id");
+      let size = $(this).parent().attr("data-cart-size");
+      let quantity = $(this).val();
+      let element = this;
+      openLoader(element);
+      if (quantity<=0){
+        quantity=1;
+      }
+      var soluongtruoc = $(this);
+      $.ajax({
+        url: "@Url.Action("UpdateCart","Cart")",
+        type: "POST",
+        data: {
+          id: id,
+          size: size,
+          quantity: quantity
+        },
+        success: function (result) {
+          if (result!=null){
+            var status = result.status;
+            console.log(status);
+            if (status == "outsize"){
+              var soluong = result.quantity;
+              soluongtruoc.val(soluong);
+
+              element.parentNode.querySelector('.qty-plus').style.pointerEvents = "none";
+              element.parentNode.querySelector('.qty-plus').style.opacity= "0.5";
+
+            }
+            if (status == "success") {
+              var soluong = result.quantity;
+              soluongtruoc.val(soluong);
+              element.parentNode.querySelector('.qty-plus').style.pointerEvents = "auto";
+              element.parentNode.querySelector('.qty-plus').style.opacity= "1";
+
+            }
+
+            if (status == "error") {
+              soluongtruoc.val(quantity);
+            }
+            closeLoader(element);
+            sumTotal();
+          }
+        }
+      });
+    });
+    function openLoader(element){
+      element.closest('.cart-item').querySelector('.wrapper-loader').classList.add('active');
+
+    }
+    function closeLoader(element){
+      setTimeout(function (){
+        element.closest('.cart-item').querySelector('.wrapper-loader').classList.remove('active');
+
+      },2000);
+    }
+    // event option element
+
+//    const allSelect = document.querySelectorAll('.size-select');
+//    allSelect.forEach(e => {
+//      e.addEventListener('change', function () {
+//        let getData=this.closest('.cart-item').querySelector('.cart-item-qty-holder');
+//        let id = getData.getAttribute("data-cart-id");
+//        let sizeCurrent =getData.getAttribute("data-cart-size");
+//        // nhớ sửa atriibute data-cart-size
+//        let sizeName = this.value;
+//        let element = this;
+//        openLoader(element);
+//        $.ajax({
+//          url: "@Url.Action("UpdateCart","Cart")",
+//          type: "POST",
+//          data: {
+//            id: id,
+//            size: sizeName,
+//            quantity: 1,
+//            sizeCurrent: sizeCurrent
+//          },
+//          success: function (data) {
+//            closeLoader(element);
+//            location.reload();
+//            //load (url [, data] [, complete])
+//          }
+//        });
+//      });
+//    });
+    //animation remove item
+    let listBtnRemove = document.querySelectorAll(".btn-remover");
+    listBtnRemove.forEach((element) => {
+      element.addEventListener("click", () => {
+        let getData=element.closest('.cart-item').querySelector('.cart-item-qty-holder');
+        let id = getData.getAttribute("data-cart-id");
+        let sizeName =getData.getAttribute("data-cart-size");
+        $.ajax({
+          url: "@Url.Action("remoteCart","Cart")",
+          type: "POST",
+          data: {
+            id: id,
+            size: sizeName,
+          },
+          success: function (data) {
+            if (data!=null&&data==="success"){
+              element.closest(".cart-item").classList.add("products--delete");
+              setTimeout(() => {
+                // element.closest(".cart-item").remove();
+                document.querySelectorAll('.products--delete').forEach((element) => {
+                  element.remove();
+                  sumTotal();
+                });
+              }, 1000);
+
+            }else {
+              pushNotify('error', 'Có lỗi xảy ra, vui lòng thử lại sau','Lỗi');
+            }
+
+          }
+        });
+      });
+    });
+    //function sum total
+    function sumTotal(){
+      // get list checkbox checked caculator this
+      let listCheckboxChecked = document.querySelectorAll(".choose-product:checked");
+      let total = 0;
+      listCheckboxChecked.forEach((element) => {
+        let getData=element.closest('.cart-item').querySelector('.cart-item-qty-holder');
+        let price = getData.getAttribute("data-cart-price");
+        let quantity = element.closest('.cart-item').querySelector('.cart-item-qty').value;
+        total += parseInt(price) * parseInt(quantity);
+
+      });
+      document.querySelector(".cart-total-price").innerHTML = formatPrice(total)+'đ';
+      document.querySelector(".cart-total-price-1").innerHTML = formatPrice(total)+'đ';
+
+    }
+    //function format price vietnamese
+    function formatPrice(price){
+      let priceFormat = price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+      return priceFormat;
+    }
+
+    document.querySelectorAll('.outsize-cart').forEach(function (element){
+      element.closest('.cart-item').querySelector('.choose-product').disabled = true;
+    })
+    document.querySelectorAll('.choose-product').forEach(function (element){
+      element.addEventListener('click',sumTotal)
+    })
+    //funtion get data all checkbox
+    function getDataCheckbox(){
+      let listCheckboxChecked = document.querySelectorAll(".choose-product:checked");
+
+      let listData = [];
+      listCheckboxChecked.forEach((element) => {
+        let getData=element.closest('.cart-item').querySelector('.cart-item-qty-holder');
+        let id = getData.getAttribute("data-cart-id");
+        let sizeName =getData.getAttribute("data-cart-size");
+        let quantity= element.closest('.cart-item').querySelector('.cart-item-qty').value;
+        let name = getData.getAttribute("data-cart-name");
+        let img = getData.getAttribute("data-cart-img");
+        let price = getData.getAttribute("data-cart-price");
+        listData.push({
+          id: id,
+          size: sizeName,
+          quantity:quantity,
+          name:name,
+          img:img,
+          price:price
+        });
+      });
+      return listData;
+    }
+
+    document.querySelector('.btn-total-checkout').addEventListener('click',function () {
+      let data = getDataCheckbox();
+      if (data.length>0){
+
+        // ajax transform data to json
+        let dataJson = JSON.stringify(data);
+        dataJson= dataJson.replace(/"/g, "'");
+
+        // ajax transform data to json
+        var url = '/checkout' ;
+        var form = $('<form action="' + url + '" method="post">' +
+            '<input type="text" name="data" value="' +dataJson + '" />' +
+            '</form>');
+        $('body').append(form);
+        form.submit();
+      }else {
+        pushNotify('error', 'Bạn chưa chọn sản phẩm nào','Lỗi');
+      }
+    })
+    </script>
+}

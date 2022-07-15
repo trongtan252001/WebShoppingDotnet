@@ -5,6 +5,8 @@ namespace WebShoppingDotnet.Models
 {
     public partial class Hoadon
     {
+      
+
         public string Mahoadon { get; set; } = null!;
         public string Iduser { get; set; } = null!;
         public DateTime? NgayDatHang { get; set; }

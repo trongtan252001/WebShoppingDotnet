@@ -12,6 +12,18 @@ namespace WebShoppingDotnet.Models
             Nhanxets = new HashSet<Nhanxet>();
         }
 
+        public User(string id, string username, string userpassword, string? usermail, int role, string? vericaioncode, long? dateregister, int isvirification)
+        {
+            Id = id;
+            Username = username;
+            Userpassword = userpassword;
+            Usermail = usermail;
+            Role = role;
+            Vericaioncode = vericaioncode;
+            Dateregister = dateregister;
+            Isvirification = isvirification;
+        }
+
         public string Id { get; set; } = null!;
         public string Username { get; set; } = null!;
         public string Userpassword { get; set; } = null!;

@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -10,12 +10,16 @@
   "profiles": {
     "WebShoppingDotnet": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
+<<<<<<< HEAD
+=======
+      "workingDirectory": "C:\\Users\\NGUYEN VAN HAU\\source\\repos\\WebShopping\\WebShoppingDotnet",
+>>>>>>> dev-hau
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7241;http://localhost:5241",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:7241;http://localhost:5241",
+      "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",

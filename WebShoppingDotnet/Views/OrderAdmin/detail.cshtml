@@ -1,0 +1,314 @@
+﻿@using WebShoppingDotnet.utilt;
+@model HoaDonS;
+@{
+    ViewData["Title"] = "Hoa don";
+    Layout = "~/Views/Shared/_admin_layout.cshtml";
+}
+    <style>
+        body{
+            position: relative;
+        }
+        .title-update {
+            color: #88B04B;
+            font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+            font-weight: 900;
+            font-size: 40px;
+            margin-bottom: 10px;
+            margin-left: 20%;
+        }
+        .mess-update {
+            color: #404F5E;
+            font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+            font-size:20px;
+            margin: 0;
+        }
+        .checkmark {
+            color: #9ABC66;
+            font-size: 100px;
+            line-height: 200px;
+            margin-left:55px;
+        }
+        .card-mode-update {
+            background: white;
+            padding: 60px;
+            border-radius: 4px;
+            box-shadow: 0 2px 3px #C8D0D8;
+            display: inline-block;
+            margin:  auto;
+        }
+        .card-mode-update-parent{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+            background: rgba(0,0,0,0.5);
+            display:flex;
+            visibility: hidden;
+        }
+        #btn-update-suss{
+            margin-left: 40%;
+            margin-top: 20px;
+
+        }
+    </style>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Hủy đơn hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn Hủy đơn hàng này không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                <button id="Huy-don-hang" data-dismiss="modal" type="button" class="btn btn-primary bg-danger btn-accept">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- * modal update -->
+
+<div class="modal fade" id="updateModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLongTitle">Xác nhận đơn hàng</h5>
+                <button type="button" class="close close-update" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+               <input name="so" type="number" placeholder="Số ngày dự kiến" min="0" id="so-ngay-du-kien">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close-update" data-dismiss="modal">Thoát</button>
+                <button  id="btn-xac-nhan" data-dismiss="modal" type="button" class="btn btn-primary  btn-accept close-update">Đồng ý</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="card-mode-update-parent">
+    <div class="card-mode-update">
+        <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+            <i class="checkmark">✓</i>
+        </div>
+        <h1 class="title-update">Success</h1>
+        <p class="mess-update">Cập nhật đơn hàng Thành công!</p>
+        <button type="button"  class="btn btn-primary" id="btn-update-suss" data-dismiss="modal">Close</button>
+    </div>
+
+</div>
+<section class="content-main">
+
+    <div class="content-header">
+        <h2 class="content-title">Chi tiết đơn hàng</h2>
+    </div>
+
+
+    <div class="card">
+        <header class="card-header">
+            <div class="row align-items-center">
+                <div class="col-lg-6 col-md-6">
+                <span>
+                  <i class="material-icons md-calendar_today"></i> <b>@Model.hoadon.NgayDatHang</b>
+                </span> <br>
+                    <small class="text-muted">Mã: @Model.hoadon.Mahoadon</small>
+                </div>
+                <div class="col-lg-6 col-md-6 ms-auto text-md-end">
+                    <span class="badge rounded-pill @ProductFotmat.getClassTrangThai2(Model.hoadon.TrangThai)">@ProductFotmat.getTrangThai2(Model.hoadon.TrangThai)</span>
+                    @if(@Model.hoadon.TrangThai == 0){
+                    <a  class="btn btn-sm btn-light" id="xac-nhan-don-hang" >
+                        <i class="material-icons md-edit"></i>  Xác nhận
+                    </a>
+                    }
+                    @if(@Model.hoadon.TrangThai == 2){
+                    <a  class="btn btn-sm btn-light" id="giao-hang" >
+                        <i class="material-icons md-edit"></i>  Giao Hàng
+                    </a>
+                    }
+                    @if(@Model.hoadon.TrangThai != 1){
+                    <a href="#"  data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-sm btn-outline-danger" >
+                        <i class="material-icons md-delete_forever"></i>  Hủy
+                    </a>
+                    }
+
+
+                </div>
+            </div>
+        </header> <!-- card-header end// -->
+        <div class="card-body">
+
+            <div class="row mb-5 order-info-wrap">
+                <div class="col-md-4">
+                    <article class="icontext align-items-start">
+                  <span class="icon icon-sm rounded-circle bg-primary-light">
+                    <i class="text-primary material-icons md-person"></i>
+                  </span>
+                        <div class="text">
+                            <h6 class="mb-1">Khách hàng</h6>
+                            <p class="mb-1">
+                              @Model.user.Username <br>  @Model.user.Usermail
+                              <br>  @Model.user.Khachhang.DienThoai
+                            </p>
+                            <a href="#">Xem thêm</a>
+                        </div>
+                    </article>
+                </div> <!-- col// -->
+                <div class="col-md-4">
+
+                </div> <!-- col// -->
+                <div class="col-md-4">
+                    <article class="icontext align-items-start">
+                  <span class="icon icon-sm rounded-circle bg-primary-light">
+                    <i class="text-primary material-icons md-place"></i>
+                  </span>
+                        <div class="text">
+                            <h6 class="mb-1">Địa chỉ giao hàng</h6>
+                            <p class="mb-1">
+                                @Model.user.Khachhang.DiaChi <br>  @Model.user.Khachhang.PhuongXa 
+                                <br>@Model.user.Khachhang.QuanHuyen
+                                <br> @Model.user.Khachhang.TinhTp
+                            </p>
+                            <a href="#">Xem thêm</a>
+                        </div>
+                    </article>
+                </div> <!-- col// -->
+            </div> <!-- row // -->
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table border table-hover table-lg">
+                            <thead>
+                            <tr>
+                                <th width="40%">Sản phẩm</th>
+                                <th width="20%">Đơn giá</th>
+                                <th width="10%">Số lượng</th>
+                                <th width="10%">Size</th>
+                                <th width="40%" class="text-end">Thành tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                          @foreach (var item in (List<DetailOrder>)ViewData["dssp"])
+                          {
+                               <tr>
+                                <td>
+                                    <a class="itemside" href="#">
+                                        <div class="left">
+                                            <img src="@item.urlImg" width="40" height="40" class="img-xs" alt="Item">
+                                        </div>
+                                        <div class="info"> @item.cthoadon.MaSp  </div>
+                                    </a>
+                                </td>
+                                <td> @ProductFotmat.formatPrice(item.cthoadon.Price) đ</td>
+                                <td> @item.cthoadon.SoLuong </td>
+                                <td> @item.cthoadon.Size </td>
+                                <td class="text-end">   @ProductFotmat.formatPrice(item.cthoadon.Price * item.cthoadon.SoLuong )  đ </td>
+                            </tr> 
+                          }
+                          
+
+                          
+
+                            </tbody>
+                        </table>
+                    </div> <!-- table-responsive// -->
+                </div>  <!-- col// -->
+
+            </div>
+        </div> <!-- card-body end// -->
+    </div> <!-- card end// -->
+
+
+
+</section> <!-- content-main end// -->
+
+    @section Scripts
+{
+    <script>
+    var maDonHang =  '@ViewData["maso"]';
+   var  soNgay = 0;
+
+    var xacnhan = document.querySelector('#xac-nhan-don-hang');
+    if(xacnhan != null){
+        xacnhan.addEventListener('click', function () {
+
+            $('#updateModalCenter').modal('show')
+
+            // sendAjax(2);
+        });
+    }
+    var btnxacnhan = document.querySelector('#btn-xac-nhan');
+    if(btnxacnhan != null){
+        btnxacnhan.addEventListener('click', function () {
+            //get value input
+            soNgay = document.querySelector('#so-ngay-du-kien').value;
+            if (soNgay.trim() == '') {
+                pushNotify('warning','Vui lòng nhập số ngày dự kiến', 'warning' );
+                return;
+            }
+            sendAjax(2);
+        });
+    }
+    var huy = document.querySelector('#Huy-don-hang');
+    if(huy != null){
+        huy.addEventListener('click', function () {
+            sendAjax(1);
+            console.log("ok")
+        });
+    }
+
+    var update = document.querySelector('#btn-update-suss');
+    if(update != null){
+        update.addEventListener('click', function () {
+            window.location.href = '/OrderAdmin/detail?m='+maDonHang;
+        });
+    }
+    var giaoHang = document.querySelector('#giao-hang');
+    if(giaoHang != null){
+        giaoHang.addEventListener('click', function () {
+            sendAjax(3);
+        });
+    }
+
+    function sendAjax(res){
+        //send ajax jquery
+        $.ajax({
+            url: '/OrderAdmin/updateStatus',
+            type: 'POST',
+            data: {
+                maDonHang: maDonHang,
+                soNgay: soNgay,
+                status: res,
+            },
+            success: function (data) {
+                if (data == 'success') {
+                    //set css visible
+                     document.querySelector('.card-mode-update-parent').style.visibility = 'visible';
+                } else {
+                    pushNotify('error', 'Có lỗi xảy ra, vui lòng thử lại sau');
+                }
+            }
+        });
+
+    }
+
+    document.querySelectorAll('.close-update').forEach(function (item) {
+        item.addEventListener('click', function () {
+            $('#updateModalCenter').modal('hide');
+        });
+    });
+</script>
+}
