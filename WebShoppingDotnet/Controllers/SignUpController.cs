@@ -20,12 +20,9 @@ namespace WebShoppingDotnet.Controllers
 
             if (userName != null && email != null && password != null && IUserService.checkAccountInfo(userName, email)
                 && IUserService.insertUser(userName, IUserService.ComputeSha512Hash(password), email, verificationCode, userID))
-            {
-                
-                string url= "https://localhost:7241/SignUp/Verify?code=" + verificationCode;
-                
+            {     
+                string url= "https://localhost:7241/SignUp/Verify?code=" + verificationCode;     
                 MailInfor info=new MailInfor("19130249@st.hcmuaf.edu.vn", email,"Xác thực",url);
-                System.Diagnostics.Debug.WriteLine("Gui mail nao");
                 IUserService.SendMail(info);
                 return RedirectToAction("Index","Login");
 
