@@ -67,7 +67,7 @@ namespace WebShoppingDotnet.Services
         public static List<DetailOrder> getDetail(string orderID)
         {
 
-
+            /*d*/
             List<Cthoadon> list = _shopthoitrang.Cthoadons.Where(d => d.MaHd.Equals(orderID)).ToList();
             List<DetailOrder> orders = new List<DetailOrder>();
             for (int i = 0; i < list.Count; i++)
@@ -77,7 +77,7 @@ namespace WebShoppingDotnet.Services
                 DetailOrder dod = new DetailOrder(list.ElementAt(i), hinhanh, p.Tensp);
                 orders.Add(dod);
             }
-            System.Diagnostics.Debug.WriteLine(list.Count + orderID);
+           
             return orders;
 
         }
