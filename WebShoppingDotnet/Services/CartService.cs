@@ -49,13 +49,22 @@ namespace WebShoppingDotnet.Services
 
     }
 
+    public class SearchDTO
+    {
+        public string id { get; set; }
+        public string url { get; set; }
+        public string name { get; set; }
+        public double price { get; set; }
+
+    }
+
     public class CheckoutDTo
     {
-    public String id { get; set; }
-    public String size { get; set; }
+    public string id { get; set; }
+    public string size { get; set; }
     public int quantity { get; set; }
-    public String name { get; set; }
-    public String img { get; set; }
+    public string name { get; set; }
+    public string img { get; set; }
     public float price { get; set; }
     public string ParseCurrencyVND(string input)
     {
