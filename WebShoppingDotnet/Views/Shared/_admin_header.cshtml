@@ -1,9 +1,14 @@
 ﻿<header class="main-header navbar">
     <div class="col-search">
         <form class="searchform">
-            <div class="input-group">
-               <input list="search_terms" type="text" class="form-control" placeholder="Tìm kiếm...">
+            <div class="input-group header-top">
+                 <div class="input-group header-search" id="input-group-header">
+                      <input  id="searchtext" list="search_terms" type="text" class="form-control" placeholder="Tìm kiếm...">
                 <button class="btn btn-light bg" type="button"> <i class="material-icons md-search"></i> </button>
+                 </div>
+              
+                   <div class="wrapper-search box-shadow" id="wrapper-search1" style="width:350px !important"></div>
+
             </div>
             <datalist id="search_terms">
                @* <option value="Products">
@@ -81,3 +86,87 @@
         </ul>
     </div>
 </header>
+<script>
+     // search
+    const search1 = document.getElementById('searchtext');
+    const wrapperSearch1 = document.getElementById('wrapper-search1');
+    search1.addEventListener('keyup', function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+        }
+        if(search1.value.length === 0){
+            wrapperSearch1.classList.remove('show');
+        }else{
+            wrapperSearch1.classList.add('show');
+            searchAjax(search1.value,wrapperSearch1);
+
+        }
+        event.preventDefault();
+
+    });
+
+
+     var req = null;
+
+    function searchAjax(value,element) {
+        if (req != null) req.abort();
+        req = $.ajax({
+            type: "GET",
+            url: "@Url.Action("SearchJsonResult","Collections")",
+            data:  {
+                txt: value
+            },
+            dataType: "text",
+            success: function(data1) {
+                var data = JSON.parse(data1);
+
+                let countSearch = data.count;
+
+                let html = '';
+                if (countSearch>0) {
+                    console.log(countSearch); 
+                    html += '<div class="search_prod_title">';
+                    html += '<span class="left">Sản phẩm</span>';
+                    //html += '<a id="view_article" href="#" class="left">Xem thêm('+countSearch+')</a>';
+                    html += '</div>';
+                    html += '<ul class="list-search">';
+                    let list =data.data;
+                    for (let i = 0; i < list.length; i++) {
+                        html += '<li class="search-items">' +
+
+                            '<div class="search-items-left">' +
+                            '<a style=" text-decoration: none  !important  " href="Detail?idProduct='+list[i].id+'" class="item-search-img">' +
+                            '<img src="' + list[i].url + '" alt="">' +
+                            '</a>' +
+                            '</div>' +
+
+                            '<div class="search-item-right">' +
+                            '<a style=" text-decoration: none  !important "  href="DetailProductAdmin?m='+list[i].id+'">' +
+                            '<h6 class="item-search-title text-one-line" style="font-size: 16px !important; text-decoration: none  !important; color:#000">' + list[i].name + '</h6>' +
+
+                            '<div class="search-item-wrap-price">';
+                        html +='<span style="color:red" class="sale-price">' + list[i].price + ' đ</span>' ;
+                        html += '</div>' +
+                            '</a>'+
+                            '</div>' +
+                            '</li>';
+                    }
+                    html += '</ul>';
+                }else {
+                    html= "<h4 style='text-align: center;'>Không có sản phẩm phù hợp"+value+"</h4>";
+                }
+                element.innerHTML =html;
+            }
+        });
+
+        document.addEventListener('click', function (event) {
+        if (event.target.closest('#input-group-header') === null) {
+            wrapperSearch1.classList.remove('show');
+        }
+        if (event.target.closest('#input-group-scroll') === null) {
+            wrapperSearch2.classList.remove('show');
+        }
+    });
+    }
+
+</script>
