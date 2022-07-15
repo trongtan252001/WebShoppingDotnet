@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace WebShoppingDotnet.Models
 {
@@ -14,7 +16,8 @@ namespace WebShoppingDotnet.Models
         public DateTime? NgayNhanHang { get; set; }
         public int? SoNgayDuKien { get; set; }
         public double TongTien { get; set; }
-
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual User IduserNavigation { get; set; } = null!;
     }
 }

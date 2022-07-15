@@ -63,6 +63,7 @@ namespace WebShoppingDotnet.Models
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");   // try with "en-US"
             return double.Parse(input+"").ToString("#,###", cul.NumberFormat)+" đ";
         }
+
         public virtual Bosutap IdboSuuTapNavigation { get; set; } = null!;
         public virtual Loaisp LoaispNavigation { get; set; } = null!;
         public virtual ICollection<Giohang> Giohangs { get; set; }
