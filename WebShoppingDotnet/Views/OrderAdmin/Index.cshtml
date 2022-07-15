@@ -1,0 +1,149 @@
+﻿@using WebShoppingDotnet.utilt;
+@model List<HoaDonS>;
+@{
+    ViewData["Title"] = "Đơn hàng";
+    Layout = "~/Views/Shared/_admin_layout.cshtml";
+
+}
+<section class="content-main">
+
+    <div class="content-header">
+        <h2 class="content-title">Danh sách đơn hàng</h2>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <header class="card-header">
+                    <div class="row gx-3">
+                        <div class="col-lg-4 col-md-6 me-auto">
+                            @*<input id="search-oder" type="text" placeholder="Tìm kiếm..." class="form-control">*@
+                        </div>
+                        <div class="col-md-3 col-6" style="padding: 0 2px;">
+                            <input id="filter-date" type="date" class="form-control">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-6">
+                            <select id="status-product" class="form-select">
+                                <option value="-1">Trạng thái</option>
+                                <option value="0">Chờ xác nhận</option>
+                                <option value="2">Đã xác nhận</option>
+                                <option value="3">Đang giao hàng</option>
+                                <option value="1">Đã hủy</option>
+                                <option value="4">Đã giao hàng</option>
+                                <option value="-1">Tất cả</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </header> <!-- card-header end// -->
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên khách hàng</th>
+                                <th>Giá</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày</th>
+                                <th class="text-end"> Hành động </th>
+                            </tr>
+                            </thead>
+                            <tbody id="table-order">
+                                @{
+                                    var index = 0;
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    index++;
+                                    <tr>
+                                <td>@index</td>
+                                <td><b>@item.user.Username</b></td>
+                                <td>@ProductFotmat.formatPrice(item.hoadon.TongTien) đ</td>
+                                <td><span class="badge rounded-pill @ProductFotmat.getClassTrangThai2(item.hoadon.TrangThai)">@ProductFotmat.getTrangThai2(item.hoadon.TrangThai)</span></td>
+                                <td>@item.hoadon.NgayDatHang</td>
+                                <td class="text-end">
+                                    <a href="~/OrderAdmin/detail?m=@item.hoadon.Mahoadon" class="btn btn-light">Chi tiết</a>
+
+                                </td>
+                            </tr>
+                              
+                          }
+                           
+
+                           
+
+                            </tbody>
+                        </table>
+                    </div> <!-- table-responsive //end -->
+                      <nav class="float-end mt-4" aria-label="Page navigation">
+                <ul class="pagination">
+                   
+                    @{
+                        var start = (int)@ViewData["page"] - 1 <= 0 ? (int)@ViewData["page"] : (int)@ViewData["page"] - 1;
+                        var pagePre = (int)@ViewData["page"] - 1;
+                         var pageNext = (int)@ViewData["page"] + 1;
+
+                    }
+                     @if( (int)@ViewData["page"] == 1)
+                    {
+                        <li class="page-item disabled"><a class="page-link" href="~/OrderAdmin?p=@pagePre">Trước</a></li>
+                    }
+                    else{
+                         <li class="page-item "><a class="page-link" href="~/OrderAdmin?p=@pagePre">Trước</a></li>
+                     }
+                   
+                     @for (var i = start; i <=(int) @ViewData["TotalPage"]; i++)
+                    {
+                        @if(i ==  (int)@ViewData["page"]){
+                          <li class="page-item active"><a class="page-link" href="~/OrderAdmin?p=@i">@i</a></li>
+
+                        }
+                        else
+                        {
+                          <li class="page-item "><a class="page-link" href="~/OrderAdmin?p=@i">@i</a></li>
+   
+                        }
+                        @if(i -  (int)@ViewData["page"] == 5)
+                        {
+                            break;
+                        }
+
+                    }
+                    @if( (int)@ViewData["page"] == (int) @ViewData["TotalPage"])
+                    {
+                        <li class="page-item disabled"><a class="page-link" href="~/OrderAdmin?p=@pageNext">Sau</a></li>
+                    }
+                    else{
+                         <li class="page-item "><a class="page-link" href="~/OrderAdmin?p=@pageNext">Sau</a></li>
+                     }
+                </ul>
+            </nav>
+                </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+        </div>
+
+    </div>
+    <!-- .row end// -->
+
+
+</section> <!-- content-main end// -->
+@section Scripts
+{
+<script>
+     document.getElementById("filter-date").addEventListener("change", function () {
+          var value = this.value;
+           window.location.href = '/OrderAdmin?p=1&n='+value;
+        });
+        //event onchange status-product use dom
+        document.getElementById("status-product").addEventListener("change", function () {
+            var value = this.value;
+         window.location.href = '/OrderAdmin?p=1&s='+value;
+
+        });
+      
+       
+       
+</script>
+}

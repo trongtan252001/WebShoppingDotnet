@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <link href="~/admin/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+    <link href="~/admin/css/bootstrapf9e3.css?v=1.1" rel="stylesheet" type="text/css"/>
+
+    <!-- custom style -->
+    <link href="~/admin/css/uif9e3.css?v=1.1" rel="stylesheet" type="text/css"/>
+    <link href="~/admin/css/responsivef9e3.css?v=1.1" rel="stylesheet" />
+
+    <!-- iconfont -->
+    <link rel="stylesheet" href="~/admin/fonts/material-icon/css/round.css"/>
+    <link rel="stylesheet" href="~/assets/notify/simple-notify.min.css">
+    <script src="~/script/jquery-3.5.0.min.js"></script>
+    @RenderSection("Styles", false)
+    </head>
+
+<body>
+    @Html.Partial("~/Views/Shared/_admin_lefmenu.cshtml")
+    <main class="main-wrap">
+        @Html.Partial("~/Views/Shared/_admin_header.cshtml")
+
+    
+    @RenderBody()
+</main>
+   @* <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>*@
+    @*<script src="~/script/home.js"></script>*@
+@*<script src="~/script/header.js"></script>*@
+<script src="~/admin/js/jquery-3.5.0.min.js"></script>
+<script src="~/admin/js/bootstrap.bundle.min.js"></script>
+<script src="~/admin/js/bootstrap.min.js"></script>
+
+<!-- Custom JS -->
+<script src="~/admin/js/scriptc619.js?v=1.0"></script>
+<script src="~/assets/notify/simple-notify.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

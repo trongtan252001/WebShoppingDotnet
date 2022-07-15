@@ -1,0 +1,207 @@
+﻿@model List<Product>;
+@using WebShoppingDotnet.utilt;
+@{
+    ViewData["Title"] = "Sản phẩm";
+    Layout = "~/Views/Shared/_admin_layout.cshtml";
+
+}
+
+<section class="content-main">
+
+    <div class="content-header">
+        <h2 class="content-title">Danh sách sản phẩm </h2>
+        <div>
+            <a href="~/AddproductAdmin" class="btn btn-primary"><i class="material-icons md-plus"></i> Tạo mới</a>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <header class="card-header">
+            <div class="row align-items-center">
+                <div class="col col-check flex-grow-0">
+                    <div class="form-check ms-2">
+                        <input class="form-check-input" type="checkbox" value="">
+                    </div>
+                </div>
+                <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                    <select id="loai-product" class="form-select">
+                            <option value="">Loại</option>
+                        @foreach(var item in (List<Loaisp>)ViewData["loaiSp"])
+                        {
+                            <option value="@item.Idloai">@item.NameLoai</option>
+                        }
+                         <option value="">Hiện tất cả</option>
+
+                  
+                    </select>
+                </div>
+                <div class="col-md-2 col-6" style="padding: 0 2px;">
+                     <input id="filter-date" type="date" class="form-control">
+                </div>
+                <div class="col-md-2 col-6">
+                      <select id="status-product" class="form-select">
+                        <option value="-1">Trạng thái</option>
+                        <option value="1">Còn hàng</option>
+                        <option value="0">Hết hàng</option>
+                        <option value="2">Tạm ngừng</option>
+                        <option value="-1">Hiện tất cả</option>
+                    </select>
+                </div>
+            </div>
+        </header> <!-- card-header end// -->
+
+        <div class="card-body">
+
+            @foreach (var item in Model)
+            {
+
+
+                <article class="itemlist">
+                    <div class="row align-items-center">
+                        <div class="col col-check flex-grow-0">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+                            <a class="itemside" href="#">
+                                <div class="left">
+                                    <img src="@item.Hinhanhs.First().Url" class="img-sm img-thumbnkail" alt="Item">
+                                </div>
+                                <div class="info">
+                                    <h6 class="mb-0">@item.Tensp</h6>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>@ProductFotmat.formatPrice(item.Dongia) đ</span> </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-status">
+                            <span class="badge rounded-pill @ProductFotmat.getClassTrangThai(item.Trangthai)">@ProductFotmat.getTrangThai(item.Trangthai)</span>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-date">
+                            <span>@item.Ngaynhap</span>
+                        </div>
+                        <div class="col-lg-1 col-sm-2 col-4 col-action">
+                            <div class="dropdown float-end">
+                                <a href="#" data-bs-toggle="dropdown" class="btn btn-light"> <i class="material-icons md-more_horiz"></i> </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="~/DetailProductAdmin?m=@item.Masp">Xem chi tiết</a>
+                                    <a class="dropdown-item" href="~/EditProductAdmin?m=@item.Masp">Chỉnh sửa</a>
+                                    <a onclick="clickDelete('@item.Masp')" class="dropdown-item text-danger" href="#">Xoá</a>
+                                </div>
+                            </div> <!-- dropdown // -->
+                    </div>
+                    </div> <!-- row .// -->
+            </article>  <!-- itemlist  .// -->
+            }
+
+
+            <nav class="float-end mt-4" aria-label="Page navigation">
+                <ul class="pagination">
+                   
+                    @{
+                        var start = (int)@ViewData["page"] - 1 <= 0 ? (int)@ViewData["page"] : (int)@ViewData["page"] - 1;
+                        var pagePre = (int)@ViewData["page"] - 1;
+                         var pageNext = (int)@ViewData["page"] + 1;
+
+                    }
+                     @if( (int)@ViewData["page"] == 1)
+                    {
+                        <li class="page-item disabled"><a class="page-link" href="~/ProductAdmin?pageNumber=@pagePre">Trước</a></li>
+                    }
+                    else{
+                         <li class="page-item "><a class="page-link" href="~/ProductAdmin?pageNumber=@pagePre">Trước</a></li>
+                     }
+                   
+                     @for (var i = start; i <=(int) @ViewData["TotalPage"]; i++)
+                    {
+                        @if(i ==  (int)@ViewData["page"]){
+                          <li class="page-item active"><a class="page-link" href="~/ProductAdmin?pageNumber=@i">@i</a></li>
+
+                        }
+                        else
+                        {
+                          <li class="page-item "><a class="page-link" href="~/ProductAdmin?pageNumber=@i">@i</a></li>
+   
+                        }
+                        @if(i -  (int)@ViewData["page"] == 5)
+                        {
+                            break;
+                        }
+
+                    }
+                    @if( (int)@ViewData["page"] == (int) @ViewData["TotalPage"])
+                    {
+                        <li class="page-item disabled"><a class="page-link" href="~/ProductAdmin?pageNumber=@pageNext">Sau</a></li>
+                    }
+                    else{
+                         <li class="page-item "><a class="page-link" href="~/ProductAdmin?pageNumber=@pageNext">Sau</a></li>
+                     }
+                </ul>
+            </nav>
+
+        </div> <!-- card-body end// -->
+    </div> <!-- card end// -->
+
+
+</section>
+@section Scripts
+{
+<script>
+     document.getElementById("filter-date").addEventListener("change", function () {
+          var value = this.value;
+           window.location.href = '/ProductAdmin?pageNumber=1&n='+value;
+        });
+        //event onchange status-product use dom
+        document.getElementById("status-product").addEventListener("change", function () {
+            var value = this.value;
+         window.location.href = '/ProductAdmin?pageNumber=1&status='+value;
+
+        });
+        //event onchange  loai-product use dom
+       document.getElementById("loai-product").addEventListener("change", function () {
+           var value = this.value;
+             window.location.href = '/ProductAdmin?pageNumber=1&l='+value;
+
+
+       });
+           function pushNotify(status, message, title) {
+        new Notify({
+            status: status,
+            title: title,
+            text: message,
+            effect: 'fade',
+            speed: 300,
+            customClass: '',
+            customIcon: '',
+            showIcon: true,
+            showCloseButton: true,
+            autoclose: true,
+            autotimeout: 2000,
+            gap: 20,
+            distance: 20,
+            type: 1,
+            position: 'right top',
+            customWrapper: '',
+        })
+    }
+       function clickDelete(id){
+           $.ajax({
+            url: '/ProductAdmin/EditProduct?m='+id,
+            type: 'POST',
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                if(data == 'success'){
+                 pushNotify('success', 'Thêm sản phẩm thành công','Thêm sản phẩm');
+                 location.reload();
+                }else{
+                    pushNotify('danger', 'Thêm sản phẩm thất bại','Thêm sản phẩm');
+                }
+            }
+      
+    });
+       }
+       
+</script>
+}
