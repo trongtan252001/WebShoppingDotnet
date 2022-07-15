@@ -397,12 +397,15 @@
     function searchAjax(value,element) {
         if (req != null) req.abort();
         req = $.ajax({
-            type: "POST",
-            url: "~/searchAjax",
-            data: {'txtSearch' : value, 'type' : 'SEARCHICON'},
+            type: "GET",
+            url: "@Url.Action("SearchJsonResult","Collections")",
+            data:  {
+                txt: value
+            },
             dataType: "text",
             success: function(msg){
                 let data = JSON.parse(msg);
+                console.log(data);
                 let countSearch = data.count;
                 let html = '';
                 if (countSearch>0){

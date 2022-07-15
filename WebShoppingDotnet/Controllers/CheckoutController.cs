@@ -42,7 +42,7 @@ namespace WebShoppingDotnet.Controllers
         }
 
         public String CheckOut(String? name, String? phone, String? email, String? address, String? tinhTP,
-            String? quanHuyen, String? check,String? listDTo)
+            String? quanHuyen, String? phuongXa, String? check,String? listDTo)
         {
 
             String jsonUser = HttpContext.Session.GetString("user");
@@ -52,8 +52,18 @@ namespace WebShoppingDotnet.Controllers
                 return "false";
             }
             User user = JsonConvert.DeserializeObject<User>(jsonUser);
-
             ShopthoitrangContext _shopthoitrang = new ShopthoitrangContext();
+            Khachhang k = _shopthoitrang.Khachhangs.First(k => k.Iduser == user.Id);
+            k.DiaChi = address;
+            k.HoTen = name;
+            k.PhuongXa = phuongXa;
+            k.QuanHuyen = quanHuyen;
+            k.TinhTp = tinhTP;
+            k.DienThoai = phone;
+            User newUser = _shopthoitrang.Users.First(k => k.Id == user.Id);
+            string newUSerJSon = JsonConvert.SerializeObject(newUser);
+
+            HttpContext.Session.SetString("user", newUSerJSon);
             var idHD = Guid.NewGuid().ToString();
             List<CheckoutDTo> checkoutDtos = JsonConvert.DeserializeObject<List<CheckoutDTo>>(listDTo);
             double total = 0;
@@ -63,7 +73,6 @@ namespace WebShoppingDotnet.Controllers
                 Product p = _shopthoitrang.Products.FirstOrDefault(p => p.Masp == vDto.id);
                 if (p.GetSize(vDto.size)>= vDto.quantity)
                 {
-                    System.Diagnostics.Debug.WriteLine("demo1");
 
                     p.S = p.S-vDto.quantity;
                     float priceNow = (1 - p.GetSaleToday()) * p.Dongia;
